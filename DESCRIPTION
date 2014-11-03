@@ -1,0 +1,16 @@
+Package: tcsam2015
+Type: Package
+Title: Provides a set of tools to interact with output from a TCSAM2015 model
+    run.
+Version: 0.1.0
+Date: 2014-1-02
+Author: William T. Stockhausen
+Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
+Description: Provides a set of tools to interact with output from a TCSAM2015
+    model run.
+License: MIT
+Imports:
+    graphics,
+    stats,
+    tcltk,
+    wtsUtilities
