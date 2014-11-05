@@ -44,8 +44,9 @@ plotModelResults<-function(res=NULL,
     cat("plotting model fits.\n")
     plotModelFits(res);
     
-    #TODO: plot model parameters and priors
+    #plot model parameter estimates and priors (but not std's or MCMC posteriors)
     cat("TODO: plotting model parameters and priors.\n")
+    plotParameters(res);
     
     #plot population quantities
     cat("plotting population quantities\n")

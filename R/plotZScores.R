@@ -8,8 +8,6 @@
 #'@param ylab - y axis title
 #'@param label - plot label
 #'
-#'@export
-#'
 plotZScores<-function(afits,
                       xlim=NULL,
                       ylim=NULL,

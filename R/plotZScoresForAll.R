@@ -5,7 +5,7 @@
 #'
 #'@export
 #'
-plotModelFits<-function(res){
+plotZScoresForAll<-function(res){
     #plot z-scores for fits to survey abundance and biomass
     plotZScoresForSurveys(res);
     

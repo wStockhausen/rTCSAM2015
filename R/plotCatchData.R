@@ -31,5 +31,7 @@ plotCatchData<-function(name=NULL,
         plotAggregateCatchData(name,od,md,ylab=ylab,logscale=TRUE);
     }
     #plot size frequencies
-    #TODO: complete this
+    if (!is.null(mod$nAtZ)){
+        plotSizeCompsComparisons(name,od,md,ylab=)
+    }
 }

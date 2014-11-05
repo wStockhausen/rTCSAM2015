@@ -14,11 +14,9 @@ plotPopQuants<-function(res){
     cat("plotting estimated natural mortality\n")
     plotNM.ByPC(res);
     
-    #TODO: plot maturity schedules
     cat("pplotting maturity schedules.\n")
     plotPrMaturity.ByPC(res);
     
-    #TODO: plot growth transition matrices
     cat("plotting growth transition matrices.\n")
     plotPrGrowth.ByPC(res);
     
@@ -27,7 +25,6 @@ plotPopQuants<-function(res){
     plotRecruits(res,ylab="recruitment (millions)");
     plotRecruits(res,logscale=TRUE,ylab="recruitment (millions) [ln-scale]");
     
-    #TODO: plot recruitment sex ratio time series
     cat("plotting recruitment sex fraction time series.\n")
     plotRecruits.SexRatio(res);
     

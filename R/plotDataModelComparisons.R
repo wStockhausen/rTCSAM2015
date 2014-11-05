@@ -5,7 +5,6 @@
 #'
 #'@export
 #'
-#TODO: add in size frequency plots
 plotDataModelComparisons<-function(res){
     #plot comparisons of abundance, biomass, and size frequencies
     #for model and data components
