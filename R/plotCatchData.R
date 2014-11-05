@@ -32,6 +32,8 @@ plotCatchData<-function(name=NULL,
     }
     #plot size frequencies
     if (!is.null(mod$nAtZ)){
-        plotSizeCompsComparisons(name,od,md,ylab=)
+        plotSizeCompsComparisons(name,od,md,showPlots=FALSE)
+        plotSizeCompsComparisons1(name,od,md,showPlots=FALSE)
+        plotSizeCompsComparisons2(name,od,md,showPlots=FALSE)
     }
 }

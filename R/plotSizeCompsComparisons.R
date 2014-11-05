@@ -3,6 +3,14 @@
 #'
 #'@description Function to plot comparisons of model and data size compositions.
 #'
+#'@param name - name of size comps source
+#'@param od - observed size comps list object (may be NULL)
+#'@param md - model (predicted) size comps list object (may be NULL)
+#'@param ncol - number of columns per page for plots
+#'@param showPlots - flag (T/F) to show plots
+#'
+#'@return list of ggplot objects comprising the graph pages to plot
+#'
 #'@importFrom reshape2 melt
 #'@import ggplot2
 #'
@@ -23,6 +31,7 @@ plotSizeCompsComparisons<-function(name,od,md,
     uz<-unique(obs$size);
     
     ctr<-0;
+    ps<-list();
     for (sxp in usx){
         for (msp in ums){
             for (scp in usc){
@@ -38,8 +47,11 @@ plotSizeCompsComparisons<-function(name,od,md,
                     p <- p + ggtitle(tolower(paste(sxp,msp,scp,sep=', ')))
                     p <- p + ggtheme
                     if (showPlots) print(p);
+                    ctr<-ctr+1;
+                    ps[[ctr]]<-p;
                 }
             }
         }
     }
+    return(ps)
 }
