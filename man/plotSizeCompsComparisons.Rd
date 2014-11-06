@@ -5,6 +5,20 @@
 \usage{
 plotSizeCompsComparisons(name, od, md, ncol = 2, showPlots = TRUE)
 }
+\arguments{
+\item{name}{- name of size comps source}
+
+\item{od}{- observed size comps list object (may be NULL)}
+
+\item{md}{- model (predicted) size comps list object (may be NULL)}
+
+\item{ncol}{- number of columns per page for plots}
+
+\item{showPlots}{- flag (T/F) to show plots}
+}
+\value{
+list of ggplot objects comprising the graph pages to plot
+}
 \description{
 Function to plot comparisons of model and data size compositions.
 }
