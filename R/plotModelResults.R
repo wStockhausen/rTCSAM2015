@@ -42,7 +42,7 @@ plotModelResults<-function(res=NULL,
     
     #plot model fits (z-scores, size comps, nlls)
     cat("plotting model fits.\n")
-    plotModelFits(res);
+    plotZScoresForAll(res);
     
     #plot model parameter estimates and priors (but not std's or MCMC posteriors)
     cat("TODO: plotting model parameters and priors.\n")

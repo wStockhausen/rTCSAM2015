@@ -10,6 +10,7 @@
 #'@param md - model (predicted) size comps list object (may be NULL)
 #'@param sxs - vector of sexes to plot ("MALE", "FEMALE", "ALL_SEX")
 #'@param ms.sc - dataframe with columns ms (maturity) and sc (shell condition) listing combinations to plot
+#'@param label - label for title
 #'@param ncol - number of columns per page for plots
 #'@param nrow - number of rows per page for plots
 #'@param showPlots - flag (T/F) to show plots
@@ -29,6 +30,8 @@ plotSizeCompsComparisons2<-function(name,
                                     ms.sc=as.data.frame(list(ms=c("IMMATURE","MATURE","MATURE"),
                                                              sc=c("NEW_SHELL","NEW_SHELL","OLD_SHELL")),
                                                         stringsAsFactors=FALSE),
+                                    label='',
+                                    normalize=TRUE,
                                     ncol=2,
                                     nrow=5,
                                     showPlots=TRUE){
@@ -41,13 +44,65 @@ plotSizeCompsComparisons2<-function(name,
     
     #reshape observed size comps
     if (!is.null(od)){
-        obs<-reshape2::melt(od$data,varnames=varnames,value.name='N');
+        od.data<-od$data;
+        if (normalize){
+            cat('normalizing observed size comps by sex and year\n')
+            od.data<-0*od$data;
+            dn<-dimnames(od$data);
+            usx<-dn[[1]];
+            ums<-dn[[2]];
+            usc<-dn[[3]];
+            yrs<-dn[[4]];
+            for (sxp in usx){
+                for (y in yrs){
+                    tot<-0;
+                    for (msp in ums){
+                        for (scp in usc){
+                            tot<-tot+sum(od$data[sxp,,,y,],na.rm=TRUE);
+                        }
+                    }
+                    cat('sex =',sxp,'y =',y,'tot =',tot,'\n')
+                    for (msp in ums){
+                        for (scp in usc){
+                            if (tot>0) od.data[sxp,msp,scp,y,]<-od$data[sxp,msp,scp,y,]/tot;
+                        }
+                    }
+                }
+            }            
+        }
+        obs<-reshape2::melt(od.data,varnames=varnames,value.name='N');
         obs$type<-'observed';#add 'type' column
     } else obs<-NULL;
     
     #reshape model-predicted size comps
     if (!is.null(md)){
-        mod<-reshape2::melt(md$data,varnames=varnames,value.name='N');
+        md.data<-md$data;
+        if (normalize){
+            cat('normalizing predicted size comps by sex and year\n')
+            md.data<-0*md$data;
+            dn<-dimnames(md$data);
+            usx<-dn[[1]];
+            ums<-dn[[2]];
+            usc<-dn[[3]];
+            yrs<-dn[[4]];
+            for (sxp in usx){
+                for (y in yrs){
+                    tot<-0;
+                    for (msp in ums){
+                        for (scp in usc){
+                            tot<-tot+sum(md$data[sxp,,,y,],na.rm=TRUE);
+                        }
+                    }
+                    cat('sex =',sxp,'y =',y,'tot =',tot,'\n')
+                    for (msp in ums){
+                        for (scp in usc){
+                            if (tot>0) md.data[sxp,msp,scp,y,]<-md$data[sxp,msp,scp,y,]/tot;
+                        }
+                    }
+                }
+            }            
+        }
+        mod<-reshape2::melt(md.data,varnames=varnames,value.name='N');
         mod$type<-'predicted';#add 'type' column
     } else mod<-NULL;
     
@@ -60,7 +115,7 @@ plotSizeCompsComparisons2<-function(name,
     dfr<-sqldf::sqldf(qry);
     
     uz<-unique(dfr$size);
-    rng<-range(dfr$N);
+    rng<-range(dfr$N,na.rm=TRUE,finite=TRUE);
     cat("rng = ",rng,'\n')
     
     yrs<-unique(dfr$year);
@@ -82,7 +137,7 @@ plotSizeCompsComparisons2<-function(name,
             p <- p + geom_hline(yintercept=0,colour='black',size=0.5)
             p <- p + labs(x="Size (mm)",y="proportion ")
             p <- p + facet_wrap(~year,ncol=2) 
-            p <- p + ggtitle(paste(gsub('.',' ',name,fixed=TRUE),tolower(sxp),sep=': '))
+            p <- p + ggtitle(paste(label,': ',name,': ',tolower(sxp),sep=''))
             p <- p + guides(fill=guide_legend(''),colour=guide_legend(''))
             p <- p + ggtheme
             if (showPlots) print(p);

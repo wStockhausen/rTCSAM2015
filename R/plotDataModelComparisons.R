@@ -9,27 +9,30 @@ plotDataModelComparisons<-function(res){
     #plot comparisons of abundance, biomass, and size frequencies
     #for model and data components
     
-    #plot comparisons for survey abundance and biomass
-    nSrv<-res$mc$nSrv;
-    for (s in 1:nSrv){
-        obs<-res$data$surveys[[s]];
-        mod<-res$sim.data$surveys[[s]];
-        plotCatchData(mod$name,obs,mod,ylab="Survey Catch");
-    }
+#     #plot comparisons for survey abundance and biomass
+#     nSrv<-res$mc$nSrv;
+#     for (s in 1:nSrv){
+#         obs<-res$data$surveys[[s]];
+#         mod<-res$sim.data$surveys[[s]];
+#         name<-gsub('.',' ',mod$name,fixed=TRUE);
+#         plotCatchData(name,obs,mod,label="Survey Catch");
+#     }
     
     #plot comparisons for fishery catches
     nFsh<-res$mc$nFsh;
+    nFsh<-1;
     for (f in 1:nFsh){
         obs<-res$data$fisheries[[f]];
         mod<-res$sim.data$fisheries[[f]];
+        name<-gsub('.',' ',mod$name,fixed=TRUE);
         if (!is.null(mod$retained.catch)){
-            plotCatchData(mod$name,obs$retained.catch,mod$retained.catch,ylab="Retained Catch");
+            plotCatchData(name,obs$retained.catch,mod$retained.catch,label="Retained Catch");
         }
         if (!is.null(mod$discard.catch)){
-            plotCatchData(mod$name,obs$discard.catch,mod$discard.catch,ylab="Discard Catch");
+            plotCatchData(name,obs$discard.catch,mod$discard.catch,label="Discard Catch");
         }
         if (!is.null(mod$total.catch)){
-            plotCatchData(mod$name,obs$total.catch,mod$total.catch,ylab="Total Catch");
+            plotCatchData(name,obs$total.catch,mod$total.catch,label="Total Catch");
         }
     }
 }

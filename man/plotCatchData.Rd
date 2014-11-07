@@ -4,7 +4,7 @@
 \title{Plot catch data}
 \usage{
 plotCatchData(name = NULL, obs = NULL, mod = NULL, logscale = FALSE,
-  ylab = "")
+  label = "")
 }
 \arguments{
 \item{name}{- fishery or survey name}
@@ -15,7 +15,7 @@ plotCatchData(name = NULL, obs = NULL, mod = NULL, logscale = FALSE,
 
 \item{logscale}{- flag (T/F) to plot on ln-scale}
 
-\item{ylab}{- base title for y axis}
+\item{label}{- base label for plots}
 }
 \description{
 Plot catch data (aggregate catch, catch-at-size) from fisheries or surveys

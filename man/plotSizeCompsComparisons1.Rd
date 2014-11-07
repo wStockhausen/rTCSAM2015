@@ -6,7 +6,7 @@
 plotSizeCompsComparisons1(name, od, md, sxs = c("MALE", "FEMALE"),
   ms.sc = as.data.frame(list(ms = c("IMMATURE", "MATURE", "MATURE"), sc =
   c("NEW_SHELL", "NEW_SHELL", "OLD_SHELL")), stringsAsFactors = FALSE),
-  ncol = 2, nrow = 5, showPlots = TRUE)
+  label = "", ncol = 2, nrow = 5, showPlots = TRUE)
 }
 \arguments{
 \item{name}{- name of size comps source}
@@ -18,6 +18,8 @@ plotSizeCompsComparisons1(name, od, md, sxs = c("MALE", "FEMALE"),
 \item{sxs}{- vector of sexes to plot ("MALE", "FEMALE", "ALL_SEX")}
 
 \item{ms.sc}{- dataframe with columns ms (maturity) and sc (shell condition) listing combinations to plot}
+
+\item{label}{- label for title}
 
 \item{ncol}{- number of columns per page for plots}
 
