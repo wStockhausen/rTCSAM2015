@@ -3,10 +3,8 @@
 \alias{plotSizeCompsComparisons1}
 \title{Plot comparisons of model and data size compositions by year.}
 \usage{
-plotSizeCompsComparisons1(name, od, md, sxs = c("MALE", "FEMALE"),
-  ms.sc = as.data.frame(list(ms = c("IMMATURE", "MATURE", "MATURE"), sc =
-  c("NEW_SHELL", "NEW_SHELL", "OLD_SHELL")), stringsAsFactors = FALSE),
-  label = "", ncol = 2, nrow = 5, showPlots = TRUE)
+plotSizeCompsComparisons1(name, od, md, label = "", normalize = TRUE,
+  ncol = 2, nrow = 5, showPlots = TRUE)
 }
 \arguments{
 \item{name}{- name of size comps source}
@@ -14,10 +12,6 @@ plotSizeCompsComparisons1(name, od, md, sxs = c("MALE", "FEMALE"),
 \item{od}{- observed size comps list object (may be NULL)}
 
 \item{md}{- model (predicted) size comps list object (may be NULL)}
-
-\item{sxs}{- vector of sexes to plot ("MALE", "FEMALE", "ALL_SEX")}
-
-\item{ms.sc}{- dataframe with columns ms (maturity) and sc (shell condition) listing combinations to plot}
 
 \item{label}{- label for title}
 
@@ -33,7 +27,7 @@ list of ggplot objects comprising the graph pages to plot
 \description{
 Function to plot comparisons of model and data size compositions by year. Males are plotted
 as positive frequencies, females as negative frequencies, and maturity/shell condition combinations
-disntiguished by different colors.
+distinguished by different colors.
 }
 \details{
 

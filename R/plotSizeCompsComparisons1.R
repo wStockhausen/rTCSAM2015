@@ -3,13 +3,11 @@
 #'
 #'@description Function to plot comparisons of model and data size compositions by year. Males are plotted
 #'as positive frequencies, females as negative frequencies, and maturity/shell condition combinations 
-#'disntiguished by different colors.
+#'distinguished by different colors.
 #'
 #'@param name - name of size comps source
 #'@param od - observed size comps list object (may be NULL)
 #'@param md - model (predicted) size comps list object (may be NULL)
-#'@param sxs - vector of sexes to plot ("MALE", "FEMALE", "ALL_SEX")
-#'@param ms.sc - dataframe with columns ms (maturity) and sc (shell condition) listing combinations to plot
 #'@param label - label for title
 #'@param ncol - number of columns per page for plots
 #'@param nrow - number of rows per page for plots
@@ -26,87 +24,92 @@
 plotSizeCompsComparisons1<-function(name,
                                     od,
                                     md,
-                                    sxs=c("MALE","FEMALE"),
-                                    ms.sc=as.data.frame(list(ms=c("IMMATURE","MATURE","MATURE"),
-                                                             sc=c("NEW_SHELL","NEW_SHELL","OLD_SHELL")),
-                                                        stringsAsFactors=FALSE),
                                     label='',
                                     normalize=TRUE,
                                     ncol=2,
                                     nrow=5,
                                     showPlots=TRUE){
     
-    #create vector of maturity x shell condition states
-    ms.scs<-tolower(paste(ms.sc$ms,ms.sc$sc,sep=', '))
-    
     #define dimension variable names
     varnames<-c("sx","ms","sc","year","size");
     
     #reshape observed size comps
     if (!is.null(od)){
-        od.data<-od$data;
-        if (normalize){
-            dn<-dimnames(od.data);
-            usx<-dn[[1]];
-            ums<-dn[[2]];
-            usc<-dn[[3]];
-            yrs<-dn[[4]];
-            for (sxp in usx){
-                for (msp in ums){
-                    for (scp in usc){
-                        for (y in yrs){
-                            tot<-sum(od.data[sxp,msp,scp,y,],na.rm=TRUE);
-                            od.data[sxp,msp,scp,y,]<-od.data[sxp,msp,scp,y,]/tot;
-                        }
-                    }
-                }
-            }            
-        }
-        obs<-reshape2::melt(od.data,varnames=varnames,value.name='N');
+        obs<-reshape2::melt(od$data,varnames=varnames,value.name='N');
         obs$type<-'observed';#add 'type' column
+        
+        qry<-'select sx,ms,sc,sum(N) as Nt
+              from obs
+              group by sx,ms,sc
+              order by sx,ms,sc;';
+        obs1<-sqldf::sqldf(qry);
+        
+        qry<-'select sx,ms,sc
+              from obs1
+              where Nt>0
+              order by sx,ms,sc;';
+        fcs<-sqldf::sqldf(qry);
     } else obs<-NULL;
     
     #reshape model-predicted size comps
     if (!is.null(md)){
-        md.data<-md$data;
-        if (normalize){
-            dn<-dimnames(md.data);
-            usx<-dn[[1]];
-            ums<-dn[[2]];
-            usc<-dn[[3]];
-            yrs<-dn[[4]];
-            for (sxp in usx){
-                for (msp in ums){
-                    for (scp in usc){
-                        for (y in yrs){
-                            tot<-sum(md.data[sxp,msp,scp,y,],na.rm=TRUE);
-                            if (tot>0) md.data[sxp,msp,scp,y,]<-md.data[sxp,msp,scp,y,]/tot;
-                        }
-                    }
-                }
-            }            
-        }
-        mod<-reshape2::melt(md.data,varnames=varnames,value.name='N');
+        mod<-reshape2::melt(md$data,varnames=varnames,value.name='N');
         mod$type<-'predicted';#add 'type' column
+        
+        if (is.null(obs)){
+            qry<-'select sx,ms,sc,sum(N) as Nt
+                  from mod
+                  group by sx,ms,sc
+                  order by sx,ms,sc;';
+            mod1<-sqldf::sqldf(qry);
+            
+            qry<-'select sx,ms,sc
+                  from mod1
+                  where Nt>0
+                  order by sx,ms,sc;';
+            fcs<-sqldf::sqldf(qry);
+        }
     } else mod<-NULL;
     
     dfr<-rbind(obs,mod);
-    dfr$ms_sc<-tolower(paste(dfr$ms,dfr$sc,sep=', '))
-    dfr<-dfr[(dfr$sx %in% sxs)&(dfr$ms_sc %in% ms.scs),]
+    
+    qry<-"select d.type,d.sx,d.ms,d.sc,d.year,d.size,d.N
+          from dfr d, fcs f
+          where d.sx=f.sx and d.ms=f.ms and d.sc=f.sc
+          order by d.type,d.year,d.ms,d.sc,d.sx,d.size;"
+    dfr<-sqldf::sqldf(qry);
+    
+#    obsp<-getSizeCompFitOption();
+    dfr$ms_sc<-paste(dfr$ms,dfr$sc,sep=', ')
+    
+    if (normalize){
+        qry<-'select type,sx,year,sum(N) as Nt
+              from dfr
+              group by type,sx,year
+              order by type,sx,year;';
+        tots<-sqldf::sqldf(qry);
+        
+        qry<-'select
+                d.type,d.sx,d.ms,d.sc,d.ms_sc,d.year,d.size,d.N/t.Nt as N
+              from dfr d, tots t
+              where d.type=t.type and d.sx=t.sx and d.year=t.year
+              order by d.type,d.year,d.ms,d.sc,d.sx,d.size;';
+        dfr<-sqldf::sqldf(qry);
+    }
+    
+    sxs<-unique(dfr$sx)
+    ms.scs<-unique(dfr$ms_sc)
+    yrs<-unique(dfr$year);
+    uz<-unique(dfr$size);
+    
+    mxp<-nrow*ncol;
+    npg<-ceiling(length(yrs)/mxp)
+    
     idx<-dfr[['sx']]=='FEMALE';
     dfr[idx,'N']<- -1*dfr[idx,'N'];
     
-    qry<-"select * from dfr
-          order by type,year,ms_sc,sx,size;"
-    dfr<-sqldf(qry);
-    
-    uz<-unique(dfr$size);
     rng<-range(dfr$N,na.rm=TRUE,finite=TRUE);
     cat("rng = ",rng,'\n')
-    
-    yrs<-unique(dfr$year);
-    mxp<-nrow*ncol;
-    npg<-ceiling(length(yrs)/mxp)
     
     ps<-list();
     for (pg in 1:npg){

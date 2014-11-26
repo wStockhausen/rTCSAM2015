@@ -3,8 +3,8 @@
 \alias{plotSizeCompsComparisons0}
 \title{Plot comparisons of model and data size compositions.}
 \usage{
-plotSizeCompsComparisons0(name, od, md, label = "", ncol = 2,
-  showPlots = TRUE)
+plotSizeCompsComparisons0(name, od, md, normalize = TRUE, label = "",
+  ncol = 2, showPlots = TRUE)
 }
 \arguments{
 \item{name}{- name of size comps source}

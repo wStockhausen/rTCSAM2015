@@ -4,7 +4,7 @@
 \title{Plot catch data}
 \usage{
 plotCatchData(name = NULL, obs = NULL, mod = NULL, logscale = FALSE,
-  label = "")
+  normalize = TRUE, label = "")
 }
 \arguments{
 \item{name}{- fishery or survey name}

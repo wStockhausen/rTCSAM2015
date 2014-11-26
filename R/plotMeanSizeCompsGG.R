@@ -1,9 +1,9 @@
 #'
-#'@title Plot comparisons of model and data size compositions by year and sex.
+#'@title Plot comparisons of mean model and data size compositions by year and sx.
 #'
-#'@description Function to plot comparisons of model and data size compositions by year for
+#'@description Function to plot comparisons of mean model and data size compositions by year for
 #'specified sexes. Maturity/shell condition combinations
-#'for a given year x sex combination are distinguished by different colors.
+#'for a given year x sx combination are distinguished by different colors.
 #'
 #'@param name - name of size comps source
 #'@param od - observed size comps list object (may be NULL)
@@ -13,8 +13,6 @@
 #'@param normalize - flag (T/F) to normalize size comps
 #'@param normBy - vector of categories to normalize by ('sx','ms',and/or 'sc') or NULL to normalize over all
 #'@param ggtheme - ggplot2 theme to use
-#'@param ncol - number of columns per page for plots
-#'@param nrow - number of rows per page for plots
 #'@param showPlots - flag (T/F) to show plots
 #'
 #'@return list of ggplot objects comprising the graph pages to plot
@@ -25,17 +23,15 @@
 #'
 #'@export
 #'
-plotSizeCompsComparisons2<-function(name,
-                                    od,
-                                    md,
-                                    label='',
-                                    disAggBy=c('sx','ms','sc'),
-                                    normalize=TRUE,
-                                    normBy=NULL,
-                                    ggtheme=theme_grey(),
-                                    ncol=2,
-                                    nrow=5,
-                                    showPlots=TRUE){
+plotMeanSizeCompsGG<-function(name,
+                              od,
+                              md,
+                              label='',
+                              disAggBy=c('sx','ms','sc'),
+                              normalize=TRUE,
+                              normBy=NULL,
+                              ggtheme=theme_grey(),
+                              showPlots=TRUE){
     
     #redefine dimension variable names for convenience
     varnames<-c("sx","ms","sc","year","size");
@@ -89,7 +85,7 @@ plotSizeCompsComparisons2<-function(name,
         if (!('sc' %in% disAggBy)) mod$sc<-'ALL_SHELL';    #sc was aggregated over
         
         mod$type<-'estimated';#add 'type' column
-        
+                
         if (is.null(obs)){
             #find factor combinations w/ non-zero abundance
             qry<-'select sx,ms,sc,sum(N) as Nt
@@ -108,6 +104,7 @@ plotSizeCompsComparisons2<-function(name,
     
     dfr<-rbind(obs,mod);
     
+    #select factor combinations with non-zero abundance
     qry<-"select d.type,d.sx,d.ms,d.sc,d.year,d.size,d.N
           from dfr d, fcs f
           where d.sx=f.sx and d.ms=f.ms and d.sc=f.sc
@@ -139,24 +136,29 @@ plotSizeCompsComparisons2<-function(name,
         qry<-gsub('&&joinByStr',joinByStr,qry);
         dfr<-sqldf::sqldf(qry);        
     }
+
+    #sum over years
+    qry<-"select
+            type,sx,ms,sc,size,sum(N)/count() as N
+          from dfr
+          group by type,sx,ms,sc,size
+          order by type,sx,ms,sc,size";
+    dfr<-sqldf::sqldf(qry);
+    dfr$ms_sc<-paste(dfr$ms,dfr$sc,sep=', ')
     
     sxs<-unique(dfr$sx)
     ms.scs<-unique(dfr$ms_sc)
-    yrs<-unique(dfr$year);
     uz<-unique(dfr$size);
-    
-    mxp<-nrow*ncol;
-    npg<-ceiling(length(yrs)/mxp)
     
     rng<-range(dfr$N,na.rm=TRUE,finite=TRUE);
     cat("rng = ",rng,'\n')
     
     ctr<-0;
     ps<-list();
-    for (sxp in sxs){ #loop over sex
-        for (pg in 1:npg){ #loop over pages
-            dfrp<-dfr[(dfr$year %in% yrs[(pg-1)*mxp+1:mxp])&(dfr$sx==sxp),]
-            p <- ggplot(data=dfrp)
+#    for (sxp in sxs){ #loop over sex
+#            dfrp<-dfr[(dfr$sx==sxp),]
+            dfrp<-dfr;
+            p <- ggplot(data=dfrp);
             p <- p + geom_bar(aes(x=size,y=N,fill=ms_sc),data=dfrp[dfrp$type=='observed',],stat="identity",position='identity',alpha=0.5)
             for (ms.scp in ms.scs){
                 p <- p + geom_line(aes(x=size,y=N,colour=ms_sc),data=dfrp[(dfrp$type=='estimated')&(dfrp$ms_sc==ms.scp),],size=1)
@@ -165,17 +167,20 @@ plotSizeCompsComparisons2<-function(name,
             p <- p + scale_y_continuous(breaks=pretty(rng),limits=rng,expand=c(0.01,0))
             p <- p + geom_hline(yintercept=0,colour='black',size=0.5)
             p <- p + labs(x="Size (mm)",y="proportion ")
-            p <- p + facet_wrap(~year,ncol=2) 
-            p <- p + ggtitle(paste(label,': ',name,': ',tolower(sxp),sep=''))
+            p <- p + facet_wrap(~sx,ncol=2) 
+            p <- p + ggtitle(paste(label,': ',name,sep=''))
             p <- p + guides(fill=guide_legend(''),colour=guide_legend(''))
             p <- p + ggtheme
             if (showPlots) print(p);
             ctr<-ctr+1;
             ps[[ctr]]<-p
-        }
-    }
+#    }
     return(ps)
 }
 
-#ps<-plotSizeCompsComparisons2(name,od,md,disAggBy=c('sx','ms'),normalize=TRUE,normBy='sx')
-#ps<-plotSizeCompsComparisons2(name,NULL,md)
+#ps<-plotMeanSizeCompsGG(name,od,md,normalize=FALSE)
+#ps<-plotMeanSizeCompsGG(name,od,md,disAggBy='sx',normalize=TRUE,normBy=NULL)
+#ps<-plotMeanSizeCompsGG(name,od,md,disAggBy='sx',normalize=TRUE,normBy='sx')
+# ps<-plotMeanSizeCompsGG(name,od,md,normalize=TRUE,normBy=c('sx','ms'))
+# ps<-plotMeanSizeCompsGG(name,od,md,normalize=TRUE,normBy=c('sx','ms','sc'))
+#ps<-plotMeanSizeCompsGG(name,NULL,md)

@@ -72,21 +72,26 @@ plotAggregateCatchData<-function(name=NULL,
             lv<-NA+ryrs[1]:ryrs[2];
             for (iy in 1:length(obs$dat[x,])){
                 yr<-obs$years[iy];
-                yv[yr-ryrs[1]]<-obs$dat[x,iy];
+                yrp<-yr-ryrs[1]+1;
+                yv[yrp]<-obs$dat[x,iy];
                 if (logscale){
-                    uv[yr-ryrs[1]]<- 1.96*sqrt(log(1+obs$cv[x,iy]^2));
-                    lv[yr-ryrs[1]]<--1.96*sqrt(log(1+obs$cv[x,iy]^2));
+                    uv[yrp]<- 1.96*sqrt(log(1+obs$cv[x,iy]^2));
+                    lv[yrp]<--1.96*sqrt(log(1+obs$cv[x,iy]^2));
                 } else {
-                    uv[yr-ryrs[1]]<-obs$dat[x,iy]*(exp( 1.96*sqrt(log(1+obs$cv[x,iy]^2)))-1);
-                    lv[yr-ryrs[1]]<-obs$dat[x,iy]*(exp(-1.96*sqrt(log(1+obs$cv[x,iy]^2)))-1);
+                    uv[yrp]<-obs$dat[x,iy]*(exp( 1.96*sqrt(log(1+obs$cv[x,iy]^2)))-1);
+                    lv[yrp]<-obs$dat[x,iy]*(exp(-1.96*sqrt(log(1+obs$cv[x,iy]^2)))-1);
                 }
             }
+#            cat(x,'- obs: \n')
+#            print(yv);
             if (logscale) {
                 plotErrorBars.V(ryrs[1]:ryrs[2],log(yv),upper=uv,lower=lv,col=col[x],pch=pch[x])
                 points(ryrs[1]:ryrs[2],log(yv),col=col[x],pch=pch[x]);
+#                text(ryrs[1]:ryrs[2],log(yv),ryrs[1]:ryrs[2]);
             } else {
                 plotErrorBars.V(ryrs[1]:ryrs[2],yv,upper=uv,lower=lv,col=col[x],pch=pch[x])
                 points(ryrs[1]:ryrs[2],yv,col=col[x],pch=pch[x]);
+#                text(ryrs[1]:ryrs[2],yv,ryrs[1]:ryrs[2]);
             }
         }
     }
@@ -96,10 +101,18 @@ plotAggregateCatchData<-function(name=NULL,
             yv<-NA+ryrs[1]:ryrs[2];            
             for (iy in 1:length(mod$dat[x,])){
                 yr<-mod$years[iy];
-                yv[yr-ryrs[1]]<-mod$dat[x,iy]
+                yrp<-yr-ryrs[1]+1;
+                yv[yrp]<-mod$dat[x,iy]
             }
-            if (logscale) {lines(ryrs[1]:ryrs[2],log(yv),col=col[x],lty=lty[x],lwd=lwd[x]);} 
-            else {lines(ryrs[1]:ryrs[2],yv,col=col[x],lty=lty[x],lwd=lwd[x]);}
+#            cat(x,'- mod: \n')
+#            print(yv);
+            if (logscale) {
+                lines(ryrs[1]:ryrs[2],log(yv),col=col[x],lty=lty[x],lwd=lwd[x]);
+#                text(ryrs[1]:ryrs[2],log(yv),ryrs[1]:ryrs[2]);
+            } else {
+                lines(ryrs[1]:ryrs[2],yv,col=col[x],lty=lty[x],lwd=lwd[x]);
+#                text(ryrs[1]:ryrs[2],yv,ryrs[1]:ryrs[2]);
+            }
         }
     }        
     if (is.null(name)) {name<-'';}

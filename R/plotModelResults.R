@@ -45,7 +45,7 @@ plotModelResults<-function(res=NULL,
     plotZScoresForAll(res);
     
     #plot model parameter estimates and priors (but not std's or MCMC posteriors)
-    cat("TODO: plotting model parameters and priors.\n")
+    cat("plotting model parameters and priors.\n")
     plotParameters(res);
     
     #plot population quantities
@@ -56,12 +56,19 @@ plotModelResults<-function(res=NULL,
     cat("plotting selectivities.\n")
     plotSelFcns.ByPC(res);
     
-    #plot fishing rates
-    cat("TODO: plotting fisheries results.\n")
-    plotFishingRates(res);
+    #plot fisheries quantities
+    cat("plotting fisheries results.\n")
+    plotFisheriesResults(res);
     
-    #TODO: plot surveys
+    #TODO: plot surveys quantities
     cat("TODO: plotting surveys results.\n")
+#    plotSurveysResults(res);
+
+    #TODO: stock-recruit curve(s)
+    cat("TODO: plotting stock-recruit curves.\n")
+    
+    #TODO: control rule/phase plane plots
+    cat("TODO: control rule/phase plane plots.\n")
     
     if (!is.null(out.pdf)){dev.off();}
     

@@ -42,5 +42,7 @@ plotCatchData<-function(name=NULL,
 #         print(ps1);
         ps2<-plotSizeCompsComparisons2(name,od,md,normalize=normalize,label=label,showPlots=FALSE)
         print(ps2);
+        psM<-plotMeanSizeCompsGG(name,od,md,normalize=normalize,label=label,showPlots=FALSE);
+        print(psM);
     }
 }
