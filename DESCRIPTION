@@ -2,8 +2,8 @@ Package: tcsam2015
 Type: Package
 Title: Provides a set of tools to interact with output from a TCSAM2015 model
     run.
-Version: 0.1.0
-Date: 2015-11-05
+Version: 0.2.1
+Date: 2015-01-13
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
 Description: Provides a set of tools to interact with output from a TCSAM2015

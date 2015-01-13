@@ -19,17 +19,19 @@ plotCatchData<-function(name=NULL,
                         label=""){
     #plot abundance
     if (!is.null(mod$abundance)){
+        cat('Plotting abundance using plotAggregateCatchDataGG\n')
         od<-obs$abundance;
         md<-mod$abundance;
-        plotAggregateCatchData(name,od,md,ylab=label);
-        plotAggregateCatchData(name,od,md,ylab=label,logscale=TRUE);
+        plotAggregateCatchDataGG(name,od,md,ylab=label);
+        plotAggregateCatchDataGG(name,od,md,ylab=label,logscale=TRUE);
     }
     #plot biomass
     if (!is.null(mod$biomass)){
+        cat('Plotting biomass using plotAggregateCatchDataGG\n')
         od<-obs$biomass;
         md<-mod$biomass;
-        plotAggregateCatchData(name,od,md,ylab=label);
-        plotAggregateCatchData(name,od,md,ylab=label,logscale=TRUE);
+        plotAggregateCatchDataGG(name,od,md,ylab=label);
+        plotAggregateCatchDataGG(name,od,md,ylab=label,logscale=TRUE);
     }
     #plot size frequencies
     if (!is.null(mod$nAtZ)){

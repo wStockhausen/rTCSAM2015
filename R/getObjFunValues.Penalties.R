@@ -66,5 +66,5 @@ getObjFunValues.Penalties<-function(res,mdl=NULL){
     }
     return(mdfr)
 }
-mdfr1<-getObjFunValues.Penalties(res.fitSD.all)
-mdfr2<-getObjFunValues.Penalties(list(base=res.fitSD.all,alt1=res.fitSD.all))
+#mdfr.pens.1<-getObjFunValues.Penalties(res)
+#mdfr.pens.2<-getObjFunValues.Penalties(list(base=res,alt1=res))

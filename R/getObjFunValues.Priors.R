@@ -66,5 +66,5 @@ getObjFunValues.Priors<-function(res,mdl=NULL){
     }
     return(mdfr)
 }
-mdfr1<-getObjFunValues.Priors(res.fitSD.all)
-mdfr2<-getObjFunValues.Priors(list(base=res.fitSD.all,alt1=res.fitSD.all))
+#mdfr.priors.1<-getObjFunValues.Priors(res)
+#mdfr.priors.2<-getObjFunValues.Priors(list(base=res,alt1=res))

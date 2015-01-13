@@ -45,4 +45,4 @@ getObjFunValues.NatZ<-function(nAtZ){
     return(mdfr);
 }
 
-mdfr.nAtZ<-getObjFunValues.NatZ(nAtZ);
+#mdfr.nAtZ<-getObjFunValues.NatZ(nAtZ);

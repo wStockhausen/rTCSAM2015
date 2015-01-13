@@ -23,27 +23,21 @@ getObjFunValues.AggregateCatch<-function(aggC,
                                          data.type='abundance'){
     
     dfr<-NULL;
-    nf<-names(aggC$fits);
-    for (f in nf){
-        cat("\t'",f,"'\n",sep='')
-        if (!is.null(aggC$fits[[f]])){
-            rw<-data.frame(
-                data.type=data.type,
-                fit.type=aggC$fit.type,
-                nll.type=aggC$fits[[f]]$nll.type,
-                year=-1,
-                sex=f,
-                maturity="ALL_MATURITY",
-                shell_condition="ALL_SHELL_CONDITION",
-                wgt=aggC$fits[[f]]$wgt,
-                nll=aggC$fits[[f]]$nll,
-                objfun=aggC$fits[[f]]$objfun,
-                stringsAsFactors=FALSE);
-            dfr<-rbind(dfr,rw);
-        }
-    }
+    f<-aggC$fits;
+    dfr<-data.frame(
+        data.type=data.type,
+        fit.type=aggC$fit.type,
+        nll.type=f$nll$nll.type,
+        year=-1,
+        sex=f$sx,
+        maturity=f$ms,
+        shell_condition=f$sc,
+        wgt=f$nll$wgt,
+        nll=f$nll$nll,
+        objfun=f$nll$objfun,
+        stringsAsFactors=FALSE);
     mdfr<-reshape2::melt(dfr,measure.vars=c('wgt','nll','objfun'))
     return(mdfr);
 }
 
-mdfr.aggC<-getObjFunValues.AggregateCatch(aggC);
+#mdfr.aggC<-getObjFunValues.AggregateCatch(aggC);

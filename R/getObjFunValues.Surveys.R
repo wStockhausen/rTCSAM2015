@@ -33,9 +33,10 @@ getObjFunValues.Surveys<-function(res,mdl=NULL){
         surveys<-res$model.fits$surveys;
         nmsrvs<-names(surveys);
         for (nmsrv in nmsrvs){
+            cat("survey is '",nmsrv,"'\n",sep='');
             survey<-surveys[[nmsrv]];
             if (!is.null(survey)){
-                mdfr<-getObjFunValues.CatchData(survey,catch.type='total')
+                mdfr<-getObjFunValues.CatchData(survey,catch.type='total.catch')
                 mdfr<-cbind(list(model=mdl,source.type='survey',source.name=nmsrv),mdfr);
                 dfr<-rbind(dfr,mdfr);
             }#non-NULL survey
@@ -55,5 +56,5 @@ getObjFunValues.Surveys<-function(res,mdl=NULL){
     }
     return(dfr)
 }
-mdfr.srvs.1<-getObjFunValues.Surveys(res)
-mdfrsrvs.2<-getObjFunValues.Surveys(list(base=res,alt1=res))
+#mdfr.srvs.1<-getObjFunValues.Surveys(res)
+#mdfrsrvs.2<-getObjFunValues.Surveys(list(base=res,alt1=res))

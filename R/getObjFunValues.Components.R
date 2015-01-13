@@ -66,5 +66,5 @@ getObjFunValues.Components<-function(res,mdl=NULL){
     }
     return(mdfr)
 }
-mdfr1<-getObjFunValues.Components(res.fitSD.all)
-mdfr2<-getObjFunValues.Components(list(base=res.fitSD.all,alt1=res.fitSD.all))
+#mdfr1<-getObjFunValues.Components(res.fitSD.all)
+#mdfr2<-getObjFunValues.Components(list(base=res.fitSD.all,alt1=res.fitSD.all))

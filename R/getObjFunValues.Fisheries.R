@@ -63,5 +63,5 @@ getObjFunValues.Fisheries<-function(res,mdl=NULL){
     }
     return(dfr)
 }
-mdfr.fshs.1<-getObjFunValues.Fisheries(res)
-mdfr.fshs.2<-getObjFunValues.Fisheries(list(base=res,alt1=res))
+#mdfr.fshs.1<-getObjFunValues.Fisheries(res)
+#mdfr.fshs.2<-getObjFunValues.Fisheries(list(base=res,alt1=res))

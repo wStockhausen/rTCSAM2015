@@ -4,6 +4,7 @@
 #'@description Plot time series of the fully-selected fishery capture rates.
 #'
 #'@param res - results list from a TCSAM2015 model run
+#'@param ggtheme - a ggplot2 theme
 #'@param showPlots - flag (T/F) to show plots
 #'
 #'@return list of ggplot objects
@@ -14,6 +15,7 @@
 #'@export
 #'
 plotFishingRatesGG<-function(res,
+                             ggtheme=theme_bw(),
                              showPlots=TRUE){
     dfr<-NULL;
     nFsh<-res$mc$nFsh;
@@ -37,12 +39,12 @@ plotFishingRatesGG<-function(res,
     dfr$year<-as.numeric(dfr$year);
     
     #select max F by type/fishery/year/sex/maturity/shell condition
-    dfr<-reshape2::dcast(dfr,type+fishery+year+sex+maturity+`shell condition`~.,max,
+    dfr<-reshape2::dcast(dfr,type+fishery+year+sex+maturity+shell_condition~.,max,
                          value.var='F',drop=TRUE)
     nms<-names(dfr);
     nms[7]<-'maxF';
     names(dfr)<-nms;
-    dfr$xms<-paste(dfr$sex,dfr$maturity,dfr$"shell condition",sep=', ')
+    dfr$xms<-paste(dfr$sex,dfr$maturity,dfr$shell_condition,sep=', ')
     
     
     rng<-c(0,max(dfr$maxF,na.rm=TRUE));
@@ -61,7 +63,7 @@ plotFishingRatesGG<-function(res,
         p <- p + ggtitle(tolower(xms))
         p <- p + guides(colour=guide_legend(''))
         p <- p + facet_wrap(~fishery,ncol=2) 
-        #p <- p + ggtheme
+        p <- p + ggtheme
         if (showPlots) print(p);
         ps[[tolower(xms)]]<-p;
     }

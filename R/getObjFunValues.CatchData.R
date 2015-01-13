@@ -4,7 +4,7 @@
 #'@description Function to get catch data components in the objective function as a melted dataframe.
 #'
 #'@param catchData  - a list object reflecting a catch data source's contributions to the objective function
-#'@param catch.type - type of catch data ('total','retained','discards')
+#'@param catch.type - type of catch data ('total.catch','retained.catch','discard.catch')
 #'
 #'@return a melted dataframe 
 #'
@@ -45,4 +45,4 @@ getObjFunValues.CatchData<-function(catchData,catch.type="standard"){
     return(mdfr);
 }
 
-mdfr.cd<-getObjFunValues.CatchData(catchData)
+#mdfr.cd<-getObjFunValues.CatchData(catchData)
