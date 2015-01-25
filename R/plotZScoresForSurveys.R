@@ -13,18 +13,18 @@ plotZScoresForSurveys<-function(res){
         if (!is.null(sfit$abundance)){
             cat("Plotting zscores for abundance time series.\n")
             afits<-sfit$abundance$fits;
-            plotZScores(afits,label=paste(srv,": ","abundance",sep=''))
+            plotZScoresGG(afits,ylab='abundance',label=srv)
         }
         if (!is.null(sfit$biomass)){
             cat("Plotting zscores for biomass time series.\n")
             afits<-sfit$biomass$fits;
-            plotZScores(afits,label=paste(srv,": ","biomass",sep=''))
+            plotZScoresGG(afits,ylab='biomass',label=srv)
         }
         if (!is.null(sfit$n.at.z)){
             cat("Plotting zscores for size frequencies.\n")
-            plotZScoresForSizeFreqs(sfit$n.at.z,res$mc,label=srv)
+            plotZScoresGG.SizeFreqs(sfit$n.at.z,res$mc,label=srv)
             cat("Plotting ESSs for size frequencies.\n")
-            plotEffNsForSizeFreqs(sfit$n.at.z,res$mc,label=srv)
+            plotEffNsGG(sfit$n.at.z,res$mc,label=srv)
         }
     }
 }

@@ -21,23 +21,27 @@
 #'
 getObjFunValues.AggregateCatch<-function(aggC,
                                          data.type='abundance'){
-    
-    dfr<-NULL;
-    f<-aggC$fits;
-    dfr<-data.frame(
-        data.type=data.type,
-        fit.type=aggC$fit.type,
-        nll.type=f$nll$nll.type,
-        year=-1,
-        sex=f$sx,
-        maturity=f$ms,
-        shell_condition=f$sc,
-        wgt=f$nll$wgt,
-        nll=f$nll$nll,
-        objfun=f$nll$objfun,
-        stringsAsFactors=FALSE);
-    mdfr<-reshape2::melt(dfr,measure.vars=c('wgt','nll','objfun'))
-    return(mdfr);
+    mmdfr<-NULL;
+    for (n in 1:length(aggC$fits)){
+        f<-aggC$fits[[n]];
+        if (!is.null(f)){
+            dfrp<-data.frame(
+                    data.type=data.type,
+                    fit.type=aggC$fit.type,
+                    nll.type=f$nll$nll.type,
+                    year=-1,
+                    sex=f$sx,
+                    maturity=f$ms,
+                    shell_condition=f$sc,
+                    wgt=f$nll$wgt,
+                    nll=f$nll$nll,
+                    objfun=f$nll$objfun,
+                    stringsAsFactors=FALSE);
+            mdfr<-reshape2::melt(dfrp,measure.vars=c('wgt','nll','objfun'));
+            mmdfr<-rbind(mmdfr,mdfr);
+        }
+    }
+    return(mmdfr);
 }
 
 #mdfr.aggC<-getObjFunValues.AggregateCatch(aggC);

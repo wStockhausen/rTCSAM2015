@@ -21,27 +21,26 @@
 #'@export
 #'
 getObjFunValues.CatchData<-function(catchData,catch.type="standard"){
-        dfr<-NULL;
-                mdfr<-NULL;
-                nmctgs<-names(catchData);#names of categories for catchData components
-                for (nmctg in nmctgs){
-                    cat("Processing data category '",nmctg,"'\n",sep='')
-                    if (tolower(nmctg)=='abundance') {
-                        mdfrp<-getObjFunValues.AggregateCatch(catchData[[nmctg]],data.type='abundance');
-                        mdfr<-rbind(mdfr,mdfrp);
-                    } else                        
-                    if (tolower(nmctg)=='biomass') {
-                        mdfrp<-getObjFunValues.AggregateCatch(catchData[[nmctg]],data.type='biomass');
-                        mdfr<-rbind(mdfr,mdfrp);
-                    } else
-                    if (tolower(nmctg)=='n.at.z') {
-                        mdfrp<-getObjFunValues.NatZ(catchData[[nmctg]]);
-                        mdfr<-rbind(mdfr,mdfrp);
-                    } else {
-                        cat("\tSkipping category\n")
-                    }
-                }#categories
-                mdfr<-cbind(list(catch.type=catch.type),mdfr);
+        mdfr<-NULL;
+        nmctgs<-names(catchData);#names of categories for catchData components
+        for (nmctg in nmctgs){
+            cat("Processing data category '",nmctg,"'\n",sep='')
+            if (tolower(nmctg)=='abundance') {
+                mdfrp<-getObjFunValues.AggregateCatch(catchData[[nmctg]],data.type='abundance');
+                mdfr<-rbind(mdfr,mdfrp);
+            } else                        
+            if (tolower(nmctg)=='biomass') {
+                mdfrp<-getObjFunValues.AggregateCatch(catchData[[nmctg]],data.type='biomass');
+                mdfr<-rbind(mdfr,mdfrp);
+            } else
+            if (tolower(nmctg)=='n.at.z') {
+                mdfrp<-getObjFunValues.NatZ(catchData[[nmctg]]);
+                mdfr<-rbind(mdfr,mdfrp);
+            } else {
+                cat("\tSkipping category\n")
+            }
+        }#categories
+        mdfr<-cbind(list(catch.type=catch.type),mdfr);
     return(mdfr);
 }
 

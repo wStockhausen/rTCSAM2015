@@ -5,7 +5,7 @@
 \title{Plot ISSs and ESSs from size frequency fits as time series}
 \usage{
 plotEffNsForSizeFreqs(fits, mc, sxs = c(mc$SXs, "ALL_SEX"), mss = c(mc$MSs,
-  "ALL_MATURITY"), scs = c(mc$SCs, "ALL_SHELL_CONDITION"), label = "")
+  "ALL_MATURITY"), scs = c(mc$SCs, "ALL_SHELL"), label = "")
 }
 \arguments{
 \item{fits}{- list of fits}

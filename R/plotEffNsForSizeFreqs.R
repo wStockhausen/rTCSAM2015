@@ -13,7 +13,7 @@ plotEffNsForSizeFreqs<-function(fits,
                                 mc,
                                 sxs=c(mc$SXs,"ALL_SEX"),
                                 mss=c(mc$MSs,"ALL_MATURITY"),
-                                scs=c(mc$SCs,"ALL_SHELL_CONDITION"),
+                                scs=c(mc$SCs,"ALL_SHELL"),
                                 label=""){
     n<-length(fits);
     yrs<-min(as.numeric(names(fits)),na.rm=TRUE):max(as.numeric(names(fits)),na.rm=TRUE)
@@ -47,7 +47,7 @@ plotEffNsForSizeFreqs<-function(fits,
                     if (substr(x,1,3)!="ANY") {sbt[1]<-x;}
                     if (substr(m,1,3)!="ANY") {sbt[2]<-m;}
                     if (substr(s,1,3)!="ANY") {sbt[3]<-s;}
-                    sbtp<-paste(sbt[sbt!=""],collapse=", ");
+                    sbtp<-tolower(paste(sbt[sbt!=""],collapse=", "));
                     ylim<-c(0,max(isss,esss,na.rm=TRUE));
                     plotXY(yrs,isss,ylim=ylim,xlab='',ylab="Sample Size",line.type=1);
                     plotXY(yrs,esss,overplot=TRUE,clr="darkblue",line.type=1);
