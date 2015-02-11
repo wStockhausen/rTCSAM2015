@@ -17,14 +17,16 @@ plotNM.ByPC<-function(res,dims=c("PC","SEX","MATURITY")){
     
     npc<-m.dims[1];
     mat<-as.vector(t(M[1,,]));
-    for (pc in 2:npc){
-        mat<-rbind(mat,as.vector(t(M[pc,,])));
+    if (npc>1){
+        for (pc in 2:npc){
+            mat<-rbind(mat,as.vector(t(M[pc,,])));
+        }
     }
     
-    plotBars(t(mat),stack=FALSE,groupwidth=80,
-             xloc='C',xlabs=list(rep(m.nms[[3]],m.dims[2]),m.nms[[2]]),xlab='',
-             ylab='Natural Mortality (yr^-1)',
-             plotLegend=TRUE,leg.text=m.nms[[1]]);
+#     plotBars(t(mat),stack=FALSE,groupwidth=80,
+#              xloc='C',xlabs=list(rep(m.nms[[3]],m.dims[2]),m.nms[[2]]),xlab='',
+#              ylab='Natural Mortality (yr^-1)',
+#              plotLegend=TRUE,leg.text=m.nms[[1]]);
     
 #     
 #     barplot(mat,beside=TRUE,legend.text=m.nms[[1]],

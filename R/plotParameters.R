@@ -51,11 +51,11 @@ plotParameters<-function(res,
                     plotParameters.NumberVector(p,label=nm,mcmc=res.mcmc[[nm]]);
                 }
             }
-        }
+        }#nm
         par(old.par);
         old.par<-par(vv.par)
         for (nm in nms){
-            p<-res$mpi$rec[[nm]];
+            p<-g[[nm]];
             if (!is.null(p)){
                 if (!is.null(p[[1]]$finalVals)) {
                     #p is a NumberVector
@@ -65,5 +65,5 @@ plotParameters<-function(res,
             }
         }
         par(old.par)
-    }
+    }#gnm
 }

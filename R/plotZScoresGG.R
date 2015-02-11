@@ -8,7 +8,7 @@
 #'@param ylim - y axis limits (computed internally if NULL)
 #'@param xlab - x axis title
 #'@param ylab - y axis title
-#'@param label - plot label
+#'@param label - title for graph page
 #'@param ggtheme - theme for ggplot2
 #'@param showPlot - flag to print plot immediately
 #'
@@ -90,11 +90,13 @@ plotZScoresGG<-function(afits,
     p1 <- p1 + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd)
     p1 <- p1 + geom_point(position=pd,size=3)
     p1 <- p1 + geom_line(position=pd,size=1,linetype=3,alpha=0.5)
-    p1 <- p1 + geom_line(data=mdfr,position=pd,size=2,linetype=1,alpha=1.0)
+    p1 <- p1 + geom_line(data=mdfr,position=pd,size=1,linetype=1,alpha=1.0)
     p1 <- p1 + xlim(xlim);
-#    if (!is.null(ylab)) p1 <- p1 + ylab(ylab)
+    if (!is.null(ylab)) p1 <- p1 + ylab(ylab)
 #    if (!is.null(ylim)) p1 <- p1 + ylim(ylim)
-    p1 <- p1 + facet_wrap(~sex,nrow=1)
+    p1 <- p1 + facet_wrap(~sex,nrow=1);
+    p1 <- p1 + guides(colour=guide_legend('maturity',order=1),fill=guide_legend('maturity',order=1),shape=guide_legend('shell condition',order=2))
+    p1 <- p1 + ggtitle(label);
     p1 <- p1 + ggtheme;
     
     odfr$val<-log(odfr$val);
@@ -106,11 +108,12 @@ plotZScoresGG<-function(afits,
     p2 <- p2 + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd)
     p2 <- p2 + geom_point(position=pd,size=3)
     p2 <- p2 + geom_line(position=pd,size=1,linetype=3,alpha=0.5)
-    p2 <- p2 + geom_line(data=mdfr,position=pd,size=2,linetype=1,alpha=1)
+    p2 <- p2 + geom_line(data=mdfr,position=pd,size=1,linetype=1,alpha=1)
     p2 <- p2 + xlim(xlim);
     if (!is.null(ylab)) p2 <- p2 + ylab(paste(ylab,'[ln-scale]'))
 #    if (!is.null(ylim)) p2 <- p2 + ylim(ylim)
     p2 <- p2 + facet_wrap(~sex,nrow=1)
+    p2 <- p2 + guides(colour=guide_legend('maturity',order=1),fill=guide_legend('maturity',order=1),shape=guide_legend('shell condition',order=2))
     p2 <- p2 + ggtheme;
     
     ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
@@ -120,6 +123,7 @@ plotZScoresGG<-function(afits,
     p3 <- p3 + ylim(ylim);
     p3 <- p3 + ylab('z-scores')
     p3 <- p3 + facet_wrap(~sex,nrow=1)
+    p3 <- p3 + guides(colour=guide_legend('maturity',order=1),fill=guide_legend('maturity',order=1),shape=guide_legend('shell condition',order=2))
     p3 <- p3 + ggtheme;
 
     if (showPlot) plotMulti.GG(p1,p2,p3,cols=1);

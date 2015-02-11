@@ -89,10 +89,11 @@ plotAggregateCatchDataGG<-function(name=NULL,
     p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd)
     p <- p + geom_point(position=pd,size=3)
     p <- p + geom_line(position=pd,size=1,linetype=3,alpha=0.5)
-    p <- p + geom_line(data=mdfr,position=pd,size=2,linetype=1,alpha=0.5)
+    p <- p + geom_line(data=mdfr,position=pd,size=1,linetype=1,alpha=1.0)
     if (!is.null(ylab)) p <- p + ylab(ylab)
     if (!is.null(ylim)) p <- p + ylim(ylim)
     p <- p + facet_wrap(~sex,ncol=1)
+    p <- p + ggtitle(name)
     if (showPlot) print(p)
     
     return(p)

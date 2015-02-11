@@ -48,7 +48,8 @@ plotModelResults<-function(res=NULL,
     #plot objective function components
     cat("----------------------------------------------\n")
     cat("plotting objective function values.\n")
-    plotObjFunValues(res,variable='objfun',showPlots=FALSE);
+    ps<-plotObjFunValues(res,variable='objfun',showPlots=FALSE);
+    print(ps);
     
     #plot simulated and observed data
     cat("----------------------------------------------\n")
