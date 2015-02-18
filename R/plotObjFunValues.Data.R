@@ -55,12 +55,13 @@ plotObjFunValues.Data<-function(mdfr,
     dfr$maturity[idx]<-'';
     idx<-dfr$shell_condition=='ALL_SHELL_CONDITION';
     dfr$shell_condition[idx]<-'';
+    idx<-dfr$shell_condition=='ALL_SHELL';
+    dfr$shell_condition[idx]<-'';
+    
+    dfr$fac<-paste(dfr$sex,dfr$maturity,dfr$shell_condition,sep=' ')
     
     n<-length(unique(dfr$model));#number of models
     cat("number of models =",n,'\n')
-    if (n==1){
-        #x<-
-    }
     
     cts<-unique(dfr$catch_type);
     
@@ -69,19 +70,19 @@ plotObjFunValues.Data<-function(mdfr,
     
     ps<-list();
     for (ct in cts){
-        p <- ggplot(data=dfr)
-        p <- p + geom_bar(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,fill=paste(sex,maturity,shell_condition,sep=' '),colour=model,line=2),stat="identity",position='dodge',alpha=1.0)
+        p <- ggplot(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,fill=fac,colour='model',line=2))
+        p <- p + geom_bar(stat="identity",position='dodge',alpha=1.0)
+        p <- p + ylim(0,rng[2])
         p <- p + scale_fill_brewer(palette='Set1')
         p <- p + scale_color_brewer(palette='Dark2')
-        p <- p + scale_y_continuous(limits=rng)
         p <- p + labs(x="Data Source",y=ylab);
-        p <- p + guides(fill=guide_legend('Category'));
-        if (n>1) p <- p + guides(colour=guide_legend('Model'));
+        p <- p + guides(fill=guide_legend('Category',order=1));
+        p <- p + guides(colour=guide_legend('Model',order=2));
         p <- p + ggtitle(paste("Data Components:",ct));
         p <- p + facet_wrap(~data_type)
         p <- p + ggtheme;
         p<-p+theme(text = element_text(size=14), 
-                   axis.text.x = element_text(angle=90, vjust=0.5, hjust=1));        
+                   axis.text.x = element_text(angle=25, vjust=1.0, hjust=1));        
         if (showPlots) print(p);
         ps[[ct]]<-p;
     }
