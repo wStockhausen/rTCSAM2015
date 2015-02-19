@@ -6,7 +6,7 @@
 #'@param mdfr - melted dataframe of penalties from call to getObjFunValues.Penalties(...)
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
-#'@param showPlots - flag to show plots
+#'@param showPlot - flag to show plots immediately
 #'
 #'@return ggplot2 object
 #'
@@ -17,7 +17,7 @@
 plotObjFunValues.Penalties<-function(mdfr,
                                      variable='objfun',
                                      ggtheme=theme_grey(),
-                                     showPlots=FALSE){
+                                     showPlot=FALSE){
     if (variable=='wgt'){
         ylab<-'likelihood weight';
     } else
@@ -34,26 +34,17 @@ plotObjFunValues.Penalties<-function(mdfr,
     
     rng<-range(dfr$value,na.rm=TRUE,finite=TRUE);
     ucats<-unique(dfr$category);
-#    ps<-list();
-#    for (ucat in ucats){
-#        dfrp<-dfr[dfr$category==ucat,];
-#        cat("Plotting category '",ucat,"'\n")
-#        print(dfrp)
-#        p <- ggplot(data=dfrp)
         p <- ggplot(data=dfr)
         p <- p + geom_bar(aes(x=paste(name,'[',sprintf('%02d',level),']',sep=''),y=value,fill=model),stat="identity",position='dodge',alpha=1.0)
         p <- p + scale_y_continuous(breaks=pretty(rng),expand=c(0.01,0))
         p <- p + labs(x="Penalty",y=ylab)
         p <- p + guides(fill=guide_legend(''),colour=guide_legend(''))
-#        p <- p + ggtitle(paste('Penalties: ',ucat,sep=''))
         p <- p + ggtitle('Penalties')
         p <- p + facet_wrap(~category)
         p <- p + ggtheme
         p<-p+theme(text = element_text(size=14), 
                    axis.text.x = element_text(angle=90, vjust=0.5, hjust=1))
-        if (showPlots) print(p);
-#        ps[[ucat]]<-p;
-#    }
+        if (showPlot) print(p);
     return(p);
 }
 

@@ -2,12 +2,17 @@
 % Please edit documentation in R/plotDataModelComparisons.R
 \name{plotDataModelComparisons}
 \alias{plotDataModelComparisons}
-\title{Plot model-simulated and observed data for comparison.}
+\title{Plot model-estimated and observed data for comparison.}
 \usage{
-plotDataModelComparisons(res)
+plotDataModelComparisons(res, showPlot = FALSE)
 }
 \arguments{
 \item{res}{- results list object from report file}
+
+\item{showPlot}{- flag to show plot immediately}
+}
+\value{
+multi-level list with ggplot2 objects
 }
 \description{
 

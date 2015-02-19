@@ -6,7 +6,7 @@
 \usage{
 plotAggregateCatchDataGG(name = NULL, obs = NULL, mod = NULL, ci = 0.95,
   pdfType = "normal", logscale = FALSE, xlab = "year", ylab = "",
-  xlim = NULL, ylim = NULL, ggtheme = theme_grey(), showPlot = TRUE)
+  xlim = NULL, ylim = NULL, ggtheme = theme_grey(), showPlot = FALSE)
 }
 \arguments{
 \item{name}{- fishery or survey name}

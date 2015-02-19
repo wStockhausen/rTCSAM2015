@@ -17,7 +17,7 @@ plotModelResults(res = NULL, resfile = NULL, ggtheme = theme_grey(),
 \item{out.pdf}{- file for pdf output (optional)}
 }
 \value{
-results model object.
+multi-level list of ggplot2 objects
 }
 \description{
 Function to plot data and results from a TCSAM2015 model run.

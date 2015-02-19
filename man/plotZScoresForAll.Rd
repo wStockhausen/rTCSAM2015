@@ -4,10 +4,15 @@
 \alias{plotZScoresForAll}
 \title{Plot model fits to data components}
 \usage{
-plotZScoresForAll(res)
+plotZScoresForAll(res, showPlot = FALSE)
 }
 \arguments{
 \item{res}{- model results list object}
+
+\item{showPlot}{- flag to show plots immediately}
+}
+\value{
+list of lists of ggplot objects
 }
 \description{
 

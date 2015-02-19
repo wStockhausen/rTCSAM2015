@@ -7,13 +7,12 @@
 #'@param resfile - report file from a TCSAM2015 model run to source. can be NULL.
 #'@param ggtheme - a ggplot2 theme to use with ggplot2 plots
 #'@param out.pdf - file for pdf output (optional)
-#'@return results model object.
+#'
+#'@return multi-level list of ggplot2 objects
 #'
 #'@details If res is NULL, resfile will be sourced locally to provide res. If
 #'resfile is also NULL, the user will be prompted to identify a 
 #'model report file from which to source the results object. \cr 
-#'
-#'@import ggplot2
 #'
 #'@export
 #'
@@ -40,6 +39,8 @@ plotModelResults<-function(res=NULL,
         old.par<-par(omi=c(0.25,0.25,0.25,0.25))
     }
     
+    ps<-list();
+    
     #plot model parameter estimates and priors (but not std's or MCMC posteriors)
     cat("----------------------------------------------\n")
     cat("plotting model parameters and priors.\n")
@@ -48,18 +49,19 @@ plotModelResults<-function(res=NULL,
     #plot objective function components
     cat("----------------------------------------------\n")
     cat("plotting objective function values.\n")
-    ps<-plotObjFunValues(res,variable='objfun',showPlots=FALSE);
-    print(ps);
+    ps$objfun<-plotObjFunValues(res,variable='objfun',showPlot=FALSE);
+    print(ps$objfun);
     
     #plot simulated and observed data
     cat("----------------------------------------------\n")
     cat("plotting simulated and observed data.\n")
-    plotDataModelComparisons(res);
+    ps$dmcs<-plotDataModelComparisons(res);
     
     #plot model fits (z-scores, size comps, nlls)
     cat("----------------------------------------------\n")
     cat("plotting model fits.\n")
-    plotZScoresForAll(res);
+    ps$zscores<-plotZScoresForAll(res,showPlot=FALSE);
+    print(ps$zscores);
     
     #plot population quantities
     cat("----------------------------------------------\n")
@@ -91,7 +93,7 @@ plotModelResults<-function(res=NULL,
     
     if (!is.null(out.pdf)){dev.off();}
     
-    return(invisible(res));
+    return(ps);
 }
 
 #plotModelResults(res,out.pdf='test.pdf');

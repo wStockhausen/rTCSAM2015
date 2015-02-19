@@ -15,7 +15,7 @@
 #'@param ggtheme - ggplot2 theme to use
 #'@param ncol - number of columns per page for plots
 #'@param nrow - number of rows per page for plots
-#'@param showPlots - flag (T/F) to show plots
+#'@param showPlot - flag (T/F) to show plots immediately
 #'
 #'@return list of ggplot objects comprising the graph pages to plot
 #'
@@ -35,7 +35,7 @@ plotSizeCompsComparisons2<-function(name,
                                     ggtheme=theme_grey(),
                                     ncol=2,
                                     nrow=5,
-                                    showPlots=TRUE){
+                                    showPlot=FALSE){
     
     #redefine dimension variable names for convenience
     varnames<-c("sx","ms","sc","year","size");
@@ -161,15 +161,16 @@ plotSizeCompsComparisons2<-function(name,
             for (ms.scp in ms.scs){
                 p <- p + geom_line(aes(x=size,y=N,colour=ms_sc),data=dfrp[(dfrp$type=='estimated')&(dfrp$ms_sc==ms.scp),],size=1)
             }
-            p <- p + scale_x_continuous(breaks=pretty(uz)) 
-            p <- p + scale_y_continuous(breaks=pretty(rng),limits=rng,expand=c(0.01,0))
+#             p <- p + scale_x_continuous(breaks=pretty(uz)) 
+#             p <- p + scale_y_continuous(breaks=pretty(rng),expand=c(0.01,0))
+            p <- p + ylim(0,rng[2])
             p <- p + geom_hline(yintercept=0,colour='black',size=0.5)
             p <- p + labs(x="Size (mm)",y="proportion ")
-            p <- p + facet_wrap(~year,ncol=2) 
+            p <- p + facet_wrap(~year,ncol=ncol) 
             p <- p + ggtitle(paste(label,': ',name,': ',tolower(sxp),sep=''))
             p <- p + guides(fill=guide_legend(''),colour=guide_legend(''))
             p <- p + ggtheme
-            if (showPlots) print(p);
+            if (showPlot) print(p);
             ctr<-ctr+1;
             ps[[ctr]]<-p
         }

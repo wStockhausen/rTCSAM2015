@@ -5,7 +5,7 @@
 \title{Plot catch data}
 \usage{
 plotCatchData(name = NULL, obs = NULL, mod = NULL, logscale = FALSE,
-  normalize = TRUE, label = "")
+  normalize = TRUE, label = "", showPlot = FALSE)
 }
 \arguments{
 \item{name}{- fishery or survey name}
@@ -17,6 +17,11 @@ plotCatchData(name = NULL, obs = NULL, mod = NULL, logscale = FALSE,
 \item{logscale}{- flag (T/F) to plot on ln-scale}
 
 \item{label}{- base label for plots}
+
+\item{showPlot}{- flag to show plots immediately}
+}
+\value{
+multi-level list of ggplot2 objects
 }
 \description{
 Plot catch data (aggregate catch, catch-at-size) from fisheries or surveys

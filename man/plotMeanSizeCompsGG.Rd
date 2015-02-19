@@ -6,7 +6,7 @@
 \usage{
 plotMeanSizeCompsGG(name, od, md, label = "", disAggBy = c("sx", "ms",
   "sc"), normalize = TRUE, normBy = NULL, ggtheme = theme_grey(),
-  showPlots = TRUE)
+  showPlot = FALSE)
 }
 \arguments{
 \item{name}{- name of size comps source}
@@ -25,7 +25,7 @@ plotMeanSizeCompsGG(name, od, md, label = "", disAggBy = c("sx", "ms",
 
 \item{ggtheme}{- ggplot2 theme to use}
 
-\item{showPlots}{- flag (T/F) to show plots}
+\item{showPlot}{- flag (T/F) to show plots immediately}
 }
 \value{
 list of ggplot objects comprising the graph pages to plot

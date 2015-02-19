@@ -3,28 +3,34 @@
 #'
 #'@param res - model results list object
 #'
+#'@return list by survey of lists with ggplot objects
+#'
 #'@export
 #'
-plotZScoresForSurveys<-function(res){
+plotZScoresForSurveys<-function(res,showPlot=FALSE){
+    ps.srv<-list();
     srvs<-names(res$model.fits$surveys)
     for (srv in srvs){
+        ps<-list();
         cat("Plotting fits for survey '",srv,"'.\n",sep='')
         sfit<-res$model.fits$surveys[[srv]];
         if (!is.null(sfit$abundance)){
             cat("Plotting zscores for abundance time series.\n")
             afits<-sfit$abundance$fits;
-            plotZScoresGG(afits,ylab='abundance',label=srv)
+            ps$abund<-plotZScoresGG(afits,ylab='abundance',label=srv,showPlot=showPlot)
         }
         if (!is.null(sfit$biomass)){
             cat("Plotting zscores for biomass time series.\n")
             afits<-sfit$biomass$fits;
-            plotZScoresGG(afits,ylab='biomass',label=srv)
+            ps$biom<-plotZScoresGG(afits,ylab='biomass',label=srv,showPlot=showPlot)
         }
         if (!is.null(sfit$n.at.z)){
             cat("Plotting zscores for size frequencies.\n")
-            plotZScoresGG.SizeFreqs(sfit$n.at.z,res$mc,label=srv)
+            ps$zfs<-plotZScoresGG.SizeFreqs(sfit$n.at.z,res$mc,label=srv,showPlot=showPlot)
             cat("Plotting ESSs for size frequencies.\n")
-            plotEffNsGG(sfit$n.at.z,res$mc,label=srv)
+            ps$effn<-plotEffNsGG(sfit$n.at.z,res$mc,label=srv,showPlot=showPlot)
         }
+        ps.srv[[srv]]<-ps;
     }
+    return(ps.srv);
 }

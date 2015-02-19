@@ -5,65 +5,71 @@
 #'
 #'@export
 #'
-plotZScoresForFisheries<-function(res){
+plotZScoresForFisheries<-function(res,showPlot=FALSE){
+    ps.fsh<-list();
     fshs<-names(res$model.fits$fisheries)
     for (fsh in fshs){
+        ps.ret<-list();
         fit<-res$model.fits$fisheries[[fsh]]$retained.catch;
         if (!is.null(fit)){
             if (!is.null(fit$abundance)){
                 cat("Plotting retained catch abundance zscores for",fsh,"\n")
                 afits<-fit$abundance$fits;
-                plotZScoresGG(afits,ylab='abundance',label=paste(fsh,": ","retained catch abundance",sep=''));
+                ps.ret$abund<-plotZScoresGG(afits,ylab='abundance',label=paste(fsh,": ","retained catch abundance",sep=''),showPlot=showPlot);
             }
             if (!is.null(fit$biomass)){
                 cat("Plotting retained catch biomass zscores for",fsh,"\n")
                 afits<-fit$biomass$fits;
-                plotZScoresGG(afits,ylab='biomass',label=paste(fsh,": ","retained catch biomass",sep=''));
+                ps.ret$biom<-plotZScoresGG(afits,ylab='biomass',label=paste(fsh,": ","retained catch biomass",sep=''),showPlot=showPlot);
             }
             if (!is.null(fit$n.at.z)){
                 cat("Plotting retained catch size frequency zscores for",fsh,"\n")
-                plotZScoresGG.SizeFreqs(fit$n.at.z,res$mc,label=paste(fsh,": ","retained catch",sep=''))
+                ps.ret$zfs<-plotZScoresGG.SizeFreqs(fit$n.at.z,res$mc,label=paste(fsh,": ","retained catch",sep=''))
                 cat("Plotting ESSs for size frequencies.\n")
-                plotEffNsGG(fit$n.at.z,res$mc,label=paste(fsh,": ","retained catch",sep=''))
+                ps.ret$effn<-plotEffNsGG(fit$n.at.z,res$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
             }
         }
+        ps.dsc<-list();
         fit<-res$model.fits$fisheries[[fsh]]$discard.catch;
         if (!is.null(fit)){
             if (!is.null(fit$abundance)){
                 cat("Plotting discard catch abundance zscores for",fsh,"\n")
                 afits<-fit$abundance$fits;
-                plotZScoresGG(afits,ylab='abundance',label=paste(fsh,": ","discard catch abundance",sep=''));
+                ps.dsc$abund<-plotZScoresGG(afits,ylab='abundance',label=paste(fsh,": ","discard catch abundance",sep=''),showPlot=showPlot);
             }
             if (!is.null(fit$biomass)){
                 cat("PLotting discard catch biomass zscores for",fsh,"\n")
                 afits<-fit$biomass$fits;
-                plotZScoresGG(afits,ylab='biomass',label=paste(fsh,": ","discard catch biomass",sep=''));
+                ps.dsc$biom<-plotZScoresGG(afits,ylab='biomass',label=paste(fsh,": ","discard catch biomass",sep=''),showPlot=showPlot);
             }
             if (!is.null(fit$n.at.z)){
                 cat("Plotting discard catch size frequency zscores for",fsh,"\n")
-                plotZScoresGG.SizeFreqs(fit$n.at.z,res$mc,label=paste(fsh,": ","discard catch",sep=''))
+                ps.dsc$zfs<-plotZScoresGG.SizeFreqs(fit$n.at.z,res$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
                 cat("Plotting ESSs for size frequencies.\n")
-                plotEffNsGG(fit$n.at.z,res$mc,label=paste(fsh,": ","discard catch",sep=''))
+                ps.dsc$effn<-plotEffNsGG(fit$n.at.z,res$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
             }
         }
+        ps.tot<-list();
         fit<-res$model.fits$fisheries[[fsh]]$total.catch;
         if (!is.null(fit)){
             if (!is.null(fit$abundance)){
                 cat("Plotting total catch abundance zscores for",fsh,"\n")
                 afits<-fit$abundance$fits;
-                plotZScoresGG(afits,ylab='abundance',label=paste(fsh,": ","total catch abundance",sep=''));
+                ps.tot$abund<-plotZScoresGG(afits,ylab='abundance',label=paste(fsh,": ","total catch abundance",sep=''),showPlot=showPlot);
             }
             if (!is.null(fit$biomass)){
                 cat("Plotting total catch biomass zscores for",fsh,"\n")
                 afits<-fit$biomass$fits;
-                plotZScoresGG(afits,ylab='biomass',label=paste(fsh,": ","total catch biomass",sep=''));
+                ps.tot$biom<-plotZScoresGG(afits,ylab='biomass',label=paste(fsh,": ","total catch biomass",sep=''),showPlot=showPlot);
             }
             if (!is.null(fit$n.at.z)){
                 cat("Plotting total catch size frequencies for",fsh,"\n")
-                plotZScoresGG.SizeFreqs(fit$n.at.z,res$mc,label=paste(fsh,": ","total catch",sep=''))
+                ps.tot$zfs<-plotZScoresGG.SizeFreqs(fit$n.at.z,res$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
                 cat("Plotting ESSs for size frequencies.\n")
-                plotEffNsGG(fit$n.at.z,res$mc,label=paste(fsh,": ","total catch",sep=''))
+                ps.tot$effn<-plotEffNsGG(fit$n.at.z,res$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
             }
         }
-    }
+        ps.fsh[[fsh]]<-list(ret=ps.ret,dsc=ps.dsc,tot=ps.tot);
+    }#fsh
+    return(ps.fsh)
 }

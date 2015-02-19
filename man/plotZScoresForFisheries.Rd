@@ -4,7 +4,7 @@
 \alias{plotZScoresForFisheries}
 \title{Plot model fits to abundance, biomass and size frequencies as z-scores for fishery data components.}
 \usage{
-plotZScoresForFisheries(res)
+plotZScoresForFisheries(res, showPlot = FALSE)
 }
 \arguments{
 \item{res}{- model results list object}

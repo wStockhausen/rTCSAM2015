@@ -5,7 +5,7 @@
 \title{Plot all objective function values.}
 \usage{
 plotObjFunValues(res, variable = "objfun", ggtheme = ggplot2::theme_grey(),
-  showPlots = FALSE)
+  showPlot = FALSE)
 }
 \arguments{
 \item{res}{- model results object or list of results objects}
@@ -14,7 +14,7 @@ plotObjFunValues(res, variable = "objfun", ggtheme = ggplot2::theme_grey(),
 
 \item{ggtheme}{- a ggplot2 theme}
 
-\item{showPlots}{- flag to show plots}
+\item{showPlot}{- flag to show plots immediately}
 }
 \value{
 list of ggplot2 objects corresponding to penalties, priors, and data plots.

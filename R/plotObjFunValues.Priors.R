@@ -6,7 +6,7 @@
 #'@param mdfr - melted dataframe of prior values from call to getObjFunValues.Priors(...)
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
-#'@param showPlots - flag to show plots
+#'@param showPlot - flag to show plots
 #'
 #'@return list of ggplot2 objects corresponding to different categories of priors.
 #'
@@ -17,7 +17,7 @@
 plotObjFunValues.Priors<-function(mdfr,
                                   variable='objfun',
                                   ggtheme=theme_grey(),
-                                  showPlots=FALSE){
+                                  showPlot=FALSE){
     if (variable=='wgt'){
         ylab<-'likelihood weight';
     } else
@@ -46,7 +46,7 @@ plotObjFunValues.Priors<-function(mdfr,
         p <- p + ggtheme
         p<-p+theme(text = element_text(size=14), 
                    axis.text.x = element_text(angle=90, vjust=0.5, hjust=1))
-        if (showPlots) print(p);
+        if (showPlot) print(p);
         ps[[ucat]]<-p;
     }
     return(ps);

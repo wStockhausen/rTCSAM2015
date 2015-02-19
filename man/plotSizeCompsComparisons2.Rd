@@ -6,7 +6,7 @@
 \usage{
 plotSizeCompsComparisons2(name, od, md, label = "", disAggBy = c("sx", "ms",
   "sc"), normalize = TRUE, normBy = NULL, ggtheme = theme_grey(),
-  ncol = 2, nrow = 5, showPlots = TRUE)
+  ncol = 2, nrow = 5, showPlot = FALSE)
 }
 \arguments{
 \item{name}{- name of size comps source}
@@ -29,7 +29,7 @@ plotSizeCompsComparisons2(name, od, md, label = "", disAggBy = c("sx", "ms",
 
 \item{nrow}{- number of rows per page for plots}
 
-\item{showPlots}{- flag (T/F) to show plots}
+\item{showPlot}{- flag (T/F) to show plots immediately}
 }
 \value{
 list of ggplot objects comprising the graph pages to plot

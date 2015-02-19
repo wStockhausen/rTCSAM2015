@@ -2,18 +2,18 @@ Package: tcsam2015
 Type: Package
 Title: Provides a set of tools to interact with output from a TCSAM2015 model
     run.
-Version: 0.2.2
-Date: 2015-02-17
+Version: 0.2.3
+Date: 2015-02-19
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
 Description: Provides a set of tools to interact with output from a TCSAM2015
     model run.
 License: MIT
 Imports:
-    ggplot2,
-    graphics,
-    reshape2,
-    sqldf,
-    stats,
-    tcltk,
-    wtsUtilities
+    ggplot2 (>= 1.0.0),
+    graphics (>= 3.1.2),
+    reshape2 (>= 1.4.1),
+    sqldf (>= 0.4-10),
+    stats (>= 3.1.2),
+    tcltk (>= 3.1.2),
+    wtsUtilities (>= 1.0.5)

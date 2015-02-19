@@ -6,7 +6,7 @@
 \usage{
 plotZScoresGG(afits, ci = 0.95, xlim = NULL, ylim = NULL,
   xlab = "years", ylab = "z-scores", label = "", ggtheme = theme_grey(),
-  showPlot = TRUE)
+  showPlot = FALSE)
 }
 \arguments{
 \item{afits}{-}
@@ -19,7 +19,7 @@ plotZScoresGG(afits, ci = 0.95, xlim = NULL, ylim = NULL,
 
 \item{ylab}{- y axis title}
 
-\item{label}{- plot label}
+\item{label}{- title for graph page}
 
 \item{ggtheme}{- theme for ggplot2}
 

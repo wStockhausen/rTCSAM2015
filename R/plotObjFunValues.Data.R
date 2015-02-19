@@ -6,7 +6,7 @@
 #'@param mdfr - melted dataframe of data values from call to getObjFunValues.getData(...)
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
-#'@param showPlots - flag to show plots
+#'@param showPlot - flag to show plots
 #'
 #'@return list of ggplot2 objects corresponding to different categories of priors.
 #'
@@ -17,7 +17,7 @@
 plotObjFunValues.Data<-function(mdfr,
                                  variable='objfun',
                                  ggtheme=theme_grey(),
-                                 showPlots=FALSE){
+                                 showPlot=FALSE){
     if (variable=='wgt'){
         fcn<-'average';
         ylab<-'likelihood weight';
@@ -83,7 +83,7 @@ plotObjFunValues.Data<-function(mdfr,
         p <- p + ggtheme;
         p<-p+theme(text = element_text(size=14), 
                    axis.text.x = element_text(angle=25, vjust=1.0, hjust=1));        
-        if (showPlots) print(p);
+        if (showPlot) print(p);
         ps[[ct]]<-p;
     }
 #    if (showPlots) plotMulti.gg(plotlist=ps,cols=1)
