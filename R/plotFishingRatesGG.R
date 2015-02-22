@@ -5,7 +5,7 @@
 #'
 #'@param res - results list from a TCSAM2015 model run
 #'@param ggtheme - a ggplot2 theme
-#'@param showPlots - flag (T/F) to show plots
+#'@param showPlot - flag (T/F) to show plots
 #'
 #'@return list of ggplot objects
 #'
@@ -16,7 +16,7 @@
 #'
 plotFishingRatesGG<-function(res,
                              ggtheme=theme_bw(),
-                             showPlots=TRUE){
+                             showPlot=FALSE){
     dfr<-NULL;
     nFsh<-res$mc$nFsh;
     for (f in 1:nFsh){
@@ -64,7 +64,7 @@ plotFishingRatesGG<-function(res,
         p <- p + guides(colour=guide_legend(''))
         p <- p + facet_wrap(~fishery,ncol=2) 
         p <- p + ggtheme
-        if (showPlots) print(p);
+        if (showPlot) print(p);
         ps[[tolower(xms)]]<-p;
     }
     return(ps)

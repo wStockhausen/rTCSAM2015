@@ -4,14 +4,14 @@
 \alias{plotFishingRatesGG}
 \title{Plot time series of the fully-selected fishery capture rates.}
 \usage{
-plotFishingRatesGG(res, ggtheme = theme_bw(), showPlots = TRUE)
+plotFishingRatesGG(res, ggtheme = theme_bw(), showPlot = FALSE)
 }
 \arguments{
 \item{res}{- results list from a TCSAM2015 model run}
 
 \item{ggtheme}{- a ggplot2 theme}
 
-\item{showPlots}{- flag (T/F) to show plots}
+\item{showPlot}{- flag (T/F) to show plots}
 }
 \value{
 list of ggplot objects

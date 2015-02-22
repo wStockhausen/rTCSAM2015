@@ -4,12 +4,12 @@
 \alias{plotFisheriesResults}
 \title{Plot model results for fisheries.}
 \usage{
-plotFisheriesResults(res, showPlots = TRUE)
+plotFisheriesResults(res, showPlot = FALSE)
 }
 \arguments{
 \item{res}{- results list from a TCSAM2015 model run}
 
-\item{showPlots}{- flag (T/F) to show plots}
+\item{showPlot}{- flag (T/F) to show plots}
 }
 \value{
 nested list of ggplot objects

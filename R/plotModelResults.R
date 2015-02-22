@@ -55,7 +55,8 @@ plotModelResults<-function(res=NULL,
     #plot simulated and observed data
     cat("----------------------------------------------\n")
     cat("plotting simulated and observed data.\n")
-    ps$dmcs<-plotDataModelComparisons(res);
+    ps$dmcs<-plotDataModelComparisons(res,showPlot=FALSE);
+    print(ps$dmcs);
     
     #plot model fits (z-scores, size comps, nlls)
     cat("----------------------------------------------\n")
@@ -76,7 +77,8 @@ plotModelResults<-function(res=NULL,
     #plot fisheries quantities
     cat("----------------------------------------------\n")
     cat("plotting fisheries results.\n")
-    plotFisheriesResults(res);
+    ps$fisheries.results<-plotFisheriesResults(res,showPlot=FALSE);
+    print(ps$fisheries.results);
     
     #TODO: plot surveys quantities
     cat("----------------------------------------------\n")
@@ -93,7 +95,7 @@ plotModelResults<-function(res=NULL,
     
     if (!is.null(out.pdf)){dev.off();}
     
-    return(ps);
+    return(invisible(ps));
 }
 
 #plotModelResults(res,out.pdf='test.pdf');

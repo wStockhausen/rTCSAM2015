@@ -4,12 +4,12 @@
 \alias{plotFisheryYieldsGG}
 \title{Plot time series of the fishery yield (biomass: captured, discards, retained) by fishery and sex.}
 \usage{
-plotFisheryYieldsGG(res, showPlots = TRUE)
+plotFisheryYieldsGG(res, showPlot = TRUE)
 }
 \arguments{
 \item{res}{- results list from a TCSAM2015 model run}
 
-\item{showPlots}{- flag (T/F) to show plots}
+\item{showPlot}{- flag (T/F) to show plots}
 }
 \value{
 list of ggplot objects

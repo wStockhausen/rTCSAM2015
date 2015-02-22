@@ -4,12 +4,12 @@
 \alias{plotFisheryCatchesGG}
 \title{Plot time series of the fishery catch (numbers: captured, discards, retained) by fishery and sex.}
 \usage{
-plotFisheryCatchesGG(res, showPlots = TRUE)
+plotFisheryCatchesGG(res, showPlot = TRUE)
 }
 \arguments{
 \item{res}{- results list from a TCSAM2015 model run}
 
-\item{showPlots}{- flag (T/F) to show plots}
+\item{showPlot}{- flag (T/F) to show plots}
 }
 \value{
 list of ggplot objects

@@ -4,7 +4,7 @@
 #'@description Plot time series of the fishery yield (biomass: captured, discards, retained) by fishery and sex.
 #'
 #'@param res - results list from a TCSAM2015 model run
-#'@param showPlots - flag (T/F) to show plots
+#'@param showPlot - flag (T/F) to show plots
 #'
 #'@return list of ggplot objects
 #'
@@ -14,7 +14,7 @@
 #'@export
 #'
 plotFisheryYieldsGG<-function(res,
-                              showPlots=TRUE){
+                              showPlot=TRUE){
     dfr<-NULL;
     nFsh<-res$mc$nFsh;
     for (f in 1:nFsh){
@@ -49,7 +49,7 @@ plotFisheryYieldsGG<-function(res,
     p <- p + ggtitle('males')
     p <- p + guides(color=guide_legend(''))
     p <- p + facet_wrap(~fishery,ncol=2) 
-    if (showPlots) print(p)
+    if (showPlot) print(p)
     ps$male<-p;
     
     #female catch
@@ -63,7 +63,7 @@ plotFisheryYieldsGG<-function(res,
     p <- p + ggtitle('females')
     p <- p + guides(color=guide_legend(''))
     p <- p + facet_wrap(~fishery,ncol=2) 
-    if (showPlots) print(p)
+    if (showPlot) print(p)
     ps$female<-p;
     
     return(ps)
