@@ -4,10 +4,15 @@
 \alias{plotPopQuants}
 \title{Plot model-estimated population quantities such as natural mortality rates, maturity schedules, etc.}
 \usage{
-plotPopQuants(res)
+plotPopQuants(res, showPlot = TRUE)
 }
 \arguments{
 \item{res}{- model results list from TCSAM 2015 model}
+
+\item{showPlot}{- flag to show plots immediately}
+}
+\value{
+list of list of ggplot2 objects
 }
 \description{
 Function to plot model-estimated population quantities such as

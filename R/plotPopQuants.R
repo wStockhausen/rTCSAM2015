@@ -5,10 +5,15 @@
 #'natural mortality rates, maturity schedules, etc.
 #'
 #'@param res - model results list from TCSAM 2015 model
+#'@param showPlot - flag to show plots immediately
+#'
+#'@return list of list of ggplot2 objects
 #'
 #'@export
 #'
-plotPopQuants<-function(res){
+plotPopQuants<-function(res,showPlot=TRUE){
+    
+    ps<-list();
     
     #plot natural mortality estimates by parameter combination
     cat("plotting estimated natural mortality\n")
@@ -19,6 +24,11 @@ plotPopQuants<-function(res){
     
     cat("plotting growth transition matrices.\n")
     plotPrGrowth.ByPC(res);
+    
+    #plot initial size distribution
+    ps$initialSizeComps<-plotSingleSizeCompGG(res=res,component='pop.quants',
+                                              title='Initial Size Comps',showPlot=FALSE)
+    if (showPlot) print(ps$initialSizeComps)
     
     #plot model recruitment time series
     cat("plotting recruits.\n")
@@ -43,4 +53,5 @@ plotPopQuants<-function(res){
     cat("plotting population biomass components\n")
     plotPopComponents.Biomass(res);
     
+    return(invisible(ps))
 }
