@@ -152,7 +152,7 @@ plotSizeCompsComparisons2<-function(name,
     cat("rng = ",rng,'\n')
     
     ctr<-0;
-    ps<-list();
+    plots<-list();
     for (sxp in sxs){ #loop over sex
         for (pg in 1:npg){ #loop over pages
             dfrp<-dfr[(dfr$year %in% yrs[(pg-1)*mxp+1:mxp])&(dfr$sx==sxp),]
@@ -172,11 +172,11 @@ plotSizeCompsComparisons2<-function(name,
             p <- p + ggtheme
             if (showPlot) print(p);
             ctr<-ctr+1;
-            ps[[ctr]]<-p
+            plots[[ctr]]<-p
         }
     }
-    return(ps)
+    return(invisible(plots));
 }
 
-#ps<-plotSizeCompsComparisons2(name,od,md,disAggBy=c('sx','ms'),normalize=TRUE,normBy='sx')
-#ps<-plotSizeCompsComparisons2(name,NULL,md)
+#plots<-plotSizeCompsComparisons2(name,od,md,disAggBy=c('sx','ms'),normalize=TRUE,normBy='sx')
+#plots<-plotSizeCompsComparisons2(name,NULL,md)

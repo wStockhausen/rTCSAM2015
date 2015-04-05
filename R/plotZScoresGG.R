@@ -63,7 +63,7 @@ plotZScoresGG<-function(afits,
                 cat('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
                 return(NULL)
             }
-            dfrp<-data.frame(type='observed',sex=afit$sx,maturity=afit$ms,sc=afit$sc,
+            dfrp<-data.frame(type='observed',sex=afit$x,maturity=afit$m,sc=afit$s,
                              year=as.numeric(names(obs)),val=obs,lci=lci,uci=uci,zscr=NA);
             odfr<-rbind(odfr,dfrp)
         }
@@ -74,7 +74,7 @@ plotZScoresGG<-function(afits,
         afit<-afits[[n]];
         if (!is.null(afit)){
             nll<-afit$nll;
-            dfrp<-data.frame(type='estimated',sex=afit$sx,maturity=afit$ms,sc=afit$sc,
+            dfrp<-data.frame(type='estimated',sex=afit$x,maturity=afit$m,sc=afit$s,
                              year=as.numeric(names(nll$mod)),val=nll$mod,lci=NA,uci=NA,zscr=nll$zscrs);
             mdfr<-rbind(mdfr,dfrp);
         }
@@ -135,5 +135,5 @@ plotZScoresGG<-function(afits,
 #    if (showPlot) plotMulti.GG(p1,p2,p3,cols=1);
     if (showPlot) {print(p1); print(p2); print(p3);}
     
-    return(list(arscale=p1,lnscale=p2,zscores=p3));
+    return(invisible(list(arscale=p1,lnscale=p2,zscores=p3)));
 }

@@ -21,28 +21,28 @@ plotCatchData<-function(name=NULL,
                         normalize=TRUE,
                         label="",
                         showPlot=FALSE){
-    ps<-list();
+    plots<-list();
     #plot abundance
     if (!is.null(mod$abundance)){
         cat('Plotting abundance using plotAggregateCatchDataGG\n')
-        ps$abundance<-list();
+        plots$abundance<-list();
         od<-obs$abundance;
         md<-mod$abundance;
-        ps$abundance$arscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,showPlot=showPlot);
-        ps$abundance$lnscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,logscale=TRUE,showPlot=showPlot);
+        plots$abundance$arscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,showPlot=showPlot);
+        plots$abundance$lnscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,logscale=TRUE,showPlot=showPlot);
     }
     #plot biomass
     if (!is.null(mod$biomass)){
         cat('Plotting biomass using plotAggregateCatchDataGG\n')
-        ps$biomass<-list();
+        plots$biomass<-list();
         od<-obs$biomass;
         md<-mod$biomass;
-        ps$biomass$arscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,showPlot=showPlot);
-        ps$biomass$lnscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,logscale=TRUE,showPlot=showPlot);
+        plots$biomass$arscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,showPlot=showPlot);
+        plots$biomass$lnscl<-plotAggregateCatchDataGG(name,od,md,pdfType=md$llType,ylab=label,logscale=TRUE,showPlot=showPlot);
     }
     #plot size frequencies
     if (!is.null(mod$nAtZ)){
-        ps$zfs<-list();
+        plots$zfs<-list();
         cat('name  =',name,'\n')
         od<-obs$nAtZ;
         md<-mod$nAtZ;
@@ -50,8 +50,8 @@ plotCatchData<-function(name=NULL,
 #         print(ps0);
 #         ps1<-plotSizeCompsComparisons1(name,od,md,normalize=normalize,label=label,showPlots=FALSE)
 #         print(ps1);
-        ps$zfs$comps<-plotSizeCompsComparisons2(name,od,md,normalize=normalize,label=label,showPlot=showPlot)
-        ps$zfs$mean<-plotMeanSizeCompsGG(name,od,md,normalize=normalize,label=label,showPlot=showPlot);
+        plots$zfs$comps<-plotSizeCompsComparisons2(name,od,md,normalize=normalize,label=label,showPlot=showPlot)
+        plots$zfs$mean<-plotMeanSizeCompsGG(name,od,md,normalize=normalize,label=label,showPlot=showPlot);
     }
-    return(ps);
+    return(invisible(plots));
 }

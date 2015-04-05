@@ -5,7 +5,7 @@
 \title{Create or add to a circle plot of age or size comp.s.}
 \usage{
 plotMDFR.Bubbles(mdfr, x = NULL, y = NULL, value.var = "val",
-  cast.formula = NULL, agg.function = sum, ..., colour = NULL,
+  agg.formula = NULL, agg.function = sum, ..., colour = NULL,
   faceting = NULL, units = "", xlab = "", ylab = "", title = "",
   alpha = 0.5, maxBubbleSize = 6, useColourGradient = FALSE,
   guideTitleColour = "", showPlot = FALSE)
@@ -17,7 +17,7 @@ plotMDFR.Bubbles(mdfr, x = NULL, y = NULL, value.var = "val",
 
 \item{value.var}{- column name for values to aggregate (value.var in cast)/plot as circles}
 
-\item{cast.formula}{- lefthand side of cast'ing formula in reshape2::dcast}
+\item{agg.formula}{- aggregation formula (left-hand side of cast formula)}
 
 \item{agg.function}{- aggregation function (fun.aggregate in cast)}
 

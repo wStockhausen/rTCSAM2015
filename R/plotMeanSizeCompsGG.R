@@ -154,7 +154,7 @@ plotMeanSizeCompsGG<-function(name,
     cat("rng = ",rng,'\n')
     
     ctr<-0;
-    ps<-list();
+    plots<-list();
 #    for (sxp in sxs){ #loop over sex
 #            dfrp<-dfr[(dfr$sx==sxp),]
             dfrp<-dfr;
@@ -174,14 +174,14 @@ plotMeanSizeCompsGG<-function(name,
             p <- p + ggtheme
             if (showPlot) print(p);
             ctr<-ctr+1;
-            ps[[ctr]]<-p
+            plots[[ctr]]<-p
 #    }
-    return(ps)
+    return(invisible(plots));
 }
 
-#ps<-plotMeanSizeCompsGG(name,od,md,normalize=FALSE)
-#ps<-plotMeanSizeCompsGG(name,od,md,disAggBy='sx',normalize=TRUE,normBy=NULL)
-#ps<-plotMeanSizeCompsGG(name,od,md,disAggBy='sx',normalize=TRUE,normBy='sx')
-# ps<-plotMeanSizeCompsGG(name,od,md,normalize=TRUE,normBy=c('sx','ms'))
-# ps<-plotMeanSizeCompsGG(name,od,md,normalize=TRUE,normBy=c('sx','ms','sc'))
-#ps<-plotMeanSizeCompsGG(name,NULL,md)
+#plots<-plotMeanSizeCompsGG(name,od,md,normalize=FALSE)
+#plots<-plotMeanSizeCompsGG(name,od,md,disAggBy='sx',normalize=TRUE,normBy=NULL)
+#plots<-plotMeanSizeCompsGG(name,od,md,disAggBy='sx',normalize=TRUE,normBy='sx')
+# plots<-plotMeanSizeCompsGG(name,od,md,normalize=TRUE,normBy=c('sx','ms'))
+# plots<-plotMeanSizeCompsGG(name,od,md,normalize=TRUE,normBy=c('sx','ms','sc'))
+#plots<-plotMeanSizeCompsGG(name,NULL,md)

@@ -4,54 +4,54 @@
 #'@description Function to plot model-estimated population quantities such as 
 #'natural mortality rates, maturity schedules, etc.
 #'
-#'@param res - model results list from TCSAM 2015 model
+#'@param repObj - model report list from TCSAM 2015 model
 #'@param showPlot - flag to show plots immediately
 #'
 #'@return list of list of ggplot2 objects
 #'
 #'@export
 #'
-plotPopQuants<-function(res,showPlot=TRUE){
+plotPopQuants<-function(repObj,showPlot=TRUE){
     
-    ps<-list();
+    plots<-list();
     
     #plot natural mortality estimates by parameter combination
     cat("plotting estimated natural mortality\n")
-    plotNM.ByPC(res);
+    plotNM.ByPC(repObj);
     
     cat("pplotting maturity schedules.\n")
-    plotPrMaturity.ByPC(res);
+    plotPrMaturity.ByPC(repObj);
     
     cat("plotting growth transition matrices.\n")
-    plotPrGrowth.ByPC(res);
+    plotPrGrowth.ByPC(repObj);
     
     #plot initial size distribution
-    ps$initialSizeComps<-plotSingleSizeCompGG(res=res,component='pop.quants',
+    plots$initialSizeComps<-plotSingleSizeCompGG(repObj=repObj,component='pop.quants',
                                               title='Initial Size Comps',showPlot=FALSE)
-    if (showPlot) print(ps$initialSizeComps)
+    if (showPlot) print(plots$initialSizeComps)
     
     #plot model recruitment time series
     cat("plotting recruits.\n")
-    plotRecruits(res,ylab="recruitment (millions)");
-    plotRecruits(res,logscale=TRUE,ylab="recruitment (millions) [ln-scale]");
+    plotRecruits(repObj,ylab="recruitment (millions)");
+    plotRecruits(repObj,logscale=TRUE,ylab="recruitment (millions) [ln-scale]");
     
     cat("plotting recruitment sex fraction time series.\n")
-    plotRecruits.SexRatio(res);
+    plotRecruits.SexRatio(repObj);
     
     #TODO: plot recruitment size distributions
     cat("TODO: plotting recruitment size distributions.\n")
     
     #plot spawning biomass
     cat("plotting spawning biomass.\n")
-    plotSpB(res);
+    plotSpB(repObj);
     
     #plot population abundance components
     cat("plotting population abundance components\n")
-    plotPopComponents.Abundance(res);
+    plotPopComponents.Abundance(repObj);
     
     #plot population biomass components
     cat("plotting population biomass components\n")
-    plotPopComponents.Biomass(res);
+    plotPopComponents.Biomass(repObj);
     
-    return(invisible(ps))
+    return(invisible(plots))
 }

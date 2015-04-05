@@ -3,33 +3,33 @@
 #'
 #'@description Function to plot model results for fisheries.
 #'
-#'@param res - results list from a TCSAM2015 model run
+#'@param repObj - report list from a TCSAM2015 model run
 #'@param showPlot - flag (T/F) to show plots
 #'
 #'@return nested list of ggplot objects
 #'
 #'@export
 #'
-plotFisheriesResults<-function(res,
+plotFisheriesResults<-function(repObj,
                                showPlot=FALSE){
-    ps<-list();
+    plots<-list();
     #plot fishing rates
     cat("plotting fishing rates.\n")
-    ps$fisheries.rates<-plotFishingRatesGG(res,showPlot=showPlot);
+    plots$fisheries.rates<-plotFishingRatesGG(repObj,showPlot=showPlot);
     
     #plot fishery catches
     cat("plotting fishery catches.\n")
-    ps$fisheries.catch<-plotFisheryCatchesGG(res,showPlot=showPlot);
+    plots$fisheries.catch<-plotFisheryCatchesGG(repObj,showPlot=showPlot);
     
     #plot fishery catches
     cat("plotting fishery yields.\n")
-    ps$fisheries.yield<-plotFisheryYieldsGG(res,showPlot=showPlot);
+    plots$fisheries.yield<-plotFisheryYieldsGG(repObj,showPlot=showPlot);
     
     #plot exploitation rates
     cat("plotting exploitation rates.\n")
-    ps$fisheries.explrates<-plotExploitationRatesGG(res,showPlot=showPlot);
+    plots$fisheries.explrates<-plotExploitationRatesGG(repObj,showPlot=showPlot);
     
-    return(invisible(ps))
+    return(invisible(plots))
 }
 
-#ps<-plotFisheriesResults(res)
+#plots<-plotFisheriesResults(repObj)

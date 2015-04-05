@@ -4,10 +4,10 @@
 \alias{plotFisheriesResults}
 \title{Plot model results for fisheries.}
 \usage{
-plotFisheriesResults(res, showPlot = FALSE)
+plotFisheriesResults(repObj, showPlot = FALSE)
 }
 \arguments{
-\item{res}{- results list from a TCSAM2015 model run}
+\item{repObj}{- report list from a TCSAM2015 model run}
 
 \item{showPlot}{- flag (T/F) to show plots}
 }

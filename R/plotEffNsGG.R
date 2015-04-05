@@ -22,15 +22,19 @@
 #' 
 plotEffNsGG<-function(fits,
                         mc,
-                        sxs=c(mc$SXs,"ALL_SEX"),
-                        mss=c(mc$MSs,"ALL_MATURITY"),
-                        scs=c(mc$SCs,"ALL_SHELL"),
+                        sxs=c(mc$dims$x$nms,"ALL_SEX"),
+                        mss=c(mc$dims$m$nms,"ALL_MATURITY"),
+                        scs=c(mc$dims$s$nms,"ALL_SHELL"),
                         label="",
                         ggtheme=theme_grey(),
                         showPlot=TRUE){
+    
+    sxs<-tolower(sxs); #use lower case for all indices
+    mss<-tolower(mss);
+    scs<-tolower(scs);
+    
     n<-length(fits);
     yrs<-min(as.numeric(names(fits)),na.rm=TRUE):max(as.numeric(names(fits)),na.rm=TRUE)
-    zbs<-as.vector(mc$zBs);
     
     dms<-c(length(sxs),length(mss),length(scs),length(yrs));
     dmnames<-list(sx=sxs,ms=mss,sc=scs,yr=yrs);
@@ -40,9 +44,9 @@ plotEffNsGG<-function(fits,
     yrsp<-names(fits);
     for (i in 1:(n-1)){
         fit<-fits[[i]];
-        x<-fit$sx;
-        m<-fit$ms;
-        s<-fit$sc;
+        x<-tolower(fit$x);
+        m<-tolower(fit$m);
+        s<-tolower(fit$s);
         y<-yrsp[i];
         ISSs[x,m,s,y]<-fit$fit$ss;
         ESSs[x,m,s,y]<-fit$fit$effN;
@@ -50,7 +54,7 @@ plotEffNsGG<-function(fits,
     
     idfr<-reshape2::melt(ISSs,value.name='n')
     edfr<-reshape2::melt(ESSs,value.name='n')
-    ps<-list();
+    plots<-list();
     for (x in sxs){
         for (m in mss){
             for (s in scs){
@@ -80,11 +84,11 @@ plotEffNsGG<-function(fits,
                     p <- p + ggtitle(sbtp);
                     p <- p + guides(color=guide_legend(override.aes=list(alpha=1.0,size=6)));
                     
-                    ps[[sbtp]]<-p;
+                    plots[[sbtp]]<-p;
                 }
             }
         }
     }
-    if (showPlot) plotMulti.GG(plotlist=ps,cols=1);
-    return(ps)
+    if (showPlot) plotMulti.GG(plotlist=plots,cols=1);
+    return(invisible(plots));
 }

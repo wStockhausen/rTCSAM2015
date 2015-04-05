@@ -6,7 +6,7 @@
 #'@param mdfr - melted dataframe
 #'@param x - column name for x-axis values
 #'@param value.var - column name for values to aggregate (value.var in cast)/plot on y-axis
-#'@param cast.formula - lefthand side of cast'ing formula in reshape2::dcast
+#'@param agg.formula - aggregation formula (left-hand side of cast formula)
 #'@param agg.function - aggregation function (fun.aggregate in cast)
 #'@param ... - further arguments passed to aggregating function
 #'@param colour - column name to which colour aesthetic is mapped
@@ -35,7 +35,7 @@
 plotMDFR.XY<-function(mdfr,
                        x=NULL,
                        value.var='val',
-                       cast.formula=NULL,
+                       agg.formula=NULL,
                        agg.function=sum,
                        ...,
                        colour=NULL,
@@ -55,20 +55,28 @@ plotMDFR.XY<-function(mdfr,
                        showPlot=FALSE
                        ){
     #cast melted dataframe
-    form<-paste(cast.formula,".",sep="~")
-    ddfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+    if (!is.null(agg.formula)){
+        #aggregate using formula
+        form<-paste(agg.formula,".",sep="~")
+        mdfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+    } else {
+        #rename value.var column to '.'
+        nms<-colnames(mdfr);
+        nms[nms==value.var]<-'.';
+        colnames(mdfr)<-nms;
+    }
     
     #setp up labels
     ylb<-ylab;
     if (units!='') ylb<-paste(ylab," (",units,")",sep='')
     if (lnscale) {
-        ddfr[['.']]<-log(ddfr[['.']]);
+        mdfr[['.']]<-log(mdfr[['.']]);
         ylb<-paste(ylab," (ln-scale)",sep='')
         if (units!='') ylb<-paste(ylab," (",units,", ln-scale)",sep='')
     }
     
     #plot resulting dataframe
-    p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill,linetype=linetype,shape=shape),data=ddfr);
+    p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill,linetype=linetype,shape=shape),data=mdfr);
     p <- p + geom_point();
     p <- p + geom_line();
     if (!is.null(xlab))     p <- p + xlab(xlab);

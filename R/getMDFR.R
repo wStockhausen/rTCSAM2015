@@ -19,9 +19,11 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL){
         if (class(tcsam)=='tcsam2015'){
             #tcsam is a tcsam2015 model object
             obj<-getObj(path,tcsam);
-            mdfr<-melt(obj,value.name='val',as.is=TRUE);
-            mdfr$model<-'tcsam';
-            mdfr$modeltype<-'tcsam';
+            if (!is.null(obj)){
+                mdfr<-melt(obj,value.name='val',as.is=TRUE);
+                mdfr$model<-'tcsam';
+                mdfr$modeltype<-'tcsam';
+            }
         } else if (class(tcsam)=='list'){
             #tcsam is a list of tcsam2015 model objects
             nl<-length(tcsam);
@@ -45,10 +47,12 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL){
         if (class(rsim)=='rsimTCSAM'){
             #rsim is a rsimTCSAM model object
             obj<-getObj(path,rsim);
-            mdfrp<-melt(obj,value.name='val',as.is=TRUE);
-            mdfrp$model<-'rsim';
-            mdfr$modeltype<-'rsim';
-            mdfr<-rbind(mdfr,mdfrp)
+            if (!is.null(obj)){
+                mdfrp<-melt(obj,value.name='val',as.is=TRUE);
+                mdfrp$model<-'rsim';
+                mdfrp$modeltype<-'rsim';
+                mdfr<-rbind(mdfr,mdfrp)
+            }
         } else if (class(rsim)=='list'){
             #rsim is a list of rsimTCSAM model objects
             nl<-length(rsim);
@@ -66,6 +70,9 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL){
             cat("Returning NULL.\n")
             return(NULL);
         }
+    }
+    
+    if (!is.null(mdfr)){
         cns<-colnames(mdfr);
         chks<-c('y','z','zp');
         for (chk in chks){
@@ -73,7 +80,6 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL){
             if (length(idx)>0) mdfr[,chk]<-as.numeric(mdfr[,chk]);
         }
     }
-    
     return(mdfr)
 }
 

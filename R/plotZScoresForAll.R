@@ -15,5 +15,5 @@ plotZScoresForAll<-function(res,showPlot=FALSE){
     #plot z-scores for fits to fishery catch abundance and biomass
     ps.fsh<-plotZScoresForFisheries(res,showPlot=showPlot);
     
-    return(list(surveys=ps.srv,fisheries=ps.fsh))
+    return(invisible(list(surveys=ps.srv,fisheries=ps.fsh)))
 }

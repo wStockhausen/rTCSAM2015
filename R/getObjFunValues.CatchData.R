@@ -20,7 +20,7 @@
 #'
 #'@export
 #'
-getObjFunValues.CatchData<-function(catchData,catch.type="standard"){
+getObjFunValues.CatchData<-function(catchData,catch.type="total.catch"){
         mdfr<-NULL;
         nmctgs<-names(catchData);#names of categories for catchData components
         for (nmctg in nmctgs){

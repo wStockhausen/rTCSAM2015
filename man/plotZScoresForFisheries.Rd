@@ -9,6 +9,9 @@ plotZScoresForFisheries(res, showPlot = FALSE)
 \arguments{
 \item{res}{- model results list object}
 }
+\value{
+list by fishery of lists with ggplot objects
+}
 \description{
 
 }

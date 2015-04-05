@@ -6,7 +6,7 @@
 #'@param x - column name for x-axis values
 #'@param y - column name for y-axis values
 #'@param value.var - column name for values to aggregate (value.var in cast)/plot as circles
-#'@param cast.formula - lefthand side of cast'ing formula in reshape2::dcast
+#'@param agg.formula - aggregation formula (left-hand side of cast formula)
 #'@param agg.function - aggregation function (fun.aggregate in cast)
 #'@param ... - further arguments passed to aggregating function
 #'@param colour - column name to which colour aesthetic is mapped
@@ -33,7 +33,7 @@ plotMDFR.Bubbles<-function(mdfr,
                            x=NULL,
                            y=NULL,
                            value.var='val',
-                           cast.formula=NULL,
+                           agg.formula=NULL,
                            agg.function=sum,
                            ...,
                            colour=NULL,
@@ -49,11 +49,19 @@ plotMDFR.Bubbles<-function(mdfr,
                            showPlot=FALSE
                            ){
     #cast melted dataframe
-    form<-paste(cast.formula,".",sep="~")
-    ddfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);    
+    if (!is.null(agg.formula)){
+        #aggregate using formula
+        form<-paste(agg.formula,".",sep="~")
+        mdfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+    } else {
+        #rename value.var column to '.'
+        nms<-colnames(mdfr);
+        nms[nms==value.var]<-'.';
+        colnames(mdfr)<-nms;
+    }
   
     #plot resulting dataframe
-    p <- ggplot(aes_string(x=x,y=y,size='.',colour=colour),data=ddfr);
+    p <- ggplot(aes_string(x=x,y=y,size='.',colour=colour),data=mdfr);
     p <- p + scale_size_area(max_size=maxBubbleSize);
     if (useColourGradient) p <- p + scale_color_gradientn(colours=wtsUtilities::createColorPalette('jet',100,alpha=alpha))
     p <- p + geom_point(alpha=alpha);

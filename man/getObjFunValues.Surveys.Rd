@@ -4,12 +4,12 @@
 \alias{getObjFunValues.Surveys}
 \title{Get survey components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.Surveys(res, mdl = NULL)
+getObjFunValues.Surveys(repObj, model = NULL)
 }
 \arguments{
-\item{res}{- tcsam2015 model results object or list of such}
+\item{repObj}{- tcsam2015 model report object or list of such}
 
-\item{mdl}{- name to associate with model results object}
+\item{model}{- name to associate with model report object}
 }
 \value{
 a melted dataframe
@@ -20,10 +20,10 @@ Function to get survey components in the objective function as a melted datafram
 \details{
 
 
-If res is a list of tcsam2015 model results objects, then the function
-is called recursively for each object, with the associated list component name used as
-mdl. If res is a tcsam2015 model results object and mdl is NULL (the default), then
-res$mc$configName is used as the model name.
+If repObj is a list of tcsam2015 model report objects, then the function
+is called recursively for each object, with the associated list component name used as the
+model. If repObj is a tcsam2015 model report object and model is NULL (the default), then
+repObj$mc$configName is used as the model name.
 
 The returned dataframe has columns named
 "model", "source.type", "source.name", "catch.type", "data.type",

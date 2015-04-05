@@ -4,10 +4,10 @@
 \alias{plotPopQuants}
 \title{Plot model-estimated population quantities such as natural mortality rates, maturity schedules, etc.}
 \usage{
-plotPopQuants(res, showPlot = TRUE)
+plotPopQuants(repObj, showPlot = TRUE)
 }
 \arguments{
-\item{res}{- model results list from TCSAM 2015 model}
+\item{repObj}{- model report list from TCSAM 2015 model}
 
 \item{showPlot}{- flag to show plots immediately}
 }

@@ -64,11 +64,11 @@ plotAggregateCatchDataGG<-function(name=NULL,
             odfr$lci<-exp(qnorm(ci[1],mean=log(odfr$val),sd=sd));
             odfr$uci<-exp(qnorm(ci[2],mean=log(odfr$val),sd=sd));
         }
-        odfr$facs<-paste(odfr$sex,odfr$maturity,odfr$`shell condition`)
+        odfr$facs<-paste(odfr$x,odfr$m,odfr$s)
         #find factor combinations which are NOT all 0's
-        tots<-dcast(odfr,sex+maturity+`shell condition`~.,value.var='val',fun.aggregate=sum,drop=TRUE)
+        tots<-dcast(odfr,x+m+s~.,value.var='val',fun.aggregate=sum,drop=TRUE)
         tots<-tots[!(tots$`.`==0),]
-        facs<-paste(tots$sex,tots$maturity,tots$`shell condition`)
+        facs<-paste(tots$x,tots$m,tots$s)
         odfr<-odfr[odfr$facs %in% facs,]
         if (logscale){
             odfr$val<-log(odfr$val);
@@ -81,22 +81,22 @@ plotAggregateCatchDataGG<-function(name=NULL,
     mdfr<-NULL;
     if (!is.null(mod)){
         mdfr<-melt(mod$data,value.name='val');
-        mdfr$facs<-paste(mdfr$sex,mdfr$maturity,mdfr$`shell condition`)
+        mdfr$facs<-paste(mdfr$x,mdfr$m,mdfr$s)
         mdfr<-mdfr[mdfr$facs %in% facs,]
         if (logscale){mdfr$val<-log(mdfr$val);}
     }
     
     pd<-position_dodge(0.2)
-    p <- ggplot(aes_string(x='year',y='val',colour='maturity',shape='`shell condition`',fill='maturity'),data=odfr)
+    p <- ggplot(aes_string(x='y',y='val',colour='m',shape='s',fill='m'),data=odfr)
     p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd)
     p <- p + geom_point(position=pd,size=3)
     p <- p + geom_line(position=pd,size=1,linetype=3,alpha=0.5)
     p <- p + geom_line(data=mdfr,position=pd,size=1,linetype=1,alpha=1.0)
     if (!is.null(ylab)) {p <- p + ylab(ylab);}
     if (!is.null(ylim)) {p <- p + ylim(ylim);}
-    p <- p + facet_wrap(~sex,ncol=1)
+    p <- p + facet_wrap(~x,ncol=1)
     p <- p + ggtitle(name)
     if (showPlot) print(p)
     
-    return(p)
+    return(invisible(p));
 }

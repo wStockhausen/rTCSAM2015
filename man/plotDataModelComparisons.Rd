@@ -4,10 +4,10 @@
 \alias{plotDataModelComparisons}
 \title{Plot model-estimated and observed data for comparison.}
 \usage{
-plotDataModelComparisons(res, showPlot = FALSE)
+plotDataModelComparisons(repObj, showPlot = FALSE)
 }
 \arguments{
-\item{res}{- results list object from report file}
+\item{repObj}{- results list object from report file}
 
 \item{showPlot}{- flag to show plot immediately}
 }

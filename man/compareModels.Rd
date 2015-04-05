@@ -2,27 +2,31 @@
 % Please edit documentation in R/compareModels.R
 \name{compareModels}
 \alias{compareModels}
-\title{Compare TCSAM2015 and rsimTCAM model runs.}
+\title{Compare model output from TCSAM2015 and/or rsimTCSAM model runs.}
 \usage{
-compareModels(tcsam = NULL, rsim = NULL, pdf = "compareModels.pdf",
-  width = 8, height = 6)
+compareModels(tcsam = NULL, rsim = NULL, ggtheme = theme_grey(),
+  showPlot = TRUE, pdf = NULL, width = 8, height = 6)
 }
 \arguments{
 \item{tcsam}{- single TCSAM2015 model results object, or named list of such}
 
 \item{rsim}{- single rsimTCSAM results object, or named list of such}
 
-\item{pdf}{- name of pdf file to record plot output to}
+\item{ggtheme}{- a ggplot2 theme to use with ggplot2 plots}
+
+\item{showPlot}{- flag to show plots immediately}
+
+\item{pdf}{- filename for pdf output (optional)}
 
 \item{width}{- pdf page width (in inches)}
 
 \item{height}{- pdf page width (in inches)}
 }
 \value{
-list of ggplot2 objects
+multi-level list of ggplot2 objects
 }
 \description{
-Function to compare TCSAM2015 and rsimTCAM model runs.
+Function to compare model output from TCSAM2015 and/or rsimTCSAM model runs.
 }
 \details{
 

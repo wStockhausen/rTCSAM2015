@@ -4,7 +4,7 @@
 \alias{plotMDFR.XY}
 \title{Plot melted dataframe using an xy-plot format.}
 \usage{
-plotMDFR.XY(mdfr, x = NULL, value.var = "val", cast.formula = NULL,
+plotMDFR.XY(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
   agg.function = sum, ..., colour = NULL, fill = NULL, linetype = NULL,
   shape = NULL, faceting = NULL, xlab = "", ylab = "", units = "",
   lnscale = FALSE, title = "", guideTitleColour = NULL,
@@ -18,7 +18,7 @@ plotMDFR.XY(mdfr, x = NULL, value.var = "val", cast.formula = NULL,
 
 \item{value.var}{- column name for values to aggregate (value.var in cast)/plot on y-axis}
 
-\item{cast.formula}{- lefthand side of cast'ing formula in reshape2::dcast}
+\item{agg.formula}{- aggregation formula (left-hand side of cast formula)}
 
 \item{agg.function}{- aggregation function (fun.aggregate in cast)}
 

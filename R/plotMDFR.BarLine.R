@@ -55,21 +55,29 @@ plotMDFR.BarLine<-function(mdfr,
                            showPlot=TRUE
                            ){
     #cast melted dataframe
-    form<-paste(agg.formula,".",sep="~")
-    ddfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+    if (!is.null(agg.formula)){
+        #aggregate using formula
+        form<-paste(agg.formula,".",sep="~")
+        mdfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+    } else {
+        #rename value.var column to '.'
+        nms<-colnames(mdfr);
+        nms[nms==value.var]<-'.';
+        colnames(mdfr)<-nms;
+    }
     
     #setp up labels
     ylb<-ylab;
     if (units!='') ylb<-paste(ylab," (",units,")",sep='')
     if (lnscale) {
-        ddfr[['.']]<-log(ddfr[['.']]);
+        mdfr[['.']]<-log(mdfr[['.']]);
         ylb<-paste(ylab," (ln-scale)",sep='')
         if (units!='') ylb<-paste(ylab," (",units,", ln-scale)",sep='')
     }
     
     #plot resulting dataframe
-    p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill,linetype=linetype,shape=shape),data=ddfr);
-    p <- p + geom_bar(aes(x=x,y='.',fill=ms_sc),data=ddfr[ddfr$modeltype=='rsim'],stat="identity",position='identity',alpha=0.5);
+    p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill,linetype=linetype,shape=shape),data=mdfr);
+    p <- p + geom_bar(aes(x=x,y='.',fill=ms_sc),data=mdfr[mdfr$modeltype=='rsim'],stat="identity",position='identity',alpha=0.5);
     p <- p + geom_line(aes(x=x,y='.',colour=ms_sc),data=dfrp[(dfrp$modeltype=='tcsam'),],size=1);
     print(p);
     if (!is.null(xlab))     p <- p + xlab(xlab);

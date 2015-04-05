@@ -4,29 +4,40 @@
 \alias{plotModelResults}
 \title{Plot TCSAM 2015 model output.}
 \usage{
-plotModelResults(res = NULL, resfile = NULL, ggtheme = theme_grey(),
-  out.pdf = NULL)
+plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
+  objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL)
 }
 \arguments{
-\item{res}{- list object based on sourcing a TCSAM2015 model report file. can be NULL.}
+\item{repObj}{- list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.}
 
-\item{resfile}{- report file from a TCSAM2015 model run to source. can be NULL.}
+\item{prsObj}{- list object based on reading a TCSAM2015 active parameters csv file. can be NULL or a filename.}
+
+\item{stdObj}{- list object based on reading a TCSAM2015 std file. can be NULL or a filename.}
+
+\item{objList}{- list with optional elements repObj, prsObj, stdObj (an optional way to provide the Obj's)}
 
 \item{ggtheme}{- a ggplot2 theme to use with ggplot2 plots}
 
-\item{out.pdf}{- file for pdf output (optional)}
+\item{showPlot}{- flag to show plots immediately}
+
+\item{pdf}{- filename for pdf output (optional)}
 }
 \value{
-multi-level list of ggplot2 objects
+list with possible elements:\cr
+* repObj - TCSAM2015 report object (if report file was read)
+* prsObj - TCSAM2015 parameters dataframe (if parameters csv file was read)
+* stdObj - TCSAM2015 std devs dataframe (if std file was read)
+* plots: multi-level list of ggplot2 objects
 }
 \description{
-Function to plot data and results from a TCSAM2015 model run.
+Function to plot data and repObjults from a TCSAM2015 model run.
 }
 \details{
 
 
-If res is NULL, resfile will be sourced locally to provide res. If
-resfile is also NULL, the user will be prompted to identify a
-model report file from which to source the results object. \cr
+If repObj is a character string (the path to a report file), the file will be read in.
+If repObj is NULL, the user will be prompted to identify a
+model report file from which to source the repObjults object. Similarly for prsObj and stdObj.
+Any of these objects obtained by reading a file will be an element in the returned list.
 }
 
