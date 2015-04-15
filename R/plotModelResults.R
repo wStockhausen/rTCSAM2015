@@ -59,13 +59,13 @@ plotModelResults<-function(repObj=NULL,
     returnPRS<-FALSE;
     if (is.null(prsObj)||is.character(prsObj)){
         prsObj<-readParamsCSV(prsObj);
-        returnPRS<-TRUE;
+        if (!is.null(prsObj)) returnPRS<-TRUE;
     }
     
     returnSTD<-FALSE;
     if (is.null(stdObj)||is.character(stdObj)){
         stdObj<-readStdFile(stdObj);
-        returnSTD<-TRUE;
+        if (!is.null(stdObj)) returnSTD<-TRUE;
     }
     
     if (!is.null(pdf)){

@@ -70,10 +70,14 @@ plotAggregateCatchDataGG<-function(name=NULL,
         tots<-tots[!(tots$`.`==0),]
         facs<-paste(tots$x,tots$m,tots$s)
         odfr<-odfr[odfr$facs %in% facs,]
+        cat("facs =",paste("'",facs,"'",sep="",collapse=", "),"\n")
+        cat("nrow(odfr) = ",nrow(odfr),'\n')
+        cat("is.null(odfr$uci) = ",is.null(odfr$uci),'\n')
+        cat("is.null(odfr$lci) = ",is.null(odfr$lci),'\n')
         if (logscale){
             odfr$val<-log(odfr$val);
-            odfr$uci<-log(odfr$uci);
-            odfr$lci<-log(odfr$lci);
+            if (!is.null(odfr$uci)) {odfr$uci<-log(odfr$uci);}
+            if (!is.null(odfr$lci)) {odfr$lci<-log(odfr$lci);}
         }
     }
     
@@ -88,7 +92,7 @@ plotAggregateCatchDataGG<-function(name=NULL,
     
     pd<-position_dodge(0.2)
     p <- ggplot(aes_string(x='y',y='val',colour='m',shape='s',fill='m'),data=odfr)
-    p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd)
+    if (!is.null(odfr$uci)) {p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd);}
     p <- p + geom_point(position=pd,size=3)
     p <- p + geom_line(position=pd,size=1,linetype=3,alpha=0.5)
     p <- p + geom_line(data=mdfr,position=pd,size=1,linetype=1,alpha=1.0)

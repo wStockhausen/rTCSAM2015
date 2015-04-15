@@ -79,8 +79,8 @@ plotEffNsGG<-function(fits,
                     p <- ggplot(aes_string(x='yr',y='n',colour='type'),data=dfrp);
                     p <- p + geom_point();
                     p <- p + geom_line();
-                    p <- p + xlab('sample size');
-                    p <- p + ylab('year');
+                    p <- p + ylab('sample size');
+                    p <- p + xlab('year');
                     p <- p + ggtitle(sbtp);
                     p <- p + guides(color=guide_legend(override.aes=list(alpha=1.0,size=6)));
                     

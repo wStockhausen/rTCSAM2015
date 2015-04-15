@@ -40,7 +40,7 @@ checkHandlingMortalityConsistency<-function(tcsam=NULL,
     #extract handling mortality rates
     path<-'mp/F_list/hm_fy';
     hm<-getMDFR(path,tcsam,rsim);
-    hm$f<-gsub("_"," ",mdfr$f,fixed=TRUE);#replace '_'s in fishery names with spaces
+    hm$f<-gsub("_"," ",hm$f,fixed=TRUE);#replace '_'s in fishery names with spaces
     hm<-hm[hm$val>0,];#include only where non-zero
         
     p <- ggplot(dm,aes(x=y,y=ratio,colour=f,shape=model));

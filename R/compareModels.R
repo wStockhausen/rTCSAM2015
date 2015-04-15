@@ -26,7 +26,7 @@ compareModels<-function(tcsam=NULL,
                         height=6){
     
     if (!is.null(pdf)){
-        pdf(file=pdf,width=width,height=eght);
+        pdf(file=pdf,width=width,height=height);
         old.par<-par(omi=c(0.25,0.25,0.25,0.25))
         on.exit(dev.off());
         on.exit(par(old.par),add=TRUE);
