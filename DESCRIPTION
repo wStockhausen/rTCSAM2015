@@ -2,8 +2,8 @@ Package: tcsam2015
 Type: Package
 Title: Provides a set of tools to interact with output from a TCSAM2015 model
     run and to compare TCSAM2015 and rsimTCAM runs.
-Version: 0.8.0
-Date: 2015-03-30
+Version: 0.9.0
+Date: 2015-04-18
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
 Description: Provides a set of tools to interact with output from a TCSAM2015

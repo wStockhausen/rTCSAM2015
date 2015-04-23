@@ -6,8 +6,9 @@
 \usage{
 plotMDFR.Bars(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
   agg.function = sum, ..., colour = NULL, fill = NULL, faceting = NULL,
-  xlab = "", ylab = "", units = "", lnscale = FALSE, title = "",
-  guideTitleColour = NULL, guideTitleFill = NULL, showPlot = FALSE)
+  position = "dodge", xlab = "", ylab = "", units = "",
+  lnscale = FALSE, title = "", guideTitleColour = NULL,
+  guideTitleFill = NULL, showPlot = FALSE)
 }
 \arguments{
 \item{mdfr}{- melted dataframe}
@@ -27,6 +28,8 @@ plotMDFR.Bars(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
 \item{fill}{- column name to which fill aesthetic is mapped}
 
 \item{faceting}{- faceting formula}
+
+\item{position}{- ggplot2 string for bar position adjustments: "dodge", "stack"}
 
 \item{xlab}{- x axis label}
 

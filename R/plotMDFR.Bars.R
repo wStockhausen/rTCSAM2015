@@ -12,6 +12,7 @@
 #'@param colour - column name to which colour aesthetic is mapped
 #'@param fill - column name to which fill aesthetic is mapped
 #'@param faceting - faceting formula
+#'@param position - ggplot2 string for bar position adjustments: "dodge", "stack"
 #'@param xlab - x axis label
 #'@param ylab - y axis label
 #'@param units - combined with y axis label
@@ -29,14 +30,15 @@
 #'@export
 #'
 plotMDFR.Bars<-function(mdfr,
-                           x=NULL,
-                           value.var='val',
-                           agg.formula=NULL,
-                           agg.function=sum,
-                           ...,
-                           colour=NULL,
-                           fill=NULL,
-                           faceting=NULL,
+                        x=NULL,
+                        value.var='val',
+                        agg.formula=NULL,
+                        agg.function=sum,
+                        ...,
+                        colour=NULL,
+                        fill=NULL,
+                        faceting=NULL,
+                        position='dodge',
                            xlab="",
                            ylab="",
                            units="",
@@ -69,7 +71,7 @@ plotMDFR.Bars<-function(mdfr,
     
     #plot resulting dataframe
     p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill),data=mdfr);
-    p <- p + geom_bar(stat="identity");
+    p <- p + geom_bar(stat="identity",position=position);
     if (!is.null(xlab))     p <- p + xlab(xlab);
     if (!is.null(ylab))     p <- p + ylab(ylab);
     if (!is.null(title))    p <- p + ggtitle(title);

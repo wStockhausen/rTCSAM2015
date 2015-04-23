@@ -10,6 +10,8 @@
 #'@param ggtheme - a ggplot2 theme to use with ggplot2 plots
 #'@param showPlot - flag to show plots immediately
 #'@param pdf - filename for pdf output (optional)
+#'@param width - pdf page width (in inches)
+#'@param height - pdf page width (in inches)
 #'
 #'@return list with possible elements:\cr
 #'* repObj - TCSAM2015 report object (if report file was read)
@@ -32,7 +34,9 @@ plotModelResults<-function(repObj=NULL,
                            objList=NULL,
                            ggtheme=theme_grey(),
                            showPlot=TRUE,
-                           pdf=NULL){
+                           pdf=NULL,
+                           width=14,
+                           height=8){
     
     if (!is.null(objList)){
         repObj<-objList$repObj;
@@ -69,7 +73,7 @@ plotModelResults<-function(repObj=NULL,
     }
     
     if (!is.null(pdf)){
-        pdf(file=pdf,width=8.5,height=11);
+        pdf(file=pdf,width=width,height=height);
         old.par<-par(omi=c(0.25,0.25,0.25,0.25))
         on.exit(dev.off());
         on.exit(par(old.par),add=TRUE);

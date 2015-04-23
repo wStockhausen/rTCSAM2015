@@ -29,9 +29,9 @@ compareModels.PopQuants<-function(tcsam=NULL,
     plots<-list();
     
     #natural mortality
-    path<-'mp/M_cxm';
-    mdfr<-getMDFR(path,tcsam,rsim);
+    mdfr<-NULL;
     if (!is.null(tcsam)){
+        mdfr<-getMDFR('mp/M_cxm',tcsam,NULL);
         pgi<-tcsam$mpi$nm$pgi;
         nPCs<-length(pgi$pcs);
         mdfr$y<-'';
@@ -39,18 +39,24 @@ compareModels.PopQuants<-function(tcsam=NULL,
             idx<-(mdfr$pc==pc)&(mdfr$modeltype=='tcsam');
             mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
         }
+        mdfr$pc<-mdfr$y;
+        mdfr$pc<-reformatTimeBlocks(mdfr$pc,tcsam$mc$dims)
+        mdfr<-subset(mdfr,select=-y)
     }
-    p<-plotMDFR.Bars(mdfr,x='x',agg.formula=NULL,faceting='y~m',
-                     fill='model',xlab='sex',ylab='natural mortality');
+    if (!is.null(rsim)){
+        mdfrp<-getMDFR('mp/M_cxm',NULL,rsim);
+        mdfrp$pc<-reformatTimeBlocks(mdfrp$pc,rsim$mc$dims)
+        mdfr<-rbind(mdfr,mdfrp);
+    }
+    p<-plotMDFR.Bars(mdfr,x='m',agg.formula=NULL,faceting='pc~x',
+                     fill='model',xlab='maturity',ylab='natural mortality');
     if (showPlot) print(p);
     plots$M_cxm<-p;
     
     #growth
-    path<-'mp/prGr_czz';
-    mdfr<-getMDFR(path,tcsam,rsim);
-#         mdfr$z <-as.numeric(mdfr$z);
-#         mdfr$zp<-as.numeric(mdfr$zp);
+    mdfr<-NULL;
     if (!is.null(tcsam)){
+        mdfr<-getMDFR('mp/prGr_czz',tcsam,NULL);
         pgi<-tcsam$mpi$grw$pgi;
         nPCs<-length(pgi$pcs);
         mdfr$y<-'';
@@ -60,18 +66,24 @@ compareModels.PopQuants<-function(tcsam=NULL,
             mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
             mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
         }
+        mdfr$pc<-reformatTimeBlocks(mdfr$y,tcsam$mc$dims);
+        mdfr<-mdfr[,c('pc','x','z','zp','val','model','modeltype')];
     }
-    p<-plotMDFR.Bubbles(mdfr,x='zp',y='z',faceting='model+y~x',
+    if (!is.null(rsim)){
+        mdfrp<-getMDFR('mp/T_cxzz',NULL,rsim);
+        mdfrp$pc<-reformatTimeBlocks(mdfrp$pc,rsim$mc$dims)
+        mdfr<-rbind(mdfr,mdfrp);
+    }
+    p<-plotMDFR.Bubbles(mdfr,x='zp',y='z',faceting='model+pc~x',
                         xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
                         colour='.',guideTitleColor='',useColourGradient=TRUE,alpha=0.5);
     if (showPlot) print(p);
     plots$prGr_czz<-p;
     
     #molt-to-maturity
-    path<-'mp/prMolt2Mat_cz';
-    mdfr<-getMDFR(path,tcsam,rsim);
-#         mdfr$z <-as.numeric(mdfr$z);
+    mdfr<-NULL;
     if (!is.null(tcsam)){
+        mdfr<-getMDFR('mp/prMolt2Mat_cz',tcsam,NULL);
         pgi<-tcsam$mpi$mat$pgi;
         nPCs<-length(pgi$pcs);
         mdfr$y<-'';
@@ -81,8 +93,15 @@ compareModels.PopQuants<-function(tcsam=NULL,
             mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
             mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
         }
+        mdfr$pc<-reformatTimeBlocks(mdfr$y,tcsam$mc$dims);
+        mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
     }
-    p<-plotMDFR.Bars(mdfr,x='z',agg.formula=NULL,faceting='y~x',
+    if (!is.null(rsim)){
+        mdfrp<-getMDFR('mp/prMolt2Mat_cxz',NULL,rsim);
+        mdfrp$pc<-reformatTimeBlocks(mdfrp$pc,rsim$mc$dims)
+        mdfr<-rbind(mdfr,mdfrp);
+    }
+    p<-plotMDFR.Bars(mdfr,x='z',agg.formula=NULL,faceting='pc~x',
                      fill='model',xlab='size (mm CW)',ylab='pr(molt-to-maturity)');
     if (showPlot) print(p);
     plots$prMolt2Mat_cz<-p;

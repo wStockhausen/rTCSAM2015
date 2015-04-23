@@ -4,9 +4,9 @@
 \alias{plotEffNsGG}
 \title{Plot input and estimated sample sizes from size frequency fits}
 \usage{
-plotEffNsGG(fits, mc, sxs = c(mc$dims$x$nms, "ALL_SEX"),
-  mss = c(mc$dims$m$nms, "ALL_MATURITY"), scs = c(mc$dims$s$nms,
-  "ALL_SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE)
+plotEffNsGG(fits, mc, sxs = c(mc$dims$x$nms, "ALL SEX"),
+  mss = c(mc$dims$m$nms, "ALL MATURITY"), scs = c(mc$dims$s$nms,
+  "ALL SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE)
 }
 \arguments{
 \item{fits}{- list of fits}

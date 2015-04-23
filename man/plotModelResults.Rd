@@ -5,7 +5,8 @@
 \title{Plot TCSAM 2015 model output.}
 \usage{
 plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
-  objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL)
+  objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL,
+  width = 14, height = 8)
 }
 \arguments{
 \item{repObj}{- list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.}
@@ -21,6 +22,10 @@ plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
 \item{showPlot}{- flag to show plots immediately}
 
 \item{pdf}{- filename for pdf output (optional)}
+
+\item{width}{- pdf page width (in inches)}
+
+\item{height}{- pdf page width (in inches)}
 }
 \value{
 list with possible elements:\cr

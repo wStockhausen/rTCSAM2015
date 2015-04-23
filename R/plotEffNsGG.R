@@ -22,9 +22,9 @@
 #' 
 plotEffNsGG<-function(fits,
                         mc,
-                        sxs=c(mc$dims$x$nms,"ALL_SEX"),
-                        mss=c(mc$dims$m$nms,"ALL_MATURITY"),
-                        scs=c(mc$dims$s$nms,"ALL_SHELL"),
+                        sxs=c(mc$dims$x$nms,"ALL SEX"),
+                        mss=c(mc$dims$m$nms,"ALL MATURITY"),
+                        scs=c(mc$dims$s$nms,"ALL SHELL"),
                         label="",
                         ggtheme=theme_grey(),
                         showPlot=TRUE){
@@ -44,9 +44,9 @@ plotEffNsGG<-function(fits,
     yrsp<-names(fits);
     for (i in 1:(n-1)){
         fit<-fits[[i]];
-        x<-tolower(fit$x);
-        m<-tolower(fit$m);
-        s<-tolower(fit$s);
+        x<-gsub("_"," ",tolower(fit$x),fixed=TRUE);
+        m<-gsub("_"," ",tolower(fit$m),fixed=TRUE);
+        s<-gsub("_"," ",tolower(fit$s),fixed=TRUE);
         y<-yrsp[i];
         ISSs[x,m,s,y]<-fit$fit$ss;
         ESSs[x,m,s,y]<-fit$fit$effN;
