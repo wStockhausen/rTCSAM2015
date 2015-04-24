@@ -50,41 +50,68 @@ plotObjFunValues.Data<-function(mdfr,
     
     #shorten 'ALL's to ''s
     idx<-dfr$sex=='ALL_SEX';
-    dfr$sex[idx]<-'';
+    dfr$sex[idx]<-'all sexes';
     idx<-dfr$maturity=='ALL_MATURITY';
-    dfr$maturity[idx]<-'';
+    dfr$maturity[idx]<-'all MSs';
     idx<-dfr$shell_condition=='ALL_SHELL_CONDITION';
-    dfr$shell_condition[idx]<-'';
+    dfr$shell_condition[idx]<-'all SCs';
     idx<-dfr$shell_condition=='ALL_SHELL';
-    dfr$shell_condition[idx]<-'';
+    dfr$shell_condition[idx]<-'all SCs';
     
-    dfr$fac<-paste(dfr$sex,dfr$maturity,dfr$shell_condition,sep=' ')
+    dfr$fac<-paste(dfr$maturity,dfr$shell_condition,sep=', ')
     
-    n<-length(unique(dfr$model));#number of models
+    ums<-as.character(unique(dfr$model))
+    n<-length(ums);#number of models
     cat("number of models =",n,'\n')
     
-    cts<-unique(dfr$catch_type);
+    ucts<-as.character(unique(dfr$catch_type));
     
     rng<-range(dfr$value)
     cat("range = [",paste(rng,collapse=', '),']\n',sep='')
     
     ps<-list();
-    for (ct in cts){
-        p <- ggplot(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,fill=fac,colour='model',line=2))
-        p <- p + geom_bar(stat="identity",position='dodge',alpha=1.0)
-        p <- p + ylim(0,rng[2])
-        p <- p + scale_fill_brewer(palette='Set1')
-        p <- p + scale_color_brewer(palette='Dark2')
-        p <- p + labs(x="Data Source",y=ylab);
-        p <- p + guides(fill=guide_legend('Category',order=1));
-        p <- p + guides(colour=guide_legend('Model',order=2));
-        p <- p + ggtitle(paste("Data Components:",ct));
-        p <- p + facet_wrap(~data_type)
-        p <- p + ggtheme;
-        p<-p+theme(text = element_text(size=14), 
-                   axis.text.x = element_text(angle=25, vjust=1.0, hjust=1));        
-        if (showPlot) print(p);
-        ps[[ct]]<-p;
+    if (n==1){
+        for (ct in ucts){
+            p <- ggplot(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,color=fac,fill=model,line=2))
+            p <- p + geom_bar(stat="identity",position='dodge',alpha=1.0)
+            p <- p + ylim(0,NA)
+            p <- p + scale_fill_brewer(palette='Set1')
+            p <- p + scale_color_brewer(palette='Dark2')
+            p <- p + labs(x="Data Source",y=ylab);
+            p <- p + guides(fill=guide_legend('Model',order=1));
+            p <- p + guides(colour=guide_legend('Category',order=2));
+            p <- p + ggtitle(paste("Data Components:",ct));
+            p <- p + facet_grid(sex~data_type)
+            p <- p + ggtheme;
+            p<-p+theme(text = element_text(size=14), 
+                       axis.text.x = element_text(angle=25, vjust=1.0, hjust=1));        
+            if (showPlot) print(p);
+            ps[[ct]]<-p;
+        }
+    } else {
+        usrcs<-as.character(unique(dfr$source_name))
+        for (src in usrcs){
+            for (ct in ucts){
+                dfrp<-dfr[(dfr$source_name==src)&(dfr$catch_type==ct),]
+                if (nrow(dfrp)>0){
+                    p <- ggplot(data=dfrp,aes(x=fac,y=value,fill=model,line=2))
+                    p <- p + geom_bar(stat="identity",position='dodge',alpha=1.0)
+ #                   p <- p + ylim(0,NA)
+                    p <- p + scale_fill_brewer(palette='Set1')
+                    p <- p + scale_color_brewer(palette='Dark2')
+                    p <- p + labs(x="Data Source",y=ylab);
+                    p <- p + guides(fill=guide_legend('Model',order=1));
+                    p <- p + guides(colour=guide_legend('Category',order=2));
+                    p <- p + ggtitle(paste(src,": ",ct,sep=''));
+                    p <- p + facet_grid(sex~data_type)
+                    p <- p + ggtheme;
+                    p<-p+theme(text = element_text(size=14), 
+                               axis.text.x = element_text(angle=25, vjust=1.0, hjust=1));        
+                    if (showPlot) print(p);
+                    ps[[ct]]<-p;
+                }
+            }#cts (catch types)
+        }#usrcs (data sources)
     }
 #    if (showPlots) plotMulti.gg(plotlist=ps,cols=1)
     

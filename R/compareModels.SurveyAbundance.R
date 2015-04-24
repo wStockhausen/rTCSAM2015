@@ -34,6 +34,7 @@ compareModels.SurveyAbundance<-function(tcsam=NULL,
     path<-'mr/S_list/N_vyxmsz';
     mdfr<-getMDFR(path,tcsam,rsim);
     mdfr$v<-gsub("_"," ",mdfr$v,fixed=TRUE);#replace '_'s in survey names with spaces
+    mdfr<-removeImmOS(mdfr);
     
     uniqVs<-unique(mdfr$v);#survey names
     

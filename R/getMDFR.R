@@ -61,7 +61,7 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL){
                 rsim1<-rsim[[l]];
                 mdfrp<-getMDFR(path,rsim=rsim1,tcsam=NULL);
                 if (!is.null(nms[l])) mdfrp$model<-nms[l];
-                mdfr$modeltype<-'rsim';
+                mdfrp$modeltype<-'rsim';
                 mdfr<-rbind(mdfr,mdfrp);
             }
         } else {

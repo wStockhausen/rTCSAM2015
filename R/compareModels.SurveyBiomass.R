@@ -33,6 +33,7 @@ compareModels.SurveyBiomass<-function(tcsam=NULL,
     #total captured (biomass)
     path<-'mr/S_list/B_vyxms';
     mdfr<-getMDFR(path,tcsam,rsim);
+    mdfr<-removeImmOS(mdfr);
     mdfr$v<-gsub("_"," ",mdfr$v,fixed=TRUE);#replace '_'s in survey names with spaces
     
     uniqVs<-unique(mdfr$v);#survey names

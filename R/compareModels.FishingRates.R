@@ -61,7 +61,7 @@ compareModels.FishingRates<-function(tcsam=NULL,
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='fully-selected fishing rate',units='',lnscale=FALSE,
-                       colour='model',guideTitleColor='model',
+                       colour='model',guideTitleColour='model',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uF]]$maxF_yx<-p;
@@ -71,7 +71,7 @@ compareModels.FishingRates<-function(tcsam=NULL,
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='size-averaged fishing rate',units='',lnscale=FALSE,
-                       colour='model',guideTitleColor='model',
+                       colour='model',guideTitleColour='model',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uF]]$avgF_yx<-p;
@@ -87,7 +87,7 @@ compareModels.FishingRates<-function(tcsam=NULL,
     ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
     p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='x~.',
                    title='all fisheries',xlab='year',ylab='fully-selected total fishing mortality rate',units='',lnscale=FALSE,
-                   colour='model',guideTitleColor='model',
+                   colour='model',guideTitleColour='model',
                    shape='modeltype',guideTitleShape='model type');
     if (showPlot) print(p);
     plots$maxF_yx<-p;
@@ -97,7 +97,7 @@ compareModels.FishingRates<-function(tcsam=NULL,
     ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
     p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='x~.',
                           title='all fisheries',xlab='year',ylab='size-averaged total fishing mortality rate',units='',lnscale=FALSE,
-                          colour='model',guideTitleColor='model',
+                          colour='model',guideTitleColour='model',
                           shape='modeltype',guideTitleShape='model type');
     if (showPlot) print(p);
     plots$avgF_yx<-p;

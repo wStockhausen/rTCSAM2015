@@ -161,12 +161,21 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
         return(invisible(p))
     }#rsim but no tcsam
     
-    #both tcsam and rsim models, so plot using pc's, not labels   
-    p<-plotMDFR.XY(mdfr,x='z',
-                   agg.formula=NULL,faceting='pc~.',
-                   xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
-                   colour='model',guideTitleColor='',
-                   shape='model',guideTitleShape='');
+    #both tcsam and rsim models, so plot using pc's, not labels 
+    npc<-5;
+    nPCs<-length(unique(mdfr$pc));
+    npgs<-ceiling(nPCs/npc);
+    p<-list();
+    for (pg in 1:npgs){
+        pcs<-1:npc+(pg-1)*npc;
+        mdfrp<-mdfr[mdfr$pc %in% pcs,];
+        mdfrp$pc<-formatZeros(mdfrp$pc,width=2);
+        p[[pg]]<-plotMDFR.XY(mdfrp,x='z',
+                             agg.formula=NULL,faceting='pc~.',
+                             xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
+                             colour='model',guideTitleColour='',
+                             shape='model',guideTitleShape='');
+    }
     if (showPlot) print(p);
         
     return(invisible(p))
