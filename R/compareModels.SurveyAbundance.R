@@ -46,6 +46,7 @@ compareModels.SurveyAbundance<-function(tcsam=NULL,
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='m+s~x',
                        title=uV,xlab='year',ylab='survey abundance',units='millions',lnscale=FALSE,
                        colour='model',guideTitleColor='model',
+                       linetype='modeltype',guideTitleLineType='model type',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uV]]$N_yx<-p;

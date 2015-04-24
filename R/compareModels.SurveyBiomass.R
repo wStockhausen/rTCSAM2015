@@ -46,6 +46,7 @@ compareModels.SurveyBiomass<-function(tcsam=NULL,
         p<-plotMDFR.XY(ddfr,x='y',value.var='.',agg.formula=NULL,faceting='m+s~x',
                        title=uV,xlab='year',ylab='survey biomass',units="1000's t",lnscale=FALSE,
                        colour='model',guideTitleColor='model',
+                       linetype='modeltype',guideTitleLineType='model type',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uV]]$B_yx<-p;

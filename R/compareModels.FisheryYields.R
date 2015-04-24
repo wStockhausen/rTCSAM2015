@@ -63,6 +63,7 @@ compareModels.FisheryYields<-function(tcsam=NULL,
         p<-plotMDFR.XY(ddfr,x='y',value.var='.',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='fishery yield',units="1000's t",lnscale=FALSE,
                        colour='model',guideTitleColor='model',
+                       linetype='modeltype',guideTitleLineType='model type',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uF]]$B_yx<-p;
@@ -73,6 +74,7 @@ compareModels.FisheryYields<-function(tcsam=NULL,
         p<-plotMDFR.XY(rdfr,x='y',value.var='ratio',agg.formula=NULL,faceting='x~.',
                        title=uF,xlab='year',ylab='discard mortality/total discards',units="",lnscale=FALSE,
                        colour='model',guideTitleColor='model',
+                       linetype='modeltype',guideTitleLineType='model type',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uF]]$ratio_yx<-p;

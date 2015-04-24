@@ -63,6 +63,7 @@ compareModels.FisheryCatches<-function(tcsam=NULL,
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='fishery catch',units='millions',lnscale=FALSE,
                        colour='model',guideTitleColor='model',
+                       linetype='modeltype',guideTitleLineType='model type',
                        shape='modeltype',guideTitleShape='model type');
         if (showPlot) print(p);
         plots[[uF]]$N_yx<-p;

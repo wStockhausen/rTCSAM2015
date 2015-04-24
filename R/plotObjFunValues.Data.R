@@ -72,14 +72,14 @@ plotObjFunValues.Data<-function(mdfr,
     ps<-list();
     if (n==1){
         for (ct in ucts){
-            p <- ggplot(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,color=fac,fill=model,line=2))
+            p <- ggplot(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,color=model,fill=fac,line=3))
             p <- p + geom_bar(stat="identity",position='dodge',alpha=1.0)
             p <- p + ylim(0,NA)
             p <- p + scale_fill_brewer(palette='Set1')
             p <- p + scale_color_brewer(palette='Dark2')
             p <- p + labs(x="Data Source",y=ylab);
-            p <- p + guides(fill=guide_legend('Model',order=1));
-            p <- p + guides(colour=guide_legend('Category',order=2));
+            p <- p + guides(fill=guide_legend('Category',order=1));
+            p <- p + guides(colour=guide_legend('Model',order=2));
             p <- p + ggtitle(paste("Data Components:",ct));
             p <- p + facet_grid(sex~data_type)
             p <- p + ggtheme;
