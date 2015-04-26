@@ -24,7 +24,7 @@ plotDataModelComparisons<-function(repObj,showPlot=FALSE){
     
     #plot comparisons for fishery catches
     plots.fsh<-list();
-    nFsh<-repObj$mc$dims$v$n;
+    nFsh<-repObj$mc$dims$f$n;
     for (f in 1:nFsh){
         plots.fsh[[f]]<-list();
         obs<-repObj$data$fisheries[[f]];
