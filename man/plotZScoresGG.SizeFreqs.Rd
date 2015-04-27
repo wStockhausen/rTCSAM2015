@@ -4,9 +4,9 @@
 \alias{plotZScoresGG.SizeFreqs}
 \title{Plot residuals from size frequency fits}
 \usage{
-plotZScoresGG.SizeFreqs(fits, mc, sxs = c(mc$SXs, "ALL_SEX"),
-  mss = c(mc$MSs, "ALL_MATURITY"), scs = c(mc$SCs, "ALL_SHELL"),
-  label = "", ggtheme = theme_grey(), showPlot = TRUE)
+plotZScoresGG.SizeFreqs(fits, mc, sxs = c(mc$dims$x$nms, "ALL_SEX"),
+  mss = c(mc$dims$m$nms, "ALL_MATURITY"), scs = c(mc$dims$s$nms,
+  "ALL_SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE)
 }
 \arguments{
 \item{fits}{- list of fits}

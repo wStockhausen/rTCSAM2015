@@ -21,15 +21,20 @@
 #' 
 plotZScoresGG.SizeFreqs<-function(fits,
                                     mc,
-                                    sxs=c(mc$SXs,"ALL_SEX"),
-                                    mss=c(mc$MSs,"ALL_MATURITY"),
-                                    scs=c(mc$SCs,"ALL_SHELL"),
+                                    sxs=c(mc$dims$x$nms,"ALL_SEX"),
+                                    mss=c(mc$dims$m$nms,"ALL_MATURITY"),
+                                    scs=c(mc$dims$s$nms,"ALL_SHELL"),
                                     label="",
                                     ggtheme=theme_grey(),
                                     showPlot=TRUE){
+    dims<-mc$dims;
+    sxs<-tolower(sxs);
+    mss<-tolower(mss);
+    scs<-tolower(scs);
+    
     n<-length(fits);
     yrs<-min(as.numeric(names(fits)),na.rm=TRUE):max(as.numeric(names(fits)),na.rm=TRUE)
-    zbs<-as.vector(mc$zBs);
+    zbs<-dims$z$vls;
     
     dms<-c(length(sxs),length(mss),length(scs),length(yrs),length(zbs));
     dmnames<-list(sx=sxs,ms=mss,sc=scs,yr=yrs,zb=zbs);
@@ -44,9 +49,9 @@ plotZScoresGG.SizeFreqs<-function(fits,
     yrsp<-names(fits);
     for (i in 1:(n-1)){
         fit<-fits[[i]];
-        x<-fit$sx;
-        m<-fit$ms;
-        s<-fit$sc;
+        x<-tolower(fit$x);
+        m<-tolower(fit$m);
+        s<-tolower(fit$s);
         y<-yrsp[i];
         pAtZ[x,m,s,y,]<-fit$fit$zscrs;
         nAtZ[x,m,s,y,]<-fit$fit$nlls;
@@ -66,9 +71,9 @@ plotZScoresGG.SizeFreqs<-function(fits,
                 if (sum(abs(pAtZp),na.rm=TRUE)>0){
                     #set up labels
                     sbt<-vector(mode="character",length=3);
-                    if (substr(x,1,3)!="ALL") {sbt[1]<-x;}
-                    if (substr(m,1,3)!="ALL") {sbt[2]<-m;}
-                    if (substr(s,1,3)!="ALL") {sbt[3]<-s;}
+                    if (substr(x,1,3)!="all") {sbt[1]<-x;}
+                    if (substr(m,1,3)!="all") {sbt[2]<-m;}
+                    if (substr(s,1,3)!="all") {sbt[3]<-s;}
                     sbtp<-tolower(paste(sbt[sbt!=""],collapse=", "));
                     if (label!='') sbtp<-paste(label,sbtp,sep=': ')
                     
@@ -82,7 +87,7 @@ plotZScoresGG.SizeFreqs<-function(fits,
                                             x='yr',y='zb',z='residual',
                                             category='type',
                                             title=sbtp,
-                                            xlab="",
+                                            xlab="pearson's residuals",
                                             ylab="size (mm CW)",
                                             alpha=0.6,
                                             ggtheme=ggtheme,
@@ -98,28 +103,12 @@ plotZScoresGG.SizeFreqs<-function(fits,
                                             x='yr',y='zb',z='residual',
                                             category='type',
                                             title='',
-                                            xlab="",
+                                            xlab="negative loglikeihoods",
                                             ylab="size (mm CW)",
                                             alpha=0.6,
                                             ggtheme=ggtheme,
                                             showPlot=FALSE);
                     
-#                     #extract ISSs and ESSs
-#                     idx<-(idfr$sx %in% x)&(idfr$ms %in% m)&(idfr$sc %in% s)
-#                     idfrp<-idfr[idx,4:5];
-#                     idfrp$type<-'input';
-#                     idx<-(edfr$sx %in% x)&(edfr$ms %in% m)&(edfr$sc %in% s)
-#                     edfrp<-edfr[idx,4:5];
-#                     edfrp$type<-'estimated';
-#                     
-#                     dfrp<-rbind(idfrp,edfrp);
-#                     p <- ggplot(aes_string(x='yr',y='n',colour='type'),data=dfrp);
-#                     p <- p + geom_point()
-#                     p <- p + geom_line()
-#                     p <- p + xlab('sample size')
-#                     p <- p + ylab('year')
-#                     p <- p + guides(color=guide_legend(override.aes=list(alpha=1.0,size=6)));
-#                     
                     if (showPlot) plotMulti.GG(pr,pn,cols=1);
                     
                     ps[[sbtp]]<-list(pearsons=pr,nlls=pn);

@@ -2,7 +2,7 @@ Package: tcsam2015
 Type: Package
 Title: Provides a set of tools to interact with output from a TCSAM2015 model
     run and to compare TCSAM2015 and rsimTCAM runs.
-Version: 0.9.0
+Version: 0.9.1
 Date: 2015-04-18
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
@@ -12,6 +12,7 @@ License: MIT
 Imports:
     ggplot2 (>= 1.0.0),
     graphics (>= 3.1.2),
+    grid,
     reshape2 (>= 1.4.1),
     sqldf (>= 0.4-10),
     stats (>= 3.1.2),
