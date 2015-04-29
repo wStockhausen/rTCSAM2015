@@ -28,9 +28,9 @@ plotZScoresGG.SizeFreqs<-function(fits,
                                     ggtheme=theme_grey(),
                                     showPlot=TRUE){
     dims<-mc$dims;
-    sxs<-tolower(sxs);
-    mss<-tolower(mss);
-    scs<-tolower(scs);
+    sxs<-gsub("_"," ",tolower(sxs),fixed=TRUE);
+    mss<-gsub("_"," ",tolower(mss),fixed=TRUE);
+    scs<-gsub("_"," ",tolower(scs),fixed=TRUE);
     
     n<-length(fits);
     yrs<-min(as.numeric(names(fits)),na.rm=TRUE):max(as.numeric(names(fits)),na.rm=TRUE)
@@ -49,9 +49,9 @@ plotZScoresGG.SizeFreqs<-function(fits,
     yrsp<-names(fits);
     for (i in 1:(n-1)){
         fit<-fits[[i]];
-        x<-tolower(fit$x);
-        m<-tolower(fit$m);
-        s<-tolower(fit$s);
+        x<-gsub("_"," ",tolower(fit$x),fixed=TRUE);
+        m<-gsub("_"," ",tolower(fit$m),fixed=TRUE);
+        s<-gsub("_"," ",tolower(fit$s),fixed=TRUE);
         y<-yrsp[i];
         pAtZ[x,m,s,y,]<-fit$fit$zscrs;
         nAtZ[x,m,s,y,]<-fit$fit$nlls;

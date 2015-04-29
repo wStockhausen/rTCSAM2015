@@ -58,6 +58,17 @@ plotObjFunValues.Data<-function(mdfr,
     idx<-dfr$shell_condition=='ALL_SHELL';
     dfr$shell_condition[idx]<-'all SCs';
     
+    #change labels to lower case, change "_" to a space
+    cols<-c('sex','maturity','shell_condition')
+    for (col in cols) {
+        dfr[[col]]<-tolower(dfr[[col]]);
+        dfr[[col]]<-gsub('[_]',' ',dfr[[col]],fixed=FALSE);
+    }
+    
+    #change "." or "_" to spaces
+    cols<-c("source_name","catch_type");
+    for (col in cols) dfr[[col]]<-gsub('[._]',' ',dfr[[col]],fixed=FALSE);
+    
     dfr$fac<-paste(dfr$maturity,dfr$shell_condition,sep=', ')
     
     ums<-as.character(unique(dfr$model))
@@ -108,8 +119,8 @@ plotObjFunValues.Data<-function(mdfr,
                     p<-p+theme(text = element_text(size=14), 
                                axis.text.x = element_text(angle=25, vjust=1.0, hjust=1));        
                     if (showPlot) print(p);
-                    ps[[ct]]<-p;
-                }
+                    ps[[paste(src,": ",ct,sep='')]]<-p;
+                }#nrow(dfrp)>0
             }#cts (catch types)
         }#usrcs (data sources)
     }
