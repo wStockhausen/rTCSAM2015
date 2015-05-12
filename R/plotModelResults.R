@@ -108,6 +108,12 @@ plotModelResults<-function(repObj=NULL,
     plots$DMCs<-plotDataModelComparisons(repObj,showPlot=FALSE);
     if (showPlot) print(plots$DMCs);
     
+    #plot effort regressions
+    cat("----------------------------------------------\n")
+    cat("plotting effort regressions.\n");
+    plots$effRegs<-plotEffortRegressions(repObj,showPlot=FALSE);
+    if (showPlot) print(plots$effRegs);
+    
     #plot model fits (z-scores, size comps, nlls)
     cat("----------------------------------------------\n")
     cat("plotting model fits.\n")

@@ -26,7 +26,7 @@ plotPopQuants<-function(repObj,showPlot=TRUE){
     plotPrGrowth.ByPC(repObj);
     
     #plot initial size distribution
-    plots$initialSizeComps<-plotSingleSizeCompGG(repObj=repObj,component='pop.quants',
+    plots$initialSizeComps<-plotSizeCompsGG.Single(repObj=repObj,component='pop.quants',
                                               title='Initial Size Comps',showPlot=FALSE)
     if (showPlot) print(plots$initialSizeComps)
     

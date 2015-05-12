@@ -4,7 +4,7 @@
 \alias{extractModelResults.StdDevs}
 \title{Function to extract parameter uncertainty (std) info from different models.}
 \usage{
-extractModelResults.StdDevs(objs, fac = 3)
+extractModelResults.StdDevs(objs, fac = 2)
 }
 \arguments{
 \item{objs}{- model results objects (each is a list with elements 'stdObj')}

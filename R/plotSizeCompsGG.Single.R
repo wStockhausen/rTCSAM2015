@@ -18,13 +18,13 @@
 #'
 #'@export
 #'
-plotSingleSizeCompGG<-function(n_xmsz=NULL,
-                               res=NULL,
-                               component='pop.quants',
-                               year=NULL,
-                               mdl='',
-                               title='',
-                               showPlot=TRUE){
+plotSizeCompsGG.Single<-function(n_xmsz=NULL,
+                                 res=NULL,
+                                 component='pop.quants',
+                                 year=NULL,
+                                 mdl='',
+                                 title='',
+                                 showPlot=TRUE){
     
     oneModel<-FALSE;
     if (!is.null(n_xmsz)){

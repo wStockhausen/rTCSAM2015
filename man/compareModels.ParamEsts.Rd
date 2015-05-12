@@ -4,7 +4,7 @@
 \alias{compareModels.ParamEsts}
 \title{Function to compare parameter values from different models.}
 \usage{
-compareModels.ParamEsts(objs, dp = 0.01, fac = 3, nc = 3, nr = 4,
+compareModels.ParamEsts(objs, dp = 0.01, fac = 2, nc = 3, nr = 4,
   showPlot = TRUE, pdf = "ModelComparisons.Params.pdf")
 }
 \arguments{

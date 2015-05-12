@@ -4,10 +4,10 @@
 \alias{plotZScoresForSurveys}
 \title{Plot model fits to abundance, biomass and size frequencies as z-scores for surveys.}
 \usage{
-plotZScoresForSurveys(res, showPlot = FALSE)
+plotZScoresForSurveys(repObj, showPlot = FALSE)
 }
 \arguments{
-\item{res}{- model results list object}
+\item{repObj}{- model report list object}
 }
 \value{
 list by survey of lists with ggplot objects

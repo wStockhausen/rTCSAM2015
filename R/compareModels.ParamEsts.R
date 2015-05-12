@@ -17,7 +17,7 @@
 #'
 #'@export
 #'
-compareModels.ParamEsts<-function(objs,dp=0.01,fac=3,
+compareModels.ParamEsts<-function(objs,dp=0.01,fac=2,
                                      nc=3,nr=4,showPlot=TRUE,
                                      pdf="ModelComparisons.Params.pdf"){
     #extract dataframe with parameter estimates and info
@@ -63,11 +63,13 @@ extractModelResults.Params<-function(objs,dp=0.01){
                     rw<-list();
                     rw$case <-case;
                     rw$type <-'scalar';
-                    rw$par  <- gsub("[[:blank:]]",'',param,fixed=FALSE);#need to remove whitespace
-                    rw$param<-rw$par;
+                    prmw  <- gsub("[[:blank:]]",'',param,fixed=FALSE);#need to remove whitespace
+                    splt<-strsplit(prmw,"[[:punct:]]");
+                    prm<-paste(splt[[1]][1],"[",formatZeros(splt[[1]][2],width=2),"]",sep='')
+                    rw$param<-prm;
                     if (nr>1) {
                         rw$type <-'vector';
-                        rw$param<-paste(rw$par,"[",formatZeros(r,width=2),"]",sep='');
+                        rw$param<-paste(prm,"[",formatZeros(r,width=2),"]",sep='');
                     }
                     rw$value<-prsp$value[r];
                     rw$min  <-prsp$min[r];
@@ -100,7 +102,7 @@ extractModelResults.Params<-function(objs,dp=0.01){
 #'
 #'@export
 #'
-extractModelResults.StdDevs<-function(objs,fac=3){
+extractModelResults.StdDevs<-function(objs,fac=2){
     vfr<-NULL;
     cases<-names(objs);
     for (case in cases){   
@@ -114,17 +116,20 @@ extractModelResults.StdDevs<-function(objs,fac=3){
             nr<-nrow(stdp);
             if (nr>0){
                 type<-'scalar';
-                paramp<-param;
+                prmw  <- gsub("[[:blank:]]",'',param,fixed=FALSE);#need to remove whitespace
+                splt<-strsplit(prmw,"[[:punct:]]");
+                prm<-paste(splt[[1]][1],"[",formatZeros(splt[[1]][2],width=2),"]",sep='')
+                paramp<-prm;
                 for (r in 1:nr){
-                    par   <-stdp[r,2];#param name
+                    par   <-prm;      #param name
                     estp  <-stdp[r,3];#model estimate
-                    stdv <-stdp[r,4];#standard dev
+                    stdv <-stdp[r,4]; #standard dev
                     if (stdv>0) {
                         x<-seq(from=estp-fac*stdv,to=estp+fac*stdv,length.out=51);
                         y<-0.9*exp(-0.5*((x-estp)/stdv)^2);
                         if (nr>1) {
                             type<-'vector';
-                            paramp<-paste(par,"[",formatZeros(r,width=2),"]",sep='');
+                            paramp<-paste(prm,"[",formatZeros(r,width=2),"]",sep='');
                         }
                         vri<-list(case=case,type=type,par=par,param=paramp,x=x,y=y);
                         vfr<-rbind(vfr,as.data.frame(vri,stringsAsFactors=FALSE));
@@ -176,6 +181,7 @@ plotModelResults.ScalarParams<-function(dfr,vfr=NULL,nc=3,nr=4,showPlot=TRUE,pdf
        p <- p + geom_rect(mapping=aes_string(xmin='min',xmax='max',ymin=I(0),ymax=I(1)),alpha=0.5,fill='grey')
        p <- p + geom_vline(aes_string(xintercept='value',colour='case',linetype='case'),size=1)
        p <- p + guides(colour=guide_legend())
+       p <- p + scale_y_continuous(breaks=NULL)
        p <- p + labs(x='parameter value',y='')
        if (!is.null(vfr)&&(nrow(vfrsp)>0)){
            p <- p + geom_area(aes(x=x,y=y,fill=case),data=vfrsp,alpha=0.3,position="identity")
