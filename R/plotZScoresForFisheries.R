@@ -26,7 +26,7 @@ plotZScoresForFisheries<-function(repObj,showPlot=FALSE){
             }
             if (!is.null(fit$n.at.z)){
                 cat("Plotting fits for total catch size frequencies.\n")
-                plots.tot$zfs<-plotFitsGG.SizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
+                plots.ret$zfs<-plotFitsGG.SizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
                 cat("Plotting retained catch size frequency zscores for",fsh,"\n")
                 plots.ret$zrs<-plotZScoresGG.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''))
                 cat("Plotting ESSs for size frequencies.\n")

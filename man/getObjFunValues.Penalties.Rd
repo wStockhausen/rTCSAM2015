@@ -4,10 +4,10 @@
 \alias{getObjFunValues.Penalties}
 \title{Get model penalties in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.Penalties(res, mdl = NULL)
+getObjFunValues.Penalties(repObj, mdl = NULL)
 }
 \arguments{
-\item{res}{- tcsam2015 model results object or list of such}
+\item{repObj}{- tcsam2015 model results object or list of such}
 
 \item{mdl}{- name to associate with model results object}
 }
@@ -20,10 +20,10 @@ Function to get model penalties as a melted dataframe.
 \details{
 
 
-If res is a list of tcsam2015 model results objects, then the function
+If repObj is a list of tcsam2015 model results objects, then the function
 is called recursively for each object, with the associated list component name used as
-mdl. If res is a tcsam2015 model results object and mdl is NULL (the default), then
-res$mc$configName is used as the model name.
+mdl. If repObj is a tcsam2015 model results object and mdl is NULL (the default), then
+repObj$mc$configName is used as the model name.
 
 The returned dataframe has columns named
 "model", "type", "category", "name", "level", "variable", and "value".

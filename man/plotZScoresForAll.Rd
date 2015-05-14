@@ -4,10 +4,10 @@
 \alias{plotZScoresForAll}
 \title{Plot model fits to data components}
 \usage{
-plotZScoresForAll(res, showPlot = FALSE)
+plotZScoresForAll(repObj, showPlot = FALSE)
 }
 \arguments{
-\item{res}{- model results list object}
+\item{repObj}{- model report list object}
 
 \item{showPlot}{- flag to show plots immediately}
 }
