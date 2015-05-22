@@ -1,4 +1,4 @@
-tcsam2015
+rTCSAM2015
 =========
 
-R code for plotting TCSAM2015 model results.
+R code for plotting and comparing TCSAM2015 and rsimTCSAM model results.
