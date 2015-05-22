@@ -45,7 +45,8 @@ plotCompsAsCirclesGG<-function(dfr,
 #    if (!is.null(ylim)) p <- p + ylim(ylim);
     p <- p + xlab(xlab);
     p <- p + ylab(ylab);
-    p <- p + guides(fill=guide_legend(override.aes=list(alpha=1.0,size=6)));
+    p <- p + guides(fill=guide_legend(override.aes=list(alpha=1.0,size=6),order=2),
+                    size=guide_legend(order=1));
     p <- p + ggtitle(title);
     p <- p + ggtheme;
     p <- p + theme(legend.box='horizontal')

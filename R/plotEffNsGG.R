@@ -89,6 +89,9 @@ plotEffNsGG<-function(fits,
             }
         }
     }
-    if (showPlot) plotMulti.GG(plotlist=plots,cols=1);
+    np<-length(plots);
+    nc<-floor((np-1)/3)+1;
+    
+    if (showPlot) plotMulti.GG(plotlist=plots,cols=nc);
     return(invisible(plots));
 }

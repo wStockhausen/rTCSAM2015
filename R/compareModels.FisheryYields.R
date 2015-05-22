@@ -54,6 +54,7 @@ compareModels.FisheryYields<-function(tcsam=NULL,
     mdfr$f<-gsub("_"," ",mdfr$f,fixed=TRUE);#replace '_'s in fishery names with spaces
     
     uniqFs<-unique(mdfr$f);#fishery names
+    uniqFs<-uniqFs[uniqFs!=''];#drop placeholder names
     
     for (uF in uniqFs){
         #plot totals across msz

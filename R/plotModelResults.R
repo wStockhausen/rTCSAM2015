@@ -102,35 +102,17 @@ plotModelResults<-function(repObj=NULL,
     plots$objfun<-compareModels.ObjFunValues(repObj,variable='objfun',showPlot=FALSE);
     if (showPlot) print(plots$objfun);
     
-    #plot simulated and observed data
-    cat("----------------------------------------------\n")
-    cat("plotting simulated and observed data.\n")
-    plots$DMCs<-plotDataModelComparisons(repObj,showPlot=FALSE);
-    if (showPlot) print(plots$DMCs);
-    
-    #plot effort regressions
-    cat("----------------------------------------------\n")
-    cat("plotting effort regressions.\n");
-    plots$effRegs<-plotEffortRegressions(repObj,showPlot=FALSE);
-    if (showPlot) print(plots$effRegs);
-    
     #plot model fits (z-scores, size comps, nlls)
     cat("----------------------------------------------\n")
     cat("plotting model fits.\n")
-    plots$zscores<-plotZScoresForAll(repObj,showPlot=FALSE);
-    if (showPlot) print(plots$zscores);
+    plots$zscores<-plotZScoresForAll(repObj,showPlot=showPlot);
+    #if (showPlot) print(plots$zscores);
     
     #plot population quantities
     cat("----------------------------------------------\n")
     cat("plotting population quantities\n")
     plots$pop.quants<-compareModels.PopQuants(repObj,showPlot=FALSE);
     if (showPlot) print(plots$pop.quants);
-    
-    #plot selectivities
-    cat("----------------------------------------------\n")
-    cat("plotting selectivities.\n")
-    plots$selfcns<-compareModels.SelFcns.ByPC(repObj,showPlot=FALSE);
-    if (showPlot) print(plots$selfcns);
     
     #plot fisheries quantities
     cat("----------------------------------------------\n")
@@ -143,6 +125,24 @@ plotModelResults<-function(repObj=NULL,
     cat("plotting surveys results.\n")
     plots$surveys.results<-compareModels.SurveyResults(repObj,showPlot=FALSE);
     if (showPlot) print(plots$surveys.results);
+    
+    #plot selectivities
+    cat("----------------------------------------------\n")
+    cat("plotting selectivities.\n")
+    plots$selfcns<-compareModels.SelFcns.ByPC(repObj,showPlot=FALSE);
+    if (showPlot) print(plots$selfcns);
+    
+    #plot simulated and observed data
+    cat("----------------------------------------------\n")
+    cat("plotting simulated and observed data.\n")
+    plots$DMCs<-plotDataModelComparisons(repObj,showPlot=FALSE);
+    if (showPlot) print(plots$DMCs);
+    
+    #plot effort regressions
+    cat("----------------------------------------------\n")
+    cat("plotting effort regressions.\n");
+    plots$effRegs<-plotEffortRegressions(repObj,showPlot=FALSE);
+    if (showPlot) print(plots$effRegs);
 
     #TODO: stock-recruit curve(s)
     cat("----------------------------------------------\n")

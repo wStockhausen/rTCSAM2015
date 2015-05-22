@@ -5,8 +5,8 @@
 \title{Compare selectivity functions from TCSAM2015 and rsimTCSAM model runs.}
 \usage{
 compareModels.SurveySelFcns(tcsam = NULL, rsim = NULL, years = list(`NMFS
-  trawl survey` = 2014), cast = "x", faceting = "y~x", showPlot = TRUE,
-  pdf = NULL, width = 8, height = 6)
+  Trawl Survey` = 2014), cast = "x", faceting = "y~x", showPlot = TRUE,
+  pdf = NULL, width = 14, height = 8)
 }
 \arguments{
 \item{tcsam}{- single TCSAM2015 model results object, or named list of such}

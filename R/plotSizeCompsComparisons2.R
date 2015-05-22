@@ -37,6 +37,8 @@ plotSizeCompsComparisons2<-function(name,
                                     nrow=5,
                                     showPlot=FALSE){
     
+    cat("---Running plotSizeCompsComparisons2(...) for",name,"with",label,"\n");
+    
     #redefine dimension variable names for convenience
     varnames<-c("sx","ms","sc","year","size");
     
@@ -106,6 +108,9 @@ plotSizeCompsComparisons2<-function(name,
         }
     } else mod<-NULL;
     
+    cat("data factor combinations are:\n");
+    print(fcs);
+    
     dfr<-rbind(obs,mod);
     
     qry<-"select d.type,d.sx,d.ms,d.sc,d.year,d.size,d.N
@@ -125,9 +130,9 @@ plotSizeCompsComparisons2<-function(name,
         if (!is.null(normBy)) normByStr<-paste(', ',normBy,sep='',collapse='');
         qry<-gsub('&&normByStr',normByStr,qry)
         tots<-sqldf::sqldf(qry);
-#         cat("normalization totals:\n")
-#         print(tots)
-#         cat('\n\n')
+        cat("Normalizing size comps by:",normByStr,'\n')
+        cat("Normalization totals:\n")
+        print(tots)
         
         qry<-'select
                 d.type,d.sx,d.ms,d.sc,d.ms_sc,d.year,d.size,d.N/t.Nt as N
@@ -168,13 +173,14 @@ plotSizeCompsComparisons2<-function(name,
             p <- p + labs(x="Size (mm)",y="proportion ")
             p <- p + facet_wrap(~year,ncol=ncol) 
             p <- p + ggtitle(paste(label,': ',name,': ',tolower(sxp),sep=''))
-            p <- p + guides(fill=guide_legend(''),colour=guide_legend(''))
+            p <- p + guides(fill=guide_legend('observed'),colour=guide_legend('estimated'))
             p <- p + ggtheme
             if (showPlot) print(p);
             ctr<-ctr+1;
             plots[[ctr]]<-p
         }
     }
+    cat("---Done running plotSizeCompsComparisons2(...)\n\n");
     return(invisible(plots));
 }
 

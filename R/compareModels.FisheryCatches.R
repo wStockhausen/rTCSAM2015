@@ -53,7 +53,8 @@ compareModels.FisheryCatches<-function(tcsam=NULL,
     mdfr<-rbind(cpmdfr,dsmdfr,rmmdfr,dmmdfr);#concatenate types in one dataframe
     mdfr$f<-gsub("_"," ",mdfr$f,fixed=TRUE);#replace '_'s in fishery names with spaces
     
-    uniqFs<-unique(mdfr$f);#fishery names
+    uniqFs<-unique(mdfr$f);    #fishery names
+    uniqFs<-uniqFs[uniqFs!=''];#drop placeholder names
     
     for (uF in uniqFs){
         #plot totals across msz

@@ -23,6 +23,8 @@
 #'@param guideTitleFill - title for fill guide
 #'@param guideTitleLineType - title for linetype guide
 #'@param guideTitleShape - title for shape guide
+#'@param plotABline - flag to plot a straight line
+#'@param abline - list w/ components intercept, slope, colour, size, linetype, alpha describing line to plots
 #'@param showPlot - flag to show plot immediately
 #'
 #'@return ggplot2 object
@@ -52,6 +54,8 @@ plotMDFR.XY<-function(mdfr,
                        guideTitleFill=NULL,
                        guideTitleLineType=NULL,
                        guideTitleShape=NULL,
+                       plotABline=FALSE,
+                       abline=list(intercept=0,slope=1,colour='black',linetype=3,size=1,alpha=0.8),
                        showPlot=FALSE
                        ){
     #cast melted dataframe
@@ -79,14 +83,19 @@ plotMDFR.XY<-function(mdfr,
     p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill,linetype=linetype,shape=shape),data=mdfr);
     p <- p + geom_point();
     p <- p + geom_line();
+    if (plotABline){
+        p <- p + geom_abline(intercept=abline$intercept,slope=abline$slope,
+                             colour=abline$colour,linetype=abline$linetype,
+                             size=abline$size,alpha=abline$alpha)
+    }
     if (!is.null(xlab))     p <- p + xlab(xlab);
     if (!is.null(ylab))     p <- p + ylab(ylb);
     if (!is.null(title))    p <- p + ggtitle(title);
     if (!is.null(faceting)) p <- p + facet_grid(faceting);
-    if (!is.null(guideTitleColour))   p <- p + guides(colour=guide_legend(title=guideTitleColour,  override.aes=list(alpha=1.0,size=6,order=1)));
-    if (!is.null(guideTitleFill))     p <- p + guides(fill=guide_legend(title=guideTitleFill,      override.aes=list(alpha=1.0,size=6,order=1)));
+    if (!is.null(guideTitleColour))   p <- p + guides(colour=guide_legend(title=guideTitleColour,    override.aes=list(alpha=1.0,size=6,order=1)));
+    if (!is.null(guideTitleFill))     p <- p + guides(fill=guide_legend(title=guideTitleFill,        override.aes=list(alpha=1.0,size=6,order=1)));
     if (!is.null(guideTitleLineType)) p <- p + guides(linetype=guide_legend(title=guideTitleLineType,override.aes=list(alpha=1.0,size=6,order=1)));
-    if (!is.null(guideTitleShape))    p <- p + guides(shape=guide_legend(title=guideTitleShape,   override.aes=list(alpha=1.0,size=6,order=1)));
+    if (!is.null(guideTitleShape))    p <- p + guides(shape=guide_legend(title=guideTitleShape,      override.aes=list(alpha=1.0,size=6,order=1)));
     if (showPlot) print(p);
     return(p)
 }

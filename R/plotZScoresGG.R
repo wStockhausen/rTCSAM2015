@@ -4,6 +4,7 @@
 #'@description Function to plot z-scores from fits to data using ggplot2.
 #'
 #'@param afits - 
+#'@param ci - confidence interval to plot
 #'@param xlim - x axis limits (computed internally if NULL)
 #'@param ylim - y axis limits (computed internally if NULL)
 #'@param xlab - x axis title
@@ -12,7 +13,7 @@
 #'@param ggtheme - theme for ggplot2
 #'@param showPlot - flag to print plot immediately
 #'
-#'@return ggplot2 object
+#'@return list of ggplot2 objects
 #'
 #'@import ggplot2
 #'@import reshape2
@@ -28,6 +29,10 @@ plotZScoresGG<-function(afits,
                         label="",
                         ggtheme=theme_grey(),
                         showPlot=FALSE){
+    cat("---Running plotZScoresGG(...) for",label,"\n");
+    
+    label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
+    
     nf<-length(afits);
     
     ci<-c((1-ci)/2,1-(1-ci)/2);
@@ -63,7 +68,7 @@ plotZScoresGG<-function(afits,
                 cat('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
                 return(NULL)
             }
-            dfrp<-data.frame(type='observed',sex=afit$x,maturity=afit$m,sc=afit$s,
+            dfrp<-data.frame(type='observed',x=afit$x,m=afit$m,s=afit$s,
                              year=as.numeric(names(obs)),val=obs,lci=lci,uci=uci,zscr=NA);
             odfr<-rbind(odfr,dfrp)
         }
@@ -74,66 +79,68 @@ plotZScoresGG<-function(afits,
         afit<-afits[[n]];
         if (!is.null(afit)){
             nll<-afit$nll;
-            dfrp<-data.frame(type='estimated',sex=afit$x,maturity=afit$m,sc=afit$s,
+            dfrp<-data.frame(type='estimated',x=afit$x,m=afit$m,s=afit$s,
                              year=as.numeric(names(nll$mod)),val=nll$mod,lci=NA,uci=NA,zscr=nll$zscrs);
             mdfr<-rbind(mdfr,dfrp);
         }
     }
         
     xlim<-range(odfr$year);
-    pd<-position_dodge(0.2)
     
-    cdfr<-rbind(odfr,mdfr)
+    cdfr<-rbind(odfr,mdfr);
+    cdfr$x<-tolower(gsub("_"," ",cdfr$x));
+    cdfr$m<-tolower(gsub("_"," ",cdfr$m));
+    cdfr$s<-tolower(gsub("_"," ",cdfr$s));
+    cdfr$class<-paste(cdfr$m,cdfr$s,sep=", ")
     
-    p1 <- ggplot(aes_string(x='year',y='val',colour='type',shape='maturity',fill='maturity'),data=cdfr)
-    p1 <- p1 + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1)
-    p1 <- p1 + geom_point(size=3,data=odfr)
-    p1 <- p1 + geom_line(size=0.75)
-    p1 <- p1 + xlim(xlim);
-    if (!is.null(ylab)) p1 <- p1 + ylab(ylab)
-#    if (!is.null(ylim)) p1 <- p1 + ylim(ylim)
-    p1 <- p1 + facet_grid(sc~sex)
-    p1 <- p1 + guides(colour=guide_legend('type',order=1),
-                      fill=guide_legend('maturity',order=2),
-                      shape=guide_legend('maturity',order=2))
-    p1 <- p1 + ggtitle(label);
-    p1 <- p1 + ggtheme;
+    cdfr<-removeImmOS(cdfr);
     
+    label<-gsub("_"," ",label);
+
+    #arithmetic-scale fits
+    pd<-position_identity(0.0)
+    p <- ggplot(aes_string(x='year',y='val',colour='type',fill='type',shape='type',linetype='type'),data=cdfr)
+    p <- p + scale_linetype_manual(values=c(observed=3,estimated=1))
+    p <- p + scale_shape_manual(values=c(observed=19,estimated=1))
+    p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),position=pd,width=0.8,linetype=1)
+    p <- p + geom_point(position=pd,size=3)
+    p <- p + geom_line( position=pd,size=1,alpha=1)
+    p <- p + xlim(xlim);
+    if (!is.null(ylab)) p <- p + ylab(ylab)
+#    if (!is.null(ylim)) p <- p + ylim(ylim)
+    p <- p + facet_grid(class~x)
+    p <- p + guides(linetype=guide_legend('type',order=1),
+                    shape   =guide_legend('type',order=1),
+                    fill    =guide_legend('type',order=1),
+                    colour  =guide_legend('type',order=1))
+    p <- p + ggtitle(label);
+    p <- p + ggtheme;
+
+    p1 <- p;#save plot with current dataframe
+    
+    #ln-scale fits
     cdfr$val<-log(cdfr$val);
     cdfr$uci<-log(cdfr$uci);
     cdfr$lci<-log(cdfr$lci);
-    odfr$val<-log(odfr$val);
-    mdfr$val<-log(mdfr$val);
-    
-    p2 <- ggplot(aes_string(x='year',y='val',colour='type',shape='maturity',fill='maturity'),data=cdfr)
-    p2 <- p2 + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1)
-    p2 <- p2 + geom_point(size=3,data=odfr)
-    p2 <- p2 + geom_line(size=0.75)
-    p2 <- p2 + xlim(xlim);
-    if (!is.null(ylab)) p2 <- p2 + ylab(paste(ylab,'[ln-scale]'))
-#    if (!is.null(ylim)) p2 <- p2 + ylim(ylim)
-    p2 <- p2 + facet_grid(sc~sex)
-    p2 <- p2 + guides(colour=guide_legend('type',order=1),
-                      fill=guide_legend('maturity',order=1),
-                      shape=guide_legend('maturity',order=1))
-    p2 <- p2 + ggtitle(label);
-    p2 <- p2 + ggtheme;
-    
+    p2 <- p %+% cdfr;#change to updated dataframe
+        
+    #zscores
     ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
-    p3 <- ggplot(aes_string(x='year',y='zscr',colour='maturity',shape='maturity',fill='maturity'),data=mdfr)
-    p3 <- p3 + geom_point(position=pd,size=3)
+    p3 <- ggplot(aes_string(x='year',y='zscr',colour='s',shape='s',fill='s'),data=cdfr)
+    p3 <- p3 + geom_point(position=pd,size=3,alpha=0.8)
     p3 <- p3 + xlim(xlim);
     p3 <- p3 + ylim(ylim);
     p3 <- p3 + ylab('z-scores')
-    p3 <- p3 + facet_grid(sc~sex)
-    p3 <- p3 + guides(colour=guide_legend('maturity',order=1),
-                      fill=guide_legend('maturity',order=1),
-                      shape=guide_legend('maturity',order=1))
+    p3 <- p3 + facet_grid(m~x)
+    p3 <- p3 + guides(colour=guide_legend('shell condition',order=1),
+                      fill  =guide_legend('shell condition',order=1),
+                      shape =guide_legend('shell condition',order=1))
     p3 <- p3 + ggtitle(label);
     p3 <- p3 + ggtheme;
 
 #    if (showPlot) plotMulti.GG(p1,p2,p3,cols=1);
     if (showPlot) {print(p1); print(p2); print(p3);}
     
+    cat("---Done running plotZScoresGG(...)\n\n");
     return(invisible(list(arscale=p1,lnscale=p2,zscores=p3)));
 }

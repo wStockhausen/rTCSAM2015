@@ -4,12 +4,13 @@
 \alias{plotAggregateCatchDataGG}
 \title{Plot aggregate catch data}
 \usage{
-plotAggregateCatchDataGG(name = NULL, obs = NULL, mod = NULL, ci = 0.95,
-  pdfType = "normal", logscale = FALSE, xlab = "year", ylab = "",
-  xlim = NULL, ylim = NULL, ggtheme = theme_grey(), showPlot = FALSE)
+plotAggregateCatchDataGG(label = NULL, obs = NULL, mod = NULL,
+  ci = 0.95, pdfType = "normal", logscale = FALSE, xlab = "year",
+  ylab = "", xlim = NULL, ylim = NULL, ggtheme = theme_grey(),
+  showPlot = FALSE)
 }
 \arguments{
-\item{name}{- fishery or survey name}
+\item{label}{- fishery or survey name}
 
 \item{obs}{- list of observed data}
 

@@ -27,6 +27,10 @@ plotZScoresGG.SizeFreqs<-function(fits,
                                     label="",
                                     ggtheme=theme_grey(),
                                     showPlot=TRUE){
+    cat("---Running plotFitsGG.SizeComps(...) for",label,"\n");
+    
+    label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
+    
     dims<-mc$dims;
     sxs<-gsub("_"," ",tolower(sxs),fixed=TRUE);
     mss<-gsub("_"," ",tolower(mss),fixed=TRUE);
@@ -116,5 +120,6 @@ plotZScoresGG.SizeFreqs<-function(fits,
             }
         }
     }
+    cat("---Done running plotFitsGG.SizeComps(...)\n\n");
     return(ps)
 }

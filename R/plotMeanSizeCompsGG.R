@@ -33,6 +33,8 @@ plotMeanSizeCompsGG<-function(name,
                               ggtheme=theme_grey(),
                               showPlot=FALSE){
     
+    cat("---Running plotMeanSizeCompsGG(...) for",name,"with",label,"\n");
+    
     #redefine dimension variable names for convenience
     varnames<-c("sx","ms","sc","year","size");
     
@@ -102,6 +104,9 @@ plotMeanSizeCompsGG<-function(name,
         }
     } else mod<-NULL;
     
+    cat("data factor combinations are:\n");
+    print(fcs);
+    
     dfr<-rbind(obs,mod);
     
     #select factor combinations with non-zero abundance
@@ -122,9 +127,9 @@ plotMeanSizeCompsGG<-function(name,
         if (!is.null(normBy)) normByStr<-paste(', ',normBy,sep='',collapse='');
         qry<-gsub('&&normByStr',normByStr,qry)
         tots<-sqldf::sqldf(qry);
-#         cat("normalization totals:\n")
-#         print(tots)
-#         cat('\n\n')
+        cat("Normalizing size comps by:",normByStr,'\n')
+        cat("Normalization totals:\n")
+        print(tots)
         
         qry<-'select
                 d.type,d.sx,d.ms,d.sc,d.ms_sc,d.year,d.size,d.N/t.Nt as N
@@ -176,6 +181,7 @@ plotMeanSizeCompsGG<-function(name,
             ctr<-ctr+1;
             plots[[ctr]]<-p
 #    }
+    cat("---Done running plotMeanSizeCompsGG(...)\n\n");
     return(invisible(plots));
 }
 

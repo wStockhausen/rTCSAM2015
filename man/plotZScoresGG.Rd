@@ -11,6 +11,8 @@ plotZScoresGG(afits, ci = 0.95, xlim = NULL, ylim = NULL,
 \arguments{
 \item{afits}{-}
 
+\item{ci}{- confidence interval to plot}
+
 \item{xlim}{- x axis limits (computed internally if NULL)}
 
 \item{ylim}{- y axis limits (computed internally if NULL)}
@@ -26,7 +28,7 @@ plotZScoresGG(afits, ci = 0.95, xlim = NULL, ylim = NULL,
 \item{showPlot}{- flag to print plot immediately}
 }
 \value{
-ggplot2 object
+list of ggplot2 objects
 }
 \description{
 Function to plot z-scores from fits to data using ggplot2.

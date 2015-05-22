@@ -24,8 +24,8 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
                                       faceting='y~x',
                                       showPlot=TRUE,
                                       pdf=NULL,
-                                      width=8,
-                                      height=6){
+                                      width=14,
+                                      height=8){
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=out.pdf,width=width,height=height);
@@ -41,26 +41,30 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
     rdfr$type<-'retention';
     
     mdfr<-rbind(sdfr,rdfr);
-    mdfr$v<-gsub("_"," ",mdfr$v,fixed=TRUE);#replace '_'s in survey names with spaces
+    mdfr$v<-gsub("_"," ",mdfr$v,fixed=TRUE);#replace '_'s in fishery names with spaces
     
     uniqFs<-unique(mdfr$f);#fishery names
+    names(years)<-tolower(names(years));#convert names for years to lower case
     
     castform<-"modeltype+model+f+type+y+z~.";
     if (!is.null(cast)&&(cast!='')) castform<-paste("modeltype+model+f+type+y+",cast,"+z~.",sep='');
     
     plots<-list();
     for (uF in uniqFs){
-        mdfrp<-mdfr[(mdfr$f==uF)&(mdfr$y %in% years[[uF]]),];#select results for fishery F        
-        ddfr<-dcast(mdfrp,castform,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
-        ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
-        p<-plotMDFR.XY(ddfr,x='z',value.var='.',
-                       agg.formula=NULL,faceting=faceting,
-                       xlab='size (mm CW)',ylab='Selectivity/Retention',units='',lnscale=FALSE,
-                       colour='model',guideTitleColor='',
-                       linetype='type',guideTitleLinetype='function type',
-                       shape='modeltype',guideTitleShape='');
-        if (showPlot) print(p);
-        plots[[uV]]$selfcn<-p;
+        mdfrp<-mdfr[(mdfr$f==uF)&(mdfr$y %in% years[[tolower(uF)]]),];#select results for fishery F      
+        if (nrow(mdfrp)>0){
+            ddfr<-dcast(mdfrp,castform,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
+            ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
+            p<-plotMDFR.XY(ddfr,x='z',value.var='.',
+                           agg.formula=NULL,faceting=faceting,
+                           xlab='size (mm CW)',ylab='Selectivity/Retention',units='',lnscale=FALSE,
+                           title=uF,
+                           colour='model',guideTitleColor='',
+                           linetype='type',guideTitleLinetype='function type',
+                           shape='modeltype',guideTitleShape='');
+            if (showPlot) print(p);
+            plots[[uF]]$selfcn<-p;
+        }
     }#uniqFs
     return(invisible(plots))
 }

@@ -68,10 +68,48 @@ compareModels.PopQuants<-function(tcsams=NULL,
     if (showPlot) print(p);
     plots$M_cxm<-p;
     
-    #growth
+    #mean growth increments
     mdfr<-NULL;
     if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/prGr_czz',tcsams,NULL);
+        mdfr<-getMDFR('mp/T_list/mnZAM_cz',tcsams,NULL);
+        mdfr$y<-'';
+        mdfr$x<-'';
+        ums<-as.character(unique(mdfr$model))
+        for (um in ums){
+            tcsam<-tcsams[[um]];
+            pgi<-tcsam$mpi$grw$pgi;
+            nPCs<-length(pgi$pcs)-1;#last element is a NULL
+            for (pc in 1:nPCs){
+                idx<-(mdfr$pc==pc)&(mdfr$model==um);
+                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
+                mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
+                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
+            }
+        }
+        mdfr$pc<-mdfr$y
+        mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
+    }
+    if (!is.null(rsims)){
+        mdfrp<-getMDFR('mp/T_list/mnZAM_cxz',NULL,rsims);
+        ums<-as.character(unique(mdfrp$model))
+        for (um in ums){
+            idx<-(mdfrp$model==um);
+            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
+        }
+        mdfr<-rbind(mdfr,mdfrp);
+    }
+    p<-plotMDFR.XY(mdfr,x='z',value.var='val',faceting='pc~x',
+                   plotABline=TRUE,
+                   xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
+                   shape='model',guideTitleShape='',
+                   colour='model',guideTitleColour='');
+    if (showPlot) print(p);
+    plots$mnZAM_cz<-p;
+    
+    #growth transition matrices
+    mdfr<-NULL;
+    if (!is.null(tcsams)){
+        mdfr<-getMDFR('mp/T_list/T_czz',tcsams,NULL);
         mdfr$y<-'';
         mdfr$x<-'';
         ums<-as.character(unique(mdfr$model))
@@ -90,7 +128,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
         mdfr<-mdfr[,c('pc','x','z','zp','val','model','modeltype')];
     }
     if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/T_cxzz',NULL,rsims);
+        mdfrp<-getMDFR('mp/T_list/T_cxzz',NULL,rsims);
         ums<-as.character(unique(mdfrp$model))
         for (um in ums){
             idx<-(mdfrp$model==um);
@@ -102,7 +140,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
                         xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
                         colour='.',guideTitleColor='',useColourGradient=TRUE,alpha=0.5);
     if (showPlot) print(p);
-    plots$prGr_czz<-p;
+    plots$T_czz<-p;
     
     #molt-to-maturity
     mdfr<-NULL;

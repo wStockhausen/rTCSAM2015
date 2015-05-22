@@ -26,6 +26,10 @@ plotFitsGG.SizeComps<-function(fits,
                                 label="",
                                 ggtheme=theme_grey(),
                                 showPlot=TRUE){
+    cat("---Running plotFitsGG.SizeComps(...) for",label,"\n");
+    
+    label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
+    
     dims<-mc$dims;
     sxs<-gsub("_"," ",tolower(sxs),fixed=TRUE);
     mss<-gsub("_"," ",tolower(mss),fixed=TRUE);
@@ -42,8 +46,6 @@ plotFitsGG.SizeComps<-function(fits,
     
     dms<-c(length(sxs),length(mss),length(scs),length(yrs));
     dmnames<-list(sx=sxs,ms=mss,sc=scs,yr=yrs);
-    ISSs<-array(NA,dms,dmnames);#input sample sizes
-    ESSs<-array(NA,dms,dmnames);#effective sample sizes
     
     yrsp<-names(fits);
     for (i in 1:(n-1)){
@@ -54,24 +56,20 @@ plotFitsGG.SizeComps<-function(fits,
         y<-yrsp[i];
         oAtZ[x,m,s,y,]<-fit$fit$obs;
         mAtZ[x,m,s,y,]<-fit$fit$mod;
-        ISSs[x,m,s,y]<-fit$fit$ss;
-        ESSs[x,m,s,y]<-fit$fit$effN;
     }
     
     odfr<-reshape2::melt(oAtZ,value.name='comp');
     mdfr<-reshape2::melt(mAtZ,value.name='comp');
     odfr$type<-'observed';
-    mdfr$type<-'predicted';
+    mdfr$type<-'estimated';
     pdfr<-rbind(odfr,mdfr);
-    idfr<-reshape2::melt(ISSs,value.name='n')
-    edfr<-reshape2::melt(ESSs,value.name='n')
     ps<-list();
+    odx<-(pdfr$type=='observed');
     for (x in sxs){
         for (m in mss){
             for (s in scs){
                 #set up extraction indices
                 idx<-(pdfr$sx %in% x)&(pdfr$ms %in% m)&(pdfr$sc %in% s);
-                odx<-(pdfr$type=='observed');
                 if (sum(pdfr$comp[idx&odx],na.rm=TRUE)>0){
                     #set up labels
                     sbt<-vector(mode="character",length=3);
@@ -81,17 +79,24 @@ plotFitsGG.SizeComps<-function(fits,
                     sbtp<-tolower(paste(sbt[sbt!=""],collapse=", "));
                     if (label!='') sbtp<-paste(label,sbtp,sep=': ')
                     
+                    #check normalization
+                    tst<-dcast(pdfr[idx,],sx+ms+sc+yr~type,fun.aggregate=sum,value.var='comp')
+                    cat("Normalization check:\n");
+                    print(tst)
+                    
                     pl <- ggplot(aes(x=zb,y=comp,color=type,fill=type),data=pdfr[idx&odx,]);
                     pl <- pl + geom_bar(alpha=0.8,stat='identity');
                     pl <- pl + geom_line(data=pdfr[idx&(!odx),],alpha=0.8);
                     pl <- pl + labs(x='size (mm)',y='composition');
                     pl <- pl + facet_wrap(~yr,nr=10);
                     pl <- pl + ggtitle(sbtp);
+                    pl <- pl + guides(fill=guide_legend('type'),colour=guide_legend('type'))
                     if (showPlot) print(pl);
                     ps[[sbtp]]<-pl;
                 }#sum(pdfr$comp[idx&odx],na.rm=TRUE)>0
             }#s
         }#m
     }#x
+    cat("---Done running plotFitsGG.SizeComps(...)\n\n");
     return(ps)
 }

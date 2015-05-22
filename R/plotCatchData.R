@@ -21,10 +21,11 @@ plotCatchData<-function(name=NULL,
                         normalize=TRUE,
                         label="",
                         showPlot=FALSE){
+    cat("---Running plotCatchData(...) for",name,"\n");
     plots<-list();
     #plot abundance
     if (!is.null(mod$abundance)){
-        cat('Plotting abundance using plotAggregateCatchDataGG\n')
+        #cat('Plotting abundance\n')
         plots$abundance<-list();
         od<-obs$abundance;
         md<-mod$abundance;
@@ -33,7 +34,7 @@ plotCatchData<-function(name=NULL,
     }
     #plot biomass
     if (!is.null(mod$biomass)){
-        cat('Plotting biomass using plotAggregateCatchDataGG\n')
+        cat('Plotting biomass\n')
         plots$biomass<-list();
         od<-obs$biomass;
         md<-mod$biomass;
@@ -42,8 +43,8 @@ plotCatchData<-function(name=NULL,
     }
     #plot size frequencies
     if (!is.null(mod$nAtZ)){
+        cat('Plotting size comps\n')
         plots$zfs<-list();
-        cat('name  =',name,'\n')
         od<-obs$nAtZ;
         md<-mod$nAtZ;
 #         ps0<-plotSizeCompsComparisons0(name,od,md,normalize=normalize,label=label,showPlots=FALSE);
@@ -53,5 +54,6 @@ plotCatchData<-function(name=NULL,
         plots$zfs$comps<-plotSizeCompsComparisons2(name,od,md,normalize=normalize,label=label,showPlot=showPlot)
         plots$zfs$mean<-plotMeanSizeCompsGG(name,od,md,normalize=normalize,label=label,showPlot=showPlot);
     }
+    cat("---Done running plotCatchData(...)\n\n");
     return(invisible(plots));
 }

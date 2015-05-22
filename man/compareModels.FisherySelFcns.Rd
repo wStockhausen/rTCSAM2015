@@ -6,7 +6,7 @@
 \usage{
 compareModels.FisherySelFcns(tcsam = NULL, rsim = NULL, years = list(TCF =
   2013), cast = "x", faceting = "y~x", showPlot = TRUE, pdf = NULL,
-  width = 8, height = 6)
+  width = 14, height = 8)
 }
 \arguments{
 \item{tcsam}{- single TCSAM2015 model results object, or named list of such}

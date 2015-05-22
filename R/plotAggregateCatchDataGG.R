@@ -3,7 +3,7 @@
 #'
 #'@description Plot aggregate (numbers or biomass) catch data from fisheries or surveys
 #'
-#'@param name - fishery or survey name
+#'@param label - fishery or survey name
 #'@param obs - list of observed data 
 #'@param mod - list of model-predicted data
 #'@param ci - confidence interval
@@ -23,19 +23,19 @@
 #'
 #'@export
 #'
-plotAggregateCatchDataGG<-function(name=NULL,
-                                 obs=NULL,
-                                 mod=NULL,
-                                 ci=0.95,
-                                 pdfType='normal',
-                                 logscale=FALSE,
-                                 xlab='year',
-                                 ylab='',
-                                 xlim=NULL,
-                                 ylim=NULL,
-                                 ggtheme=theme_grey(),
-                                 showPlot=FALSE){
-    
+plotAggregateCatchDataGG<-function(label=NULL,
+                                   obs=NULL,
+                                   mod=NULL,
+                                   ci=0.95,
+                                   pdfType='normal',
+                                   logscale=FALSE,
+                                   xlab='year',
+                                   ylab='',
+                                   xlim=NULL,
+                                   ylim=NULL,
+                                   ggtheme=theme_grey(),
+                                   showPlot=FALSE){
+    cat("---Running plotAggregateCatchDataGG(...) for",label,"with",ylab,"\n");
     units<-gsub("_"," ",tolower(mod$units));
     ylab<-paste(ylab," (",units,")",sep='');
     
@@ -63,6 +63,10 @@ plotAggregateCatchDataGG<-function(name=NULL,
             odfr$sd<-odfr$cv*odfr$val; #sd on arithmetic scale
             odfr$lci<-exp(qnorm(ci[1],mean=log(odfr$val),sd=sd));
             odfr$uci<-exp(qnorm(ci[2],mean=log(odfr$val),sd=sd));
+        } else {
+            cat('No error bars\n')
+            odfr$lci<-NA;
+            odfr$uci<-NA;
         }
         odfr$facs<-paste(odfr$x,odfr$m,odfr$s)
         #find factor combinations which are NOT all 0's
@@ -70,16 +74,18 @@ plotAggregateCatchDataGG<-function(name=NULL,
         tots<-tots[!(tots$`.`==0),]
         facs<-paste(tots$x,tots$m,tots$s)
         odfr<-odfr[odfr$facs %in% facs,]
-        cat("facs =",paste("'",facs,"'",sep="",collapse=", "),"\n")
-        cat("nrow(odfr) = ",nrow(odfr),'\n')
-        cat("is.null(odfr$uci) = ",is.null(odfr$uci),'\n')
-        cat("is.null(odfr$lci) = ",is.null(odfr$lci),'\n')
+        cat("data factors =",paste("'",facs,"'",sep="",collapse=", "),"\n")
+#         cat("nrow(odfr) = ",nrow(odfr),'\n')
+#         cat("is.null(odfr$uci) = ",is.null(odfr$uci),'\n')
+#         cat("is.null(odfr$lci) = ",is.null(odfr$lci),'\n')
         if (logscale){
             odfr$val<-log(odfr$val);
             if (!is.null(odfr$uci)) {odfr$uci<-log(odfr$uci);}
             if (!is.null(odfr$lci)) {odfr$lci<-log(odfr$lci);}
         }
     }
+    odfr$type<-'observed';
+    odfr<-odfr[,c('type','x','m','s','y','val','lci','uci')];
     
     #model predictions
     mdfr<-NULL;
@@ -89,18 +95,37 @@ plotAggregateCatchDataGG<-function(name=NULL,
         mdfr<-mdfr[mdfr$facs %in% facs,]
         if (logscale){mdfr$val<-log(mdfr$val);}
     }
+    mdfr$type<-'estimated';
+    mdfr$lci<-NA;
+    mdfr$uci<-NA;
+    mdfr<-mdfr[,c('type','x','m','s','y','val','lci','uci')];
     
-    pd<-position_dodge(0.2)
-    p <- ggplot(aes_string(x='y',y='val',colour='m',shape='s',fill='m'),data=odfr)
-    if (!is.null(odfr$uci)) {p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),width=1,position=pd);}
+    cdfr<-rbind(odfr,mdfr)
+    cdfr$class<-paste(cdfr$m,cdfr$s,sep=", ");#add 'class' column for maturity+shell condition
+    
+#     print(names(cdfr));
+#     print(cdfr);
+    
+    pd<-position_identity(0.0)
+    p <- ggplot(aes_string(x='y',y='val',colour='type',fill='type',shape='type',linetype='type'),data=cdfr)
+    p <- p + scale_linetype_manual(values=c(observed=3,estimated=1))
+    p <- p + scale_shape_manual(values=c(observed=19,estimated=1))
+    p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),position=pd,width=0.8,linetype=1)
     p <- p + geom_point(position=pd,size=3)
-    p <- p + geom_line(position=pd,size=1,linetype=3,alpha=0.5)
-    p <- p + geom_line(data=mdfr,position=pd,size=1,linetype=1,alpha=1.0)
-    if (!is.null(ylab)) {p <- p + ylab(ylab);}
-    if (!is.null(ylim)) {p <- p + ylim(ylim);}
-    p <- p + facet_wrap(~x,ncol=1)
-    p <- p + ggtitle(name)
+    p <- p + geom_line( position=pd,size=1,alpha=1)
+    if (!is.null(xlim)) p <- p + xlim(xlim);
+    if (!is.null(xlab)) p <- p + xlab(xlab)
+#    if (!is.null(ylim)) p <- p + ylim(ylim)
+    if (!is.null(ylab)) p <- p + ylab(ylab)
+    p <- p + facet_grid(class~x)
+    p <- p + guides(linetype=guide_legend('type',order=1),
+                    shape   =guide_legend('type',order=1),
+                    fill    =guide_legend('type',order=1),
+                    colour  =guide_legend('type',order=1))
+    if (!is.null(label)) p <- p + ggtitle(gsub("_"," ",label,fixed=TRUE));
+    p <- p + ggtheme;
     if (showPlot) print(p)
     
+    cat("---Done running plotAggregateCatchDataGG(...)\n\n");
     return(invisible(p));
 }

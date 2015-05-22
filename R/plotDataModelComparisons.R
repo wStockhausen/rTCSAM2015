@@ -11,6 +11,7 @@
 plotDataModelComparisons<-function(repObj,showPlot=FALSE){
     #plot comparisons of abundance, biomass, and size frequencies
     #for model and data components
+    cat("---Running plotDataModelComparisons(...)\n");
     
     #plot comparisons for survey abundance and biomass
     plots.srv<-list();
@@ -40,6 +41,7 @@ plotDataModelComparisons<-function(repObj,showPlot=FALSE){
             plots.fsh[[f]]$tot<-plotCatchData(name,obs$total.catch,mod$total.catch,label="Total Catch",showPlot=showPlot);
         }
     }
+    cat("---Done running plotDataModelComparisons(...)\n");
     return(invisible(list(surveys=plots.srv,fisheries=plots.fsh)));
 }
 

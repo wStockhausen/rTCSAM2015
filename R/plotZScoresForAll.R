@@ -10,10 +10,10 @@
 #'
 plotZScoresForAll<-function(repObj,showPlot=FALSE){
     #plot z-scores for fits to survey abundance and biomass
-    ps.srv<-plotZScoresForSurveys(repObj,showPlot=showPlot);
+    plots.srv<-plotZScoresForSurveys(repObj,showPlot=showPlot);
     
     #plot z-scores for fits to fishery catch abundance and biomass
-    ps.fsh<-plotZScoresForFisheries(repObj,showPlot=showPlot);
+    plots.fsh<-plotZScoresForFisheries(repObj,showPlot=showPlot);
     
-    return(invisible(list(surveys=ps.srv,fisheries=ps.fsh)))
+    return(invisible(list(surveys=plots.srv,fisheries=plots.fsh)))
 }

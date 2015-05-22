@@ -53,6 +53,7 @@ compareModels.FishingRates<-function(tcsam=NULL,
     mdfr<-rbind(cmdfr,tmdfr,rmdfr,dmdfr);#concatenate types in one dataframe
     
     uniqFs<-unique(mdfr$f);#fishery names
+    uniqFs<-uniqFs[uniqFs!=''];#drop placeholder names
     
     for (uF in uniqFs){
         mdfrp<-mdfr[mdfr$f==uF,];#select fishery results
