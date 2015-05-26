@@ -20,7 +20,7 @@ plotZScoresForAll<-function(repObj,
     plots.fsh<-plotZScoresForFisheries(repObj,showPlot=showPlot);
     
     #plot z-scores for recruit devs
-    cat("Plotting z-scoress for rec devs\n")
+    cat("Plotting z-scores for rec devs\n")
     pDevsLnR<-repObj$mpi$rec$pDevsLnR;
     mdfr<-NULL;
     for (p in names(pDevsLnR)){
@@ -42,7 +42,7 @@ plotZScoresForAll<-function(repObj,
     if (showPlot) print(pR);
     
     #plot z-scores for F-devs
-    cat("Plotting z-scoress for F-devs\n")
+    cat("Plotting z-scores for F-devs\n")
     pDevsLnC<-repObj$mpi$fsh$pDevsLnC;
     mdfr<-NULL;
     for (p in names(pDevsLnC)){
@@ -63,5 +63,39 @@ plotZScoresForAll<-function(repObj,
     pC <- pC + ggtheme;
     if (showPlot) print(pC);
     
-    return(invisible(list(surveys=plots.srv,fisheries=plots.fsh,recDevs=pR,fshDevs=pC)))
+    #plot z-scores for selectivity devs
+    cat("Plotting z-scores for selectivity devs\n");
+    pSs<-list();
+    devs<-paste("pDevsS",1:6,sep='');
+    for (dev in devs){
+        pDevsS<-repObj$mpi$sel[[dev]];
+        if (!is.null(pDevsS)){
+            mdfr<-NULL;
+            for (p in names(pDevsS)){
+                dfr<-reshape2::melt(pDevsS[[p]]$finalVals,value.name="zscr");
+                dfr$pc<-p;
+                mdfr<-rbind(mdfr,dfr);
+            }
+            ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
+            pd<-position_identity(0.2)
+            pS <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
+            pS <- pS + geom_point(position=pd,size=3,alpha=0.8)
+            pS <- pS + ylim(ylim);
+            pS <- pS + xlab('year')
+            pS <- pS + ylab('deviation')
+            pS <- pS + ggtitle(dev)
+            pS <- pS + guides(colour=guide_legend('pc',order=1),
+                              fill  =guide_legend('pc',order=1),
+                              shape =guide_legend('pc',order=1))
+            pS <- pS + ggtheme;
+            if (showPlot) print(pS);
+            pSs[[dev]]<-pS;
+        }
+    }
+    
+    return(invisible(list(surveys=plots.srv,
+                          fisheries=plots.fsh,
+                          recDevs=pR,
+                          fshDevs=pC,
+                          selDevs=pSs)));
 }
