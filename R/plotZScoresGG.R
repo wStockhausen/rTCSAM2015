@@ -95,6 +95,8 @@ plotZScoresGG<-function(afits,
     
     cdfr<-removeImmOS(cdfr);
     
+    cdfr<-cdfr[(xlim[1]<=cdfr$year)&(cdfr$year<=xlim[2]),]
+    
     label<-gsub("_"," ",label);
 
     #arithmetic-scale fits

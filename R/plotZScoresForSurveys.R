@@ -30,7 +30,7 @@ plotZScoresForSurveys<-function(repObj,showPlot=FALSE){
                 plots$zfs<-plotFitsGG.SizeComps(    sfit$n.at.z,repObj$mc,label=srv,showPlot=showPlot)
                 plots$mzfs<-plotFitsGG.MeanSizeComps(sfit$n.at.z,repObj$mc,label=srv,showPlot=showPlot)
                 cat("Plotting zscores for size frequencies.\n")
-                plots$zrs<-plotZScoresGG.SizeFreqs(sfit$n.at.z,repObj$mc,label=srv,showPlot=showPlot)
+                plots$zrs<-plotZScoresGG1.SizeFreqs(sfit$n.at.z,repObj$mc,label=srv,showPlot=showPlot)
                 cat("Plotting ESSs for size frequencies.\n")
                 plots$effn<-plotEffNsGG(sfit$n.at.z,repObj$mc,label=srv,showPlot=showPlot)
             }

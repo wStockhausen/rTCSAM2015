@@ -8,6 +8,7 @@
 #'@param y - column name with y coordinates of circle centers
 #'@param z - column name with values to be plotted as circles
 #'@param category - column name with values used as categories for plot
+#'@param faceting - formula (as string) for faceting (NULL=no faceting)
 #'@param title - title for plot
 #'@param xlim - x axis limits
 #'@param ylim - y axis limits
@@ -28,6 +29,7 @@ plotCompsAsCirclesGG<-function(dfr,
                                y=NULL,                             
                                z=NULL,
                                category=NULL,
+                               faceting=NULL,
                                title=NA,
                                xlim=NULL,
                                ylim=NULL,
@@ -50,6 +52,7 @@ plotCompsAsCirclesGG<-function(dfr,
     p <- p + ggtitle(title);
     p <- p + ggtheme;
     p <- p + theme(legend.box='horizontal')
+    if (!is.null(faceting)) p <- p + facet_grid(faceting)
     if (showPlot) print(p);
 
     return(p)

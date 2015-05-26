@@ -27,9 +27,10 @@ plotZScoresForFisheries<-function(repObj,showPlot=FALSE){
                 }
                 if (!is.null(fit$n.at.z)){
                     cat("Plotting fits for total catch size frequencies.\n")
-                    plots.ret$zfs<-plotFitsGG.SizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
+                    plots.ret$zfs <-plotFitsGG.SizeComps(    fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
+                    plots.ret$mzfs<-plotFitsGG.MeanSizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
                     cat("Plotting retained catch size frequency zscores for",fsh,"\n")
-                    plots.ret$zrs<-plotZScoresGG.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''))
+                    plots.ret$zrs<-plotZScoresGG1.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''))
                     cat("Plotting ESSs for size frequencies.\n")
                     plots.ret$effn<-plotEffNsGG(fit$n.at.z,repObj$mc,label=paste(fsh,": ","retained catch",sep=''),showPlot=showPlot)
                 }
@@ -49,9 +50,10 @@ plotZScoresForFisheries<-function(repObj,showPlot=FALSE){
                 }
                 if (!is.null(fit$n.at.z)){
                     cat("Plotting fits for discard catch size frequencies.\n")
-                    plots.tot$zfs<-plotFitsGG.SizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
+                    plots.tot$zfs <-plotFitsGG.SizeComps(    fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
+                    plots.tot$mzfs<-plotFitsGG.MeanSizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
                     cat("Plotting discard catch size frequency zscores for",fsh,"\n")
-                    plots.dsc$zrs<-plotZScoresGG.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
+                    plots.dsc$zrs<-plotZScoresGG1.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
                     cat("Plotting ESSs for size frequencies.\n")
                     plots.dsc$effn<-plotEffNsGG(fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
                 }
@@ -71,9 +73,10 @@ plotZScoresForFisheries<-function(repObj,showPlot=FALSE){
                 }
                 if (!is.null(fit$n.at.z)){
                     cat("Plotting fits for total catch size frequencies.\n")
-                    plots.tot$zfs<-plotFitsGG.SizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
+                    plots.tot$zfs <-plotFitsGG.SizeComps(    fit$n.at.z,repObj$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
+                    plots.tot$mzfs<-plotFitsGG.MeanSizeComps(fit$n.at.z,repObj$mc,label=paste(fsh,": ","discard catch",sep=''),showPlot=showPlot)
                     cat("Plotting total catch size frequencies for",fsh,"\n")
-                    plots.tot$zrs<-plotZScoresGG.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
+                    plots.tot$zrs<-plotZScoresGG1.SizeFreqs(fit$n.at.z,repObj$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
                     cat("Plotting ESSs for size frequencies.\n")
                     plots.tot$effn<-plotEffNsGG(fit$n.at.z,repObj$mc,label=paste(fsh,": ","total catch",sep=''),showPlot=showPlot)
                 }
