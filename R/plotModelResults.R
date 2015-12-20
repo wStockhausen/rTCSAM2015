@@ -160,4 +160,4 @@ plotModelResults<-function(repObj=NULL,
     return(invisible(ret));
 }
 
-#plotModelrepObjults(repObj,out.pdf='test.pdf');
+#plotModelrepObjults(repObj,pdf='test.pdf');

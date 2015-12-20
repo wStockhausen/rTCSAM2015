@@ -28,8 +28,8 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
                                       height=8){
     #set up pdf device, if requested
     if (!is.null(pdf)){
-        pdf(file=out.pdf,width=width,height=height);
-        on.exit(dev.close())
+        pdf(file=pdf,width=width,height=height);
+        on.exit(dev.close());
     }
         
     #selectivity/retention

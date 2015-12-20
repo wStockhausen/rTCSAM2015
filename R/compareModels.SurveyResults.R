@@ -22,8 +22,8 @@ compareModels.SurveyResults<-function(tcsam=NULL,
                                   height=6){
     #set up pdf device, if requested
     if (!is.null(pdf)){
-        pdf(file=out.pdf,width=width,height=height);
-        on.exit(dev.close())
+        pdf(file=pdf,width=width,height=height);
+        on.exit(dev.close());
     }
     
     plots<-list();

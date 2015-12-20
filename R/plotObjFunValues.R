@@ -10,13 +10,13 @@
 #'
 #'@return list of ggplot2 objects corresponding to penalties, priors, and data plots.
 #'
-#'@importFrom ggplot2 theme_grey
+#'@import ggplot2
 #'
 #'@export
 #'
 plotObjFunValues<-function(res,
                            variable='objfun',
-                           ggtheme=ggplot2::theme_grey(),
+                           ggtheme=theme_grey(),
                            showPlot=FALSE){
     ps<-list();
     cat("plotting objective function values for penalties.\n")

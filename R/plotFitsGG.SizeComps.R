@@ -88,7 +88,7 @@ plotFitsGG.SizeComps<-function(fits,
                     pl <- pl + geom_bar(alpha=0.8,stat='identity');
                     pl <- pl + geom_line(data=pdfr[idx&(!odx),],alpha=0.8);
                     pl <- pl + labs(x='size (mm)',y='composition');
-                    pl <- pl + facet_wrap(~yr,nr=10);
+                    pl <- pl + facet_wrap(~yr,nrow=10);
                     pl <- pl + ggtitle(sbtp);
                     pl <- pl + guides(fill=guide_legend('type'),colour=guide_legend('type'))
                     if (showPlot) print(pl);

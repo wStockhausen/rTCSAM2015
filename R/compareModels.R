@@ -73,4 +73,4 @@ compareModels<-function(tcsam=NULL,
     return(invisible(plots));
 }
 
-#plotModelrepObjults(repObj,out.pdf='test.pdf');
+#plotModelrepObjults(repObj,pdf='test.pdf');

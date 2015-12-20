@@ -12,6 +12,7 @@
 #'
 #'@return list of ggplot2 objects
 #'
+#'
 #'@export
 #'
 compareModels.PopQuants<-function(tcsams=NULL,
@@ -22,7 +23,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
                                   height=6){
     #set up pdf device, if requested
     if (!is.null(pdf)){
-        pdf(file=out.pdf,width=width,height=height);
+        pdf(file=pdf,width=width,height=height);
         on.exit(dev.close())
     }
     

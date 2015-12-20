@@ -1,20 +1,24 @@
 Package: rTCSAM2015
 Type: Package
-Title: Provides a set of tools to interact with output from a TCSAM2015 model
-    run and to compare TCSAM2015 and rsimTCAM runs.
-Version: 0.9.8
-Date: 2015-05-25
+Title: A set of tools to set up input for, and interact with output from, a
+    TCSAM2015 model run, as well as to compare TCSAM2015 and rsimTCAM runs.
+Version: 0.9.9
+Date: 2015-12-19
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
-Description: Provides a set of tools to interact with output from a TCSAM2015
-    model run. Also provides tools to compare TCAM2015 and rsimTCSAM model runs.
-License: MIT
+Description: This package provides a set of tools to set up input for,
+    and interact with output from, a TCSAM2015 model run, as well as
+    to compare TCSAM2015 and rsimTCAM runs.
+License: MIT + file LICSENSE
+Depends:
+    R (>= 3.1.2)
 Imports:
     ggplot2 (>= 1.0.0),
     graphics (>= 3.1.2),
-    grid,
+    grid (>= 3.1.2),
     reshape2 (>= 1.4.1),
     sqldf (>= 0.4-10),
     stats (>= 3.1.2),
     tcltk (>= 3.1.2),
     wtsUtilities (>= 1.0.10)
+RoxygenNote: 5.0.1
