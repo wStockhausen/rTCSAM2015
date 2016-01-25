@@ -29,7 +29,6 @@
 #'
 #'@return ggplot2 object
 #'
-#'@importFrom reshape2 dcast
 #'@import ggplot2
 #'
 #'@export
@@ -62,7 +61,7 @@ plotMDFR.XY<-function(mdfr,
     if (!is.null(agg.formula)){
         #aggregate using formula
         form<-paste(agg.formula,".",sep="~")
-        mdfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+        mdfr<-reshape2::dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
     } else {
         #rename value.var column to '.'
         nms<-colnames(mdfr);

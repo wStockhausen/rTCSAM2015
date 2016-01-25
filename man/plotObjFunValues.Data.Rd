@@ -5,7 +5,7 @@
 \title{Plot data values (surveys and fisheries) used in the objective function, grouped by category.}
 \usage{
 plotObjFunValues.Data(mdfr, variable = "objfun", ggtheme = theme_grey(),
-  showPlot = FALSE)
+  showPlot = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{mdfr}{- melted dataframe of data values from call to getObjFunValues.getData(...)}
@@ -15,6 +15,8 @@ plotObjFunValues.Data(mdfr, variable = "objfun", ggtheme = theme_grey(),
 \item{ggtheme}{- a ggplot2 theme}
 
 \item{showPlot}{- flag to show plots}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 list of ggplot2 objects corresponding to different categories of priors.

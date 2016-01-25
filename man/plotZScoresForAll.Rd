@@ -2,9 +2,10 @@
 % Please edit documentation in R/plotZScoresForAll.R
 \name{plotZScoresForAll}
 \alias{plotZScoresForAll}
-\title{Plot model fits to data components}
+\title{Plot z-scores for all components}
 \usage{
-plotZScoresForAll(repObj, ggtheme = theme_grey(), showPlot = FALSE)
+plotZScoresForAll(repObj, ggtheme = theme_grey(), showPlot = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{repObj}{- model report list object}
@@ -12,8 +13,13 @@ plotZScoresForAll(repObj, ggtheme = theme_grey(), showPlot = FALSE)
 \item{ggtheme}{- theme for ggplot2}
 
 \item{showPlot}{- flag to show plots immediately}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 list of lists of ggplot objects
+}
+\description{
+Function to plot z-scores for all components.
 }
 

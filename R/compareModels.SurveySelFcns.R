@@ -48,15 +48,15 @@ compareModels.SurveySelFcns<-function(tcsam=NULL,
         cat('creating selectivity functions plot for survey ',uV,'\n')
         mdfrp<-mdfr[(mdfr$v==uV)&(mdfr$y %in% years[[tolower(uV)]]),];#select results for survey uV        
         if (nrow(mdfrp)>0){
-            ddfr<-dcast(mdfrp,castform,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
+            ddfr<-reshape2::dcast(mdfrp,castform,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
             ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
             p<-plotMDFR.XY(ddfr,x='z',value.var='.',
                            agg.formula=NULL,faceting=faceting,
                            xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
                            title=uV,
                            colour='model',guideTitleColor='',
-                           shape='model',guideTitleShape='');
-            if (showPlot) print(p);
+                           shape='model',guideTitleShape='',
+                           showPlot=showPlot);
             plots[[uV]]$selfcn<-p;
         }
     }#uniqVs

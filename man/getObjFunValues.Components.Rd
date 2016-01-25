@@ -4,12 +4,14 @@
 \alias{getObjFunValues.Components}
 \title{Get model components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.Components(res, mdl = NULL)
+getObjFunValues.Components(res, mdl = NULL, verbose = FALSE)
 }
 \arguments{
 \item{res}{- tcsam2015 model results object or list of such}
 
 \item{mdl}{- name to associate with model results object}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 a melted dataframe

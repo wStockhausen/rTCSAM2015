@@ -1,26 +1,42 @@
 #'
-#'@title Plot model fits to data components
+#'@title Plot z-scores for all components
+#'
+#'@description Function to plot z-scores for all components.
 #'
 #'@param repObj - model report list object
 #'@param ggtheme - theme for ggplot2
 #'@param showPlot - flag to show plots immediately
+#'@param verbose - flag (T/F) to print dagnostic info
 #'
 #'@return list of lists of ggplot objects
+#'
+#'@import ggplot2
 #'
 #'@export
 #'
 plotZScoresForAll<-function(repObj,
                             ggtheme=theme_grey(),
-                            showPlot=FALSE){
+                            showPlot=TRUE,
+                            verbose=FALSE){
     
     #plot z-scores for fits to survey abundance and biomass
-    plots.srv<-plotZScoresForSurveys(repObj,showPlot=showPlot);
+    ##plots.srv<-plotZScoresForSurveys(repObj,showPlot=showPlot);
+    if (verbose) cat("Plotting z-scores for surveys\n")
+    plots.srv<-plotZScoresForFleets(repObj,
+                                    type='survey',
+                                    showPlot=showPlot,
+                                    verbose=verbose);
     
     #plot z-scores for fits to fishery catch abundance and biomass
-    plots.fsh<-plotZScoresForFisheries(repObj,showPlot=showPlot);
+    ##plots.fsh<-plotZScoresForFisheries(repObj,showPlot=showPlot);
+    if (verbose) cat("Plotting z-scores for fisheries\n")
+    plots.fsh<-plotZScoresForFleets(repObj,
+                                    type='fishery',
+                                    showPlot=showPlot,
+                                    verbose=verbose);
     
     #plot z-scores for recruit devs
-    cat("Plotting z-scores for rec devs\n")
+    if (verbose) cat("Plotting z-scores for rec devs\n")
     pDevsLnR<-repObj$mpi$rec$pDevsLnR;
     mdfr<-NULL;
     for (p in names(pDevsLnR)){
@@ -29,7 +45,7 @@ plotZScoresForAll<-function(repObj,
         mdfr<-rbind(mdfr,dfr);
     }
     ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
-    pd<-position_identity(0.0)
+    pd<-position_identity();
     pR <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
     pR <- pR + geom_point(position=pd,size=3,alpha=0.8)
     pR <- pR + ylim(ylim);
@@ -42,7 +58,7 @@ plotZScoresForAll<-function(repObj,
     if (showPlot) print(pR);
     
     #plot z-scores for F-devs
-    cat("Plotting z-scores for F-devs\n")
+    if (verbose) cat("Plotting z-scores for F-devs\n")
     pDevsLnC<-repObj$mpi$fsh$pDevsLnC;
     mdfr<-NULL;
     for (p in names(pDevsLnC)){
@@ -51,7 +67,7 @@ plotZScoresForAll<-function(repObj,
         mdfr<-rbind(mdfr,dfr);
     }
     ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
-    pd<-position_identity(0.2)
+    pd<-position_dodge(0.2)
     pC <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
     pC <- pC + geom_point(position=pd,size=3,alpha=0.8)
     pC <- pC + ylim(ylim);
@@ -64,7 +80,7 @@ plotZScoresForAll<-function(repObj,
     if (showPlot) print(pC);
     
     #plot z-scores for selectivity devs
-    cat("Plotting z-scores for selectivity devs\n");
+    if (verbose) cat("Plotting z-scores for selectivity devs\n");
     pSs<-list();
     devs<-paste("pDevsS",1:6,sep='');
     for (dev in devs){
@@ -77,7 +93,7 @@ plotZScoresForAll<-function(repObj,
                 mdfr<-rbind(mdfr,dfr);
             }
             ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
-            pd<-position_identity(0.2)
+            pd<-position_dodge(0.2)
             pS <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
             pS <- pS + geom_point(position=pd,size=3,alpha=0.8)
             pS <- pS + ylim(ylim);

@@ -5,6 +5,7 @@
 #'
 #'@param res - tcsam2015 model results object or list of such
 #'@param mdl - name to associate with model results object
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
@@ -19,11 +20,11 @@
 #'The "variable" column indicates whether the "value" is a weight ('wgt'),
 #'negative log-likelihood ('nll'), or objective function value ('objfun').
 #'
-#'@importFrom reshape2 melt
-#'
 #'@export
 #'
-getObjFunValues.Priors<-function(res,mdl=NULL){
+getObjFunValues.Priors<-function(res,
+                                 mdl=NULL,
+                                 verbose=FALSE){
     if (class(res)=='tcsam2015'){
         #res is a tcsam2015 model results object
         if (is.null(mdl)) mdl<-res$mc$configName;
@@ -31,16 +32,16 @@ getObjFunValues.Priors<-function(res,mdl=NULL){
         nmctgs<-names(priors);#names of model categories for priors
         dfr<-NULL;
         for (nmctg in nmctgs){
-            cat("Processing priors for category",nmctg,'\n')
+            if(verbose) cat("Processing priors for category",nmctg,'\n')
             ctg<-priors[[nmctg]];#model category object
             nmps<-names(ctg);   #names of parameters in category
             for (nmp in nmps){
-                cat("Processing priors for parameter",nmp,'\n')
+                if(verbose) cat("Processing priors for parameter",nmp,'\n')
                 param<-ctg[[nmp]]; #model parameter object
                 if (!is.null(param)){
                     nmlevs<-names(param);#names of parameter levels
                     for (nmlev in nmlevs){
-                        cat("\tProcessing level",nmlev,'\n')
+                        if(verbose) cat("\tProcessing level",nmlev,'\n')
                         lev<-param[[nmlev]];
                         if (!is.null(lev)){
                             rw<-data.frame(model=mdl,type='prior',category=nmctg,name=nmp,level=nmlev,wgt=lev$wgt,nll=lev$nll,objfun=lev$objfun);

@@ -5,6 +5,7 @@
 #'
 #'@param aggC - a list object reflecting an aggregate catch data source's contributions to the objective function
 #'@param data.type - data type (abundance or biomass) of aggregated catch
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
@@ -15,12 +16,11 @@
 #'The "variable" column indicates whether the "value" is a weight ('wgt'),
 #'negative log-likelihood ('nll'), or objective function value ('objfun').
 #'
-#'@importFrom reshape2 melt
-#'
 #'@export
 #'
 getObjFunValues.AggregateCatch<-function(aggC,
-                                         data.type='abundance'){
+                                         data.type='abundance',
+                                         verbose=FALSE){
     mmdfr<-NULL;
     for (n in 1:length(aggC$fits)){
         f<-aggC$fits[[n]];

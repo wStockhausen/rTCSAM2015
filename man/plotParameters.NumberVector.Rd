@@ -6,7 +6,7 @@
 \usage{
 plotParameters.NumberVector(nv, label = "", mcmc = NULL, delta = 0.005,
   plotConsts = FALSE, xlab = "", ylab = "", pchs = 21:25,
-  clrs = c("black", "blue", "green", "grey", "cyan"))
+  clrs = c("black", "blue", "green", "grey", "cyan"), verbose = FALSE)
 }
 \arguments{
 \item{label}{- the ...NumberVector variable name}
@@ -22,6 +22,8 @@ plotParameters.NumberVector(nv, label = "", mcmc = NULL, delta = 0.005,
 \item{pchs}{- vector of point symbols to use}
 
 \item{clrs}{- vector of colors to use}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 
 \item{vv}{- the ...NumberVector info list object}
 }

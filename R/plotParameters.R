@@ -7,6 +7,7 @@
 #'@param res.mcmc - list object for compiled MCMC results
 #'@param nv.mfrow - number of rows/page for plotting NumberVector parameters
 #'@param vv.mfrow - number of rows/page for plotting VectorVector parameters
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@import graphics
 #'
@@ -15,7 +16,8 @@
 plotParameters<-function(res,
                          res.mcmc=NULL,
                          nv.mfrow=NULL,
-                         vv.mfrow=NULL){
+                         vv.mfrow=NULL,
+                         verbose=FALSE){
     if (is.null(nv.mfrow)){
         if (names(dev.cur())[1]=='pdf'){
             nv.mfrow=c(5,4);#5 rows, 4 cols
@@ -47,8 +49,10 @@ plotParameters<-function(res,
             if (!is.null(p)){
                 if (is.null(p[[1]]$finalVals)) {
                     #p is a NumberVector
-                    cat("Plotting NumberVector parameter",nm,"\n")
-                    plotParameters.NumberVector(p,label=nm,mcmc=res.mcmc[[nm]]);
+                    if (verbose) cat("Plotting NumberVector parameter",nm,"\n")
+                    plotParameters.NumberVector(p,label=nm,
+                                                mcmc=res.mcmc[[nm]],
+                                                verbose=verbose);
                 }
             }
         }#nm
@@ -59,8 +63,8 @@ plotParameters<-function(res,
             if (!is.null(p)){
                 if (!is.null(p[[1]]$finalVals)) {
                     #p is a NumberVector
-                    cat("Plotting VectorVector parameter",nm,"\n")
-                    plotParameters.VectorVector(p,nm);
+                    if (verbose) cat("Plotting VectorVector parameter",nm,"\n")
+                    plotParameters.VectorVector(p,nm,verbose=verbose);
                 }
             }
         }

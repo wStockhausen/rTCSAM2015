@@ -4,12 +4,15 @@
 \alias{getObjFunValues.AggregateCatch}
 \title{Get aggregate catch components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.AggregateCatch(aggC, data.type = "abundance")
+getObjFunValues.AggregateCatch(aggC, data.type = "abundance",
+  verbose = FALSE)
 }
 \arguments{
 \item{aggC}{- a list object reflecting an aggregate catch data source's contributions to the objective function}
 
 \item{data.type}{- data type (abundance or biomass) of aggregated catch}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 a melted dataframe

@@ -5,7 +5,7 @@
 \title{Function to compare parameter values from different models.}
 \usage{
 compareModels.ParamEsts(objs, dp = 0.01, fac = 2, nc = 3, nr = 4,
-  showPlot = TRUE, pdf = "ModelComparisons.Params.pdf")
+  showPlot = TRUE, pdf = "ModelComparisons.Params.pdf", verbose = FALSE)
 }
 \arguments{
 \item{objs}{- list of model results objects (each is a list with elements 'prsObj' and 'stdObj')}
@@ -21,6 +21,8 @@ compareModels.ParamEsts(objs, dp = 0.01, fac = 2, nc = 3, nr = 4,
 \item{showPlot}{- flag to show plots immediately}
 
 \item{pdf}{- file name for printing plots to a pdf file (or NULL to print to screen)}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 - list with dfr, vfr, and plots as elements

@@ -12,8 +12,6 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@import reshape2
-#'
 #'@export
 #'
 compareModels.FisheryYields<-function(tcsam=NULL,
@@ -59,25 +57,25 @@ compareModels.FisheryYields<-function(tcsam=NULL,
     for (uF in uniqFs){
         #plot totals across msz
         mdfrp<-mdfr[mdfr$f==uF,];#select fishery results        
-        ddfr<-dcast(mdfrp,modeltype+model+type+y+x~.,fun.aggregate=sum,na.rm=TRUE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+type+y+x~.,fun.aggregate=sum,na.rm=TRUE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',value.var='.',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='fishery yield',units="1000's t",lnscale=FALSE,
                        colour='model',guideTitleColor='model',
                        linetype='modeltype',guideTitleLineType='model type',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uF]]$B_yx<-p;
         
         #recast to look at discard mortality/discards ratio
-        rdfr<-dcast(ddfr,modeltype+model+y+x~type,fun.aggregate=NULL,na.rm=TRUE,value.var='.',drop=TRUE);
+        rdfr<-reshape2::dcast(ddfr,modeltype+model+y+x~type,fun.aggregate=NULL,na.rm=TRUE,value.var='.',drop=TRUE);
         rdfr$ratio<-rdfr[['discard mortality']]/rdfr[['discarded']]
         p<-plotMDFR.XY(rdfr,x='y',value.var='ratio',agg.formula=NULL,faceting='x~.',
                        title=uF,xlab='year',ylab='discard mortality/total discards',units="",lnscale=FALSE,
                        colour='model',guideTitleColor='model',
                        linetype='modeltype',guideTitleLineType='model type',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uF]]$ratio_yx<-p;
     }#uniqFs
     

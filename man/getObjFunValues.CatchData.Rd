@@ -4,12 +4,15 @@
 \alias{getObjFunValues.CatchData}
 \title{Get catch data components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.CatchData(catchData, catch.type = "total.catch")
+getObjFunValues.CatchData(catchData, catch.type = "total.catch",
+  verbose = FALSE)
 }
 \arguments{
 \item{catchData}{- a list object reflecting a catch data source's contributions to the objective function}
 
 \item{catch.type}{- type of catch data ('total.catch','retained.catch','discard.catch')}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 a melted dataframe

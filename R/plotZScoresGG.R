@@ -12,6 +12,7 @@
 #'@param label - title for graph page
 #'@param ggtheme - theme for ggplot2
 #'@param showPlot - flag to print plot immediately
+#'@param verbose - flag (T/F) to print dagnostic info
 #'
 #'@return list of ggplot2 objects
 #'
@@ -28,8 +29,9 @@ plotZScoresGG<-function(afits,
                         ylab="z-scores",
                         label="",
                         ggtheme=theme_grey(),
-                        showPlot=FALSE){
-    cat("---Running plotZScoresGG(...) for",label,"\n");
+                        showPlot=TRUE,
+                        verbose=FALSE){
+    if (verbose) cat("---Running plotZScoresGG(...) for",label,"\n");
     
     label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
     
@@ -47,17 +49,17 @@ plotZScoresGG<-function(afits,
             sdv<-nll$stdv;
             if (tolower(pdfType)=='normal'){
                 #normal, sdv on arithmetic scale
-                cat('using err type = normal\n')
+                if (verbose) cat('using err type = normal\n')
                 lci<-qnorm(ci[1],mean=obs,sd=sdv);
                 uci<-qnorm(ci[2],mean=obs,sd=sdv);
             } else if (tolower(pdfType)=='lognormal'){
                 #lognormal, sdv on ln-scale
-                cat('using err type = lognormal\n')
+                if (verbose) cat('using err type = lognormal\n')
                 lci<-qlnorm(ci[1],meanlog=log(obs),sdlog=sdv);
                 uci<-qlnorm(ci[2],meanlog=log(obs),sdlog=sdv);
             } else if (tolower(pdfType)=='norm2'){
                 #normal, sdv on arithmetic scale
-                cat('using err type = normal, but fit uses norm2\n')
+                if (verbose) cat('using err type = normal, but fit uses norm2\n')
                 lci<-qnorm(ci[1],mean=obs,sd=1);
                 uci<-qnorm(ci[2],mean=obs,sd=1);
             } else {
@@ -100,7 +102,7 @@ plotZScoresGG<-function(afits,
     label<-gsub("_"," ",label);
 
     #arithmetic-scale fits
-    pd<-position_identity(0.0)
+    pd<-position_identity();
     p <- ggplot(aes_string(x='year',y='val',colour='type',fill='type',shape='type',linetype='type'),data=cdfr)
     p <- p + scale_linetype_manual(values=c(observed=3,estimated=1))
     p <- p + scale_shape_manual(values=c(observed=19,estimated=1))
@@ -143,6 +145,6 @@ plotZScoresGG<-function(afits,
 #    if (showPlot) plotMulti.GG(p1,p2,p3,cols=1);
     if (showPlot) {print(p1); print(p2); print(p3);}
     
-    cat("---Done running plotZScoresGG(...)\n\n");
+    if (verbose) cat("---Done running plotZScoresGG(...)\n\n");
     return(invisible(list(arscale=p1,lnscale=p2,zscores=p3)));
 }

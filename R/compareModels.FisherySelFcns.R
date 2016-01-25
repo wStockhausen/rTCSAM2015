@@ -53,7 +53,7 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
     for (uF in uniqFs){
         mdfrp<-mdfr[(mdfr$f==uF)&(mdfr$y %in% years[[tolower(uF)]]),];#select results for fishery F      
         if (nrow(mdfrp)>0){
-            ddfr<-dcast(mdfrp,castform,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
+            ddfr<-reshape2::dcast(mdfrp,castform,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
             ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
             p<-plotMDFR.XY(ddfr,x='z',value.var='.',
                            agg.formula=NULL,faceting=faceting,
@@ -61,8 +61,8 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
                            title=uF,
                            colour='model',guideTitleColor='',
                            linetype='type',guideTitleLinetype='function type',
-                           shape='modeltype',guideTitleShape='');
-            if (showPlot) print(p);
+                           shape='modeltype',guideTitleShape='',
+                           showPlot=showPlot);
             plots[[uF]]$selfcn<-p;
         }
     }#uniqFs

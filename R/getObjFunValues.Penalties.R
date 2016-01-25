@@ -5,6 +5,7 @@
 #'
 #'@param repObj - tcsam2015 model results object or list of such
 #'@param mdl - name to associate with model results object
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
@@ -19,11 +20,11 @@
 #'The "variable" column indicates whether the "value" is a weight ('wgt'),
 #'negative log-likelihood ('nll'), or objective function value ('objfun').
 #'
-#'@importFrom reshape2 melt
-#'
 #'@export
 #'
-getObjFunValues.Penalties<-function(repObj,mdl=NULL){
+getObjFunValues.Penalties<-function(repObj,
+                                    mdl=NULL,
+                                    verbose=FALSE){
     if (class(repObj)=='tcsam2015'){
         #repObj is a tcsam2015 model results object
         if (is.null(mdl)) mdl<-repObj$mc$configName;
@@ -31,16 +32,16 @@ getObjFunValues.Penalties<-function(repObj,mdl=NULL){
         nmctgs<-names(penalties);#names of model categories for penalties
         dfr<-NULL;
         for (nmctg in nmctgs){
-            cat("Processing penalties for category",nmctg,'\n')
+            if(verbose) cat("Processing penalties for category",nmctg,'\n')
             ctg<-penalties[[nmctg]];#model category object
             nmps<-names(ctg);   #names of penalties in category
             for (nmp in nmps){
-                cat("Processing penalty for",nmp,'\n')
+                if(verbose) cat("Processing penalty for",nmp,'\n')
                 pen<-ctg[[nmp]];
                 if (!is.null(pen)){
                     nmlevs<-names(pen);
                     for (nmlev in nmlevs){
-                        cat("\tProcessing level",nmlev,'\n')
+                        if(verbose) cat("\tProcessing level",nmlev,'\n')
                         lev<-pen[[nmlev]]
                         if (!is.null(lev)){
                             rw<-data.frame(model=mdl,type='penalty',category=nmctg,name=nmp,level=nmlev,wgt=lev$wgt,nll=lev$pen,objfun=lev$objfun);

@@ -12,8 +12,6 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@import reshape2
-#'
 #'@export
 #'
 compareModels.SurveyBiomass<-function(tcsam=NULL,
@@ -41,14 +39,14 @@ compareModels.SurveyBiomass<-function(tcsam=NULL,
     for (uV in uniqVs){
         #plot totals across msz
         mdfrp<-mdfr[mdfr$v==uV,];#select results for survey uV        
-        ddfr<-dcast(mdfrp,modeltype+model+v+y+x+m+s~.,fun.aggregate=NULL,na.rm=TRUE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+v+y+x+m+s~.,fun.aggregate=NULL,na.rm=TRUE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',value.var='.',agg.formula=NULL,faceting='m+s~x',
                        title=uV,xlab='year',ylab='survey biomass',units="1000's t",lnscale=FALSE,
                        colour='model',guideTitleColor='model',
                        linetype='modeltype',guideTitleLineType='model type',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uV]]$B_yx<-p;
     }#uniqVs
     

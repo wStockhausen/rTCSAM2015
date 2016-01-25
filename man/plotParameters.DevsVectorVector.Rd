@@ -4,10 +4,12 @@
 \alias{plotParameters.DevsVectorVector}
 \title{Plot initial and final parameter values associated with a DevsVectorVector info list object.}
 \usage{
-plotParameters.DevsVectorVector(dvv)
+plotParameters.DevsVectorVector(dvv, verbose = FALSE)
 }
 \arguments{
 \item{dvv}{- the DevsVectorVector info list object}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \description{
 Function to plot initial and final parameter values associated with a DevsVectorVector info list object.

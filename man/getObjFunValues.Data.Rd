@@ -4,12 +4,14 @@
 \alias{getObjFunValues.Data}
 \title{Get daat components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.Data(res, mdl = NULL)
+getObjFunValues.Data(res, mdl = NULL, verbose = FALSE)
 }
 \arguments{
 \item{res}{- tcsam2015 model results object or list of such}
 
 \item{mdl}{- name to associate with model results object}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 a melted dataframe

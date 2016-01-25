@@ -12,6 +12,7 @@
 #' @param label - plot label
 #' @param ggtheme - ggplot2 theme
 #' @param showPlot - flag to show (print) plot immediately on current graphics device
+#' @param verbose - flag (T/F) to print dagnostic info
 #' 
 #' @return list of list of ggplot2 plot objects
 #' 
@@ -20,14 +21,15 @@
 #' @export
 #' 
 plotZScoresGG.SizeFreqs<-function(fits,
-                                    mc,
-                                    sxs=c(mc$dims$x$nms,"ALL_SEX"),
-                                    mss=c(mc$dims$m$nms,"ALL_MATURITY"),
-                                    scs=c(mc$dims$s$nms,"ALL_SHELL"),
-                                    label="",
-                                    ggtheme=theme_grey(),
-                                    showPlot=TRUE){
-    cat("---Running plotFitsGG.SizeComps(...) for",label,"\n");
+                                  mc,
+                                  sxs=c(mc$dims$x$nms,"ALL_SEX"),
+                                  mss=c(mc$dims$m$nms,"ALL_MATURITY"),
+                                  scs=c(mc$dims$s$nms,"ALL_SHELL"),
+                                  label="",
+                                  ggtheme=theme_grey(),
+                                  showPlot=TRUE,
+                                  verbose=FALSE){
+    if (verbose) cat("---Running plotFitsGG.SizeComps(...) for",label,"\n");
     
     label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
     
@@ -95,7 +97,8 @@ plotZScoresGG.SizeFreqs<-function(fits,
                                             ylab="size (mm CW)",
                                             alpha=0.6,
                                             ggtheme=ggtheme,
-                                            showPlot=FALSE);
+                                            showPlot=FALSE,
+                                            verbose=verbose);
                     
                     #extract nlls and plot
                     idx<-(ndfr$sx %in% x)&(ndfr$ms %in% m)&(ndfr$sc %in% s)
@@ -111,7 +114,8 @@ plotZScoresGG.SizeFreqs<-function(fits,
                                             ylab="size (mm CW)",
                                             alpha=0.6,
                                             ggtheme=ggtheme,
-                                            showPlot=FALSE);
+                                            showPlot=FALSE,
+                                            verbose=verbose);
                     
                     if (showPlot) plotMulti.GG(pr,pn,cols=1);
                     
@@ -120,6 +124,6 @@ plotZScoresGG.SizeFreqs<-function(fits,
             }
         }
     }
-    cat("---Done running plotFitsGG.SizeComps(...)\n\n");
+    if (verbose) cat("---Done running plotFitsGG.SizeComps(...)\n\n");
     return(ps)
 }

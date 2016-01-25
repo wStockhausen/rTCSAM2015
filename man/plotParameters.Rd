@@ -4,7 +4,8 @@
 \alias{plotParameters}
 \title{Plot initial & final values, limits, and priors for model parameters.}
 \usage{
-plotParameters(res, res.mcmc = NULL, nv.mfrow = NULL, vv.mfrow = NULL)
+plotParameters(res, res.mcmc = NULL, nv.mfrow = NULL, vv.mfrow = NULL,
+  verbose = FALSE)
 }
 \arguments{
 \item{res}{- TCSAM2015 model results list object}
@@ -14,6 +15,8 @@ plotParameters(res, res.mcmc = NULL, nv.mfrow = NULL, vv.mfrow = NULL)
 \item{nv.mfrow}{- number of rows/page for plotting NumberVector parameters}
 
 \item{vv.mfrow}{- number of rows/page for plotting VectorVector parameters}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \description{
 Function to plot initial & final values, limits, and priors for model parameters.

@@ -4,12 +4,14 @@
 \alias{getObjFunValues.Penalties}
 \title{Get model penalties in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.Penalties(repObj, mdl = NULL)
+getObjFunValues.Penalties(repObj, mdl = NULL, verbose = FALSE)
 }
 \arguments{
 \item{repObj}{- tcsam2015 model results object or list of such}
 
 \item{mdl}{- name to associate with model results object}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 a melted dataframe

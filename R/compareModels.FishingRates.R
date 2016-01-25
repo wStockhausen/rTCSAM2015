@@ -12,16 +12,14 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@import reshape2
-#'
 #'@export
 #'
 compareModels.FishingRates<-function(tcsam=NULL,
-                                  rsim=NULL,
-                                  showPlot=TRUE,
-                                  pdf=NULL,
-                                  width=8,
-                                  height=6){
+                                      rsim=NULL,
+                                      showPlot=TRUE,
+                                      pdf=NULL,
+                                      width=8,
+                                      height=6){
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=pdf,width=width,height=height);
@@ -58,13 +56,13 @@ compareModels.FishingRates<-function(tcsam=NULL,
     for (uF in uniqFs){
         mdfrp<-mdfr[mdfr$f==uF,];#select fishery results
         #plot fully-selected rates
-        ddfr<-dcast(mdfrp,modeltype+model+type+y+x~.,fun.aggregate=max,na.rm=TRUE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+type+y+x~.,fun.aggregate=max,na.rm=TRUE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='fully-selected fishing rate',units='',lnscale=FALSE,
                        colour='model',guideTitleColour='model',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uF]]$maxF_yx<-p;
         
         #plot average (across msz) rates
@@ -73,8 +71,8 @@ compareModels.FishingRates<-function(tcsam=NULL,
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='size-averaged fishing rate',units='',lnscale=FALSE,
                        colour='model',guideTitleColour='model',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uF]]$avgF_yx<-p;
     }#uniqFs
         
@@ -84,23 +82,23 @@ compareModels.FishingRates<-function(tcsam=NULL,
     mdfr<-getMDFR(path,tcsam,rsim);
     
     #plot fully-selected rates
-    ddfr<-dcast(mdfr,modeltype+model+y+x~.,fun.aggregate=max,na.rm=TRUE,value.var='val',drop=TRUE)
+    ddfr<-reshape2::dcast(mdfr,modeltype+model+y+x~.,fun.aggregate=max,na.rm=TRUE,value.var='val',drop=TRUE)
     ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
     p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='x~.',
                    title='all fisheries',xlab='year',ylab='fully-selected total fishing mortality rate',units='',lnscale=FALSE,
                    colour='model',guideTitleColour='model',
-                   shape='modeltype',guideTitleShape='model type');
-    if (showPlot) print(p);
+                   shape='modeltype',guideTitleShape='model type',
+                   showPlot=showPlot);
     plots$maxF_yx<-p;
     
     #plot average (across msz) rates
-    ddfr<-dcast(mdfr,modeltype+model+y+x~.,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
+    ddfr<-reshape2::dcast(mdfr,modeltype+model+y+x~.,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
     ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
     p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='x~.',
                           title='all fisheries',xlab='year',ylab='size-averaged total fishing mortality rate',units='',lnscale=FALSE,
                           colour='model',guideTitleColour='model',
-                          shape='modeltype',guideTitleShape='model type');
-    if (showPlot) print(p);
+                          shape='modeltype',guideTitleShape='model type',
+                   showPlot=showPlot);
     plots$avgF_yx<-p;
     
     return(invisible(plots))

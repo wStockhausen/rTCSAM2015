@@ -12,22 +12,22 @@
 #' @param label - plot label
 #' @param ggtheme - ggplot2 theme
 #' @param showPlot - flag to show (print) plot immediately on current graphics device
+#' @param verbose - flag (T/F) to print dagnostic info
 #' 
 #' @return list of list of ggplot2 plot objects
-#' 
-#' @import reshape2
 #' 
 #' @export
 #' 
 plotZScoresGG1.SizeFreqs<-function(fits,
-                                    mc,
-                                    sxs=c(mc$dims$x$nms,"ALL_SEX"),
-                                    mss=c(mc$dims$m$nms,"ALL_MATURITY"),
-                                    scs=c(mc$dims$s$nms,"ALL_SHELL"),
-                                    label="",
-                                    ggtheme=theme_grey(),
-                                    showPlot=TRUE){
-    cat("---Running plotFitsGG1.SizeComps(...) for",label,"\n");
+                                   mc,
+                                   sxs=c(mc$dims$x$nms,"ALL_SEX"),
+                                   mss=c(mc$dims$m$nms,"ALL_MATURITY"),
+                                   scs=c(mc$dims$s$nms,"ALL_SHELL"),
+                                   label="",
+                                   ggtheme=theme_grey(),
+                                   showPlot=TRUE,
+                                   verbose=FALSE){
+    if (verbose) cat("---Running plotFitsGG1.SizeComps(...) for",label,"\n");
     
     label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
     
@@ -70,7 +70,7 @@ plotZScoresGG1.SizeFreqs<-function(fits,
                     idx<-(ndfr$x==x)&(ndfr$m==m)&(ndfr$s==s);
                     ndfr<-ndfr[!idx,];
                 } else {
-                    cat('Will plot factor combination',x,m,s,"\n")
+                    if (verbose) cat('Will plot factor combination',x,m,s,"\n")
                 }
             }#s
         }#m
@@ -91,7 +91,8 @@ plotZScoresGG1.SizeFreqs<-function(fits,
                             ylab="size (mm CW)",
                             alpha=0.6,
                             ggtheme=ggtheme,
-                            showPlot=showPlot);
+                            showPlot=showPlot,
+                            verbose=verbose);
     
     #extract nlls and plot
     ndfr$type<-'O > M';
@@ -106,8 +107,9 @@ plotZScoresGG1.SizeFreqs<-function(fits,
                             ylab="size (mm CW)",
                             alpha=0.6,
                             ggtheme=ggtheme,
-                            showPlot=showPlot);
+                            showPlot=showPlot,
+                            verbose=FALSE);
                     
-    cat("---Done running plotFitsGG1.SizeComps(...)\n\n");
+    if (verbose) cat("---Done running plotFitsGG1.SizeComps(...)\n\n");
     return(invisible(list(pearsons=pr,nlls=pn)));
 }

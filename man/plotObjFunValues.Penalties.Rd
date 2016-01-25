@@ -5,7 +5,7 @@
 \title{Plot penalties used in the objective function, grouped by category.}
 \usage{
 plotObjFunValues.Penalties(mdfr, variable = "objfun",
-  ggtheme = theme_grey(), showPlot = FALSE)
+  ggtheme = theme_grey(), showPlot = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{mdfr}{- melted dataframe of penalties from call to getObjFunValues.Penalties(...)}
@@ -15,6 +15,8 @@ plotObjFunValues.Penalties(mdfr, variable = "objfun",
 \item{ggtheme}{- a ggplot2 theme}
 
 \item{showPlot}{- flag to show plots immediately}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 ggplot2 object

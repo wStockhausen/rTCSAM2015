@@ -12,8 +12,6 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@import reshape2
-#'
 #'@export
 #'
 compareModels.SurveyAbundance<-function(tcsam=NULL,
@@ -41,16 +39,16 @@ compareModels.SurveyAbundance<-function(tcsam=NULL,
     for (uV in uniqVs){
         #plot totals across z
         mdfrp<-mdfr[mdfr$v==uV,];#select results for survey uV        
-        ddfr<-dcast(mdfrp,modeltype+model+y+x+m+s~.,fun.aggregate=sum,na.rm=TRUE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+y+x+m+s~.,fun.aggregate=sum,na.rm=TRUE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='m+s~x',
                        title=uV,xlab='year',ylab='survey abundance',units='millions',lnscale=FALSE,
                        colour='model',guideTitleColor='model',
                        linetype='modeltype',guideTitleLineType='model type',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uV]]$N_yx<-p;
-    }#uniqFs
+    }#uniqVs
     
     return(invisible(plots))
 }

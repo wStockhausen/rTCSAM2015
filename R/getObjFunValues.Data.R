@@ -5,6 +5,7 @@
 #'
 #'@param res - tcsam2015 model results object or list of such
 #'@param mdl - name to associate with model results object
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
@@ -21,14 +22,11 @@
 #'The "variable" column indicates whether the "value" is a weight ('wgt'),
 #'negative log-likelihood ('nll'), or objective function value ('objfun').
 #'
-#'@importFrom reshape2 melt
-#'
 #'@export
 #'
-getObjFunValues.Data<-function(res,mdl=NULL){
-    dfr<-getObjFunValues.Surveys(res,mdl);
-    dfr<-rbind(dfr,getObjFunValues.Fisheries(res,mdl));
-
+getObjFunValues.Data<-function(res,mdl=NULL,verbose=FALSE){
+    dfr<-getObjFunValues.Fleets(res,mdl,'survey',verbose);
+    dfr<-rbind(dfr,getObjFunValues.Fleets(res,mdl,'fishery',verbose));
     return(dfr)
 }
 #mdfr.data.1<-getObjFunValues.Data(res)

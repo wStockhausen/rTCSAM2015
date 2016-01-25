@@ -6,7 +6,8 @@
 \usage{
 plotZScoresGG.SizeFreqs(fits, mc, sxs = c(mc$dims$x$nms, "ALL_SEX"),
   mss = c(mc$dims$m$nms, "ALL_MATURITY"), scs = c(mc$dims$s$nms,
-  "ALL_SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE)
+  "ALL_SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{fits}{- list of fits}
@@ -24,6 +25,8 @@ plotZScoresGG.SizeFreqs(fits, mc, sxs = c(mc$dims$x$nms, "ALL_SEX"),
 \item{ggtheme}{- ggplot2 theme}
 
 \item{showPlot}{- flag to show (print) plot immediately on current graphics device}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 list of list of ggplot2 plot objects

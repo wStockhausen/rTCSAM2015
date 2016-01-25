@@ -5,7 +5,8 @@
 \title{Plot initial and final parameter values associated with a ...VectorVector info list object.}
 \usage{
 plotParameters.VectorVector(vv, label = "", xlab = "", ylab = "",
-  pchs = 21:25, clrs = c("black", "blue", "green", "grey", "cyan"))
+  pchs = 21:25, clrs = c("black", "blue", "green", "grey", "cyan"),
+  verbose = FALSE)
 }
 \arguments{
 \item{vv}{- the ...VectorVector info list object}
@@ -19,6 +20,8 @@ plotParameters.VectorVector(vv, label = "", xlab = "", ylab = "",
 \item{pchs}{- vector of point symbols to use}
 
 \item{clrs}{- vector of colors to use}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \description{
 Function to plot initial and final parameter values associated with a ...VectorVector info list object.

@@ -15,11 +15,11 @@
 #'@export
 #'
 compareModels.SurveyResults<-function(tcsam=NULL,
-                                  rsim=NULL,
-                                  showPlot=TRUE,
-                                  pdf=NULL,
-                                  width=8,
-                                  height=6){
+                                      rsim=NULL,
+                                      showPlot=TRUE,
+                                      pdf=NULL,
+                                      width=8,
+                                      height=6){
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=pdf,width=width,height=height);
@@ -29,18 +29,15 @@ compareModels.SurveyResults<-function(tcsam=NULL,
     plots<-list();
     
     #survey Qs
-    p<-compareModels.SurveyQs(tcsam,rsim,showPlot=FALSE)
-    if (showPlot) print(p);
+    p<-compareModels.SurveyQs(tcsam,rsim,showPlot=showPlot)
     plots$surveyQs<-p;
     
     #survey abundances
-    p<-compareModels.SurveyAbundance(tcsam,rsim,showPlot=FALSE)
-    if (showPlot) print(p);
+    p<-compareModels.SurveyAbundance(tcsam,rsim,showPlot=showPlot)
     plots$surveyAbundance<-p;
     
     #survey biomass
-    p<-compareModels.SurveyBiomass(tcsam,rsim,showPlot=FALSE)
-    if (showPlot) print(p);
+    p<-compareModels.SurveyBiomass(tcsam,rsim,showPlot=showPlot)
     plots$surveyBiomass<-p;
     
     return(invisible(plots))

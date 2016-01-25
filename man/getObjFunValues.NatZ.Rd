@@ -4,10 +4,12 @@
 \alias{getObjFunValues.NatZ}
 \title{Get size comps components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.NatZ(nAtZ)
+getObjFunValues.NatZ(nAtZ, verbose = FALSE)
 }
 \arguments{
 \item{nAtZ}{- a list object reflecting a size comps' contributions to the objective function}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 a melted dataframe

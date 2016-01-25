@@ -12,8 +12,6 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@import reshape2
-#'
 #'@export
 #'
 compareModels.FisheryCatches<-function(tcsam=NULL,
@@ -59,14 +57,14 @@ compareModels.FisheryCatches<-function(tcsam=NULL,
     for (uF in uniqFs){
         #plot totals across msz
         mdfrp<-mdfr[mdfr$f==uF,];#select fishery results        
-        ddfr<-dcast(mdfrp,modeltype+model+type+y+x~.,fun.aggregate=sum,na.rm=TRUE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+type+y+x~.,fun.aggregate=sum,na.rm=TRUE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='type~x',
                        title=uF,xlab='year',ylab='fishery catch',units='millions',lnscale=FALSE,
                        colour='model',guideTitleColor='model',
                        linetype='modeltype',guideTitleLineType='model type',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uF]]$N_yx<-p;
     }#uniqFs
     

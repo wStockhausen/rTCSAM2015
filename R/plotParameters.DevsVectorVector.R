@@ -4,12 +4,12 @@
 #'@description Function to plot initial and final parameter values associated with a DevsVectorVector info list object.
 #'
 #'@param dvv - the DevsVectorVector info list object
-#'
-#'@import graphics
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@export
 #'
-plotParameters.DevsVectorVector<-function(dvv){
+plotParameters.DevsVectorVector<-function(dvv,
+                                          verbose=FALSE){
     npc<-length(dvv);#number of pc's to plot
     
     #determine plot scales

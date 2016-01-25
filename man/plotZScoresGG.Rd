@@ -6,7 +6,7 @@
 \usage{
 plotZScoresGG(afits, ci = 0.95, xlim = NULL, ylim = NULL,
   xlab = "years", ylab = "z-scores", label = "", ggtheme = theme_grey(),
-  showPlot = FALSE)
+  showPlot = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{afits}{-}
@@ -26,6 +26,8 @@ plotZScoresGG(afits, ci = 0.95, xlim = NULL, ylim = NULL,
 \item{ggtheme}{- theme for ggplot2}
 
 \item{showPlot}{- flag to print plot immediately}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 list of ggplot2 objects

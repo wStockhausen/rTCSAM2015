@@ -4,7 +4,7 @@
 \alias{getMDFR}
 \title{Get model arrays as a melted dataframe from TCSAM2015 and rsimTCSAM models.}
 \usage{
-getMDFR(path, tcsam = NULL, rsim = NULL)
+getMDFR(path, tcsam = NULL, rsim = NULL, verbose = FALSE)
 }
 \arguments{
 \item{path}{- path in models to requested array (using '/' as separator for list levels)}
@@ -12,6 +12,8 @@ getMDFR(path, tcsam = NULL, rsim = NULL)
 \item{tcsam}{- single TCSAM2015 model results object, or named list of such}
 
 \item{rsim}{- single rsimTCSAM results object, or named list of such}
+
+\item{verbose}{- flag (T/F) to print diagnostics}
 }
 \value{
 Melted dataframe (ala package reshape2) of the requested array, with additional columns 'model' and 'modeltype'.

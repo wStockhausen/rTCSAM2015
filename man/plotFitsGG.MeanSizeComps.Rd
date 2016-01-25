@@ -2,11 +2,12 @@
 % Please edit documentation in R/plotFitsGG.MeanSizeComps.R
 \name{plotFitsGG.MeanSizeComps}
 \alias{plotFitsGG.MeanSizeComps}
-\title{Plot fits to mean size comps}
+\title{Plot mean size comps fits}
 \usage{
 plotFitsGG.MeanSizeComps(fits, mc, sxs = c(mc$dims$x$nms, "ALL_SEX"),
   mss = c(mc$dims$m$nms, "ALL_MATURITY"), scs = c(mc$dims$s$nms,
-  "ALL_SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE)
+  "ALL_SHELL"), label = "", ggtheme = theme_grey(), showPlot = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{fits}{- list of fits}
@@ -24,11 +25,13 @@ plotFitsGG.MeanSizeComps(fits, mc, sxs = c(mc$dims$x$nms, "ALL_SEX"),
 \item{ggtheme}{- ggplot2 theme}
 
 \item{showPlot}{- flag to show (print) plot immediately on current graphics device}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 list of list of ggplot2 plot objects
 }
 \description{
-Plot mean size comps fits using ggplot2.
+Function to plot mean size comps fits using ggplot2.
 }
 

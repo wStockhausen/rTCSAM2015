@@ -6,7 +6,8 @@
 \usage{
 plotCompsAsCirclesGG(dfr, x = NULL, y = NULL, z = NULL, category = NULL,
   faceting = NULL, title = NA, xlim = NULL, ylim = NULL, xlab = NA,
-  ylab = NA, alpha = 0.6, ggtheme = theme_grey(), showPlot = TRUE)
+  ylab = NA, alpha = 0.6, ggtheme = theme_grey(), showPlot = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{dfr}{- dataframe from which to extract columns}
@@ -36,6 +37,8 @@ plotCompsAsCirclesGG(dfr, x = NULL, y = NULL, z = NULL, category = NULL,
 \item{ggtheme}{- ggplot2 theme}
 
 \item{showPlot}{- flag to show (print) plot immediately on current graphics device}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 ggplot2 object

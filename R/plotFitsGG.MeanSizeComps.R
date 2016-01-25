@@ -1,7 +1,7 @@
 #'
-#'@title Plot fits to mean size comps
+#'@title Plot mean size comps fits
 #'
-#' @description  Plot mean size comps fits using ggplot2.
+#' @description  Function to plot mean size comps fits using ggplot2.
 #' 
 #' @param fits - list of fits
 #' @param mc - model configuration list
@@ -11,10 +11,11 @@
 #' @param label - plot label
 #' @param ggtheme - ggplot2 theme
 #' @param showPlot - flag to show (print) plot immediately on current graphics device
+#' @param verbose - flag (T/F) to print dagnostic info
 #' 
 #' @return list of list of ggplot2 plot objects
 #' 
-#' @import reshape2
+#' @import ggplot2
 #' 
 #' @export
 #' 
@@ -25,8 +26,9 @@ plotFitsGG.MeanSizeComps<-function(fits,
                                 scs=c(mc$dims$s$nms,"ALL_SHELL"),
                                 label="",
                                 ggtheme=theme_grey(),
-                                showPlot=TRUE){
-    cat("---Running plotFitsGG.MeanSizeComps(...) for",label,"\n");
+                                showPlot=TRUE,
+                                verbose=FALSE){
+    if (verbose) cat("---Running plotFitsGG.MeanSizeComps(...) for",label,"\n");
     
     label<-gsub("[_]"," ",label);#replace "_"'s
     
@@ -63,14 +65,16 @@ plotFitsGG.MeanSizeComps<-function(fits,
     pdfr<-rbind(odfr,mdfr);
     
     #calculate averages over years
-    pdfr<-dcast(pdfr,type+sx+ms+sc+zb~.,fun.aggregate=mean,value.var='comp');
+    pdfr<-reshape2::dcast(pdfr,type+sx+ms+sc+zb~.,fun.aggregate=mean,value.var='comp');
     names(pdfr)<-c('type','sx','ms','sc','zb','comp')
     pdfr$fac<-paste(pdfr$ms,pdfr$sc,sep=', ')
 
     #check normalization
-    tst<-dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
-    cat("Normalization check:\n");
-    print(tst)
+    if (verbose){
+        tst<-reshape2::dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
+        cat("Normalization check:\n");
+        print(tst);
+    }
     
     #remove "missing" factor levels
     nr<-nrow(tst);
@@ -81,12 +85,13 @@ plotFitsGG.MeanSizeComps<-function(fits,
         }
     }
     
-    #check normalization again
-    tst<-dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
-    cat("Repeat normalization check:\n");
-    print(tst)
-    
-    print(names(tst));
+    if (verbose){
+        #check normalization again
+        tst<-dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
+        cat("Repeat normalization check:\n");
+        print(tst)
+        print(names(tst));
+    }
     
     #make plots
     odx<-(pdfr$type=='observed');#extraction indices for data
@@ -98,6 +103,6 @@ plotFitsGG.MeanSizeComps<-function(fits,
     pl <- pl + ggtitle(label);
     pl <- pl + guides(fill=guide_legend('type'),colour=guide_legend('type'))
     if (showPlot) print(pl);
-    cat("---Done running plotFitsGG.MeanSizeComps(...)\n\n");
+    if (verbose) cat("---Done running plotFitsGG.MeanSizeComps(...)\n\n");
     return(invisible(pl))
 }

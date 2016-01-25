@@ -15,11 +15,11 @@
 #'@export
 #'
 compareModels.FisheryResults<-function(tcsam=NULL,
-                                  rsim=NULL,
-                                  showPlot=TRUE,
-                                  pdf=NULL,
-                                  width=8,
-                                  height=6){
+                                      rsim=NULL,
+                                      showPlot=TRUE,
+                                      pdf=NULL,
+                                      width=8,
+                                      height=6){
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=out,width=width,height=height);
@@ -29,23 +29,19 @@ compareModels.FisheryResults<-function(tcsam=NULL,
     plots<-list();
     
     #check handling mortality/fishery equations
-    p<-checkHandlingMortalityConsistency(tcsam,rsim,showPlot=FALSE);
-    if (showPlot) print(p);
+    p<-checkHandlingMortalityConsistency(tcsam,rsim,showPlot=showPlot);
     plots$hmCheck<-p;
     
     #fishing rates
-    p<-compareModels.FishingRates(tcsam,rsim,showPlot=FALSE)
-    if (showPlot) print(p);
+    p<-compareModels.FishingRates(tcsam,rsim,showPlot=showPlot)
     plots$fishingRates<-p;
     
     #fishery catches (abundance)
-    p<-compareModels.FisheryCatches(tcsam,rsim,showPlot=FALSE)
-    if (showPlot) print(p);
+    p<-compareModels.FisheryCatches(tcsam,rsim,showPlot=showPlot)
     plots$fisheryCatches<-p;
     
     #fishery yields (biomass)
-    p<-compareModels.FisheryYields(tcsam,rsim,showPlot=FALSE)
-    if (showPlot) print(p);
+    p<-compareModels.FisheryYields(tcsam,rsim,showPlot=showPlot)
     plots$fisheryYields<-p;
     
     return(invisible(plots))

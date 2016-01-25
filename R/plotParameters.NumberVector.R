@@ -11,9 +11,7 @@
 #'@param ylab - the y-axis label
 #'@param pchs - vector of point symbols to use
 #'@param clrs - vector of colors to use
-#'
-#'@import graphics
-#'@importFrom wtsUtilities addTransparency
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@export
 #'
@@ -25,7 +23,8 @@ plotParameters.NumberVector<-function(nv,
                                       xlab='',
                                       ylab='',
                                       pchs=21:25,
-                                      clrs=c("black","blue","green","grey","cyan")){
+                                      clrs=c("black","blue","green","grey","cyan"),
+                                      verbose=FALSE){
     
     npc<-length(nv);#number of pc's to plot
     

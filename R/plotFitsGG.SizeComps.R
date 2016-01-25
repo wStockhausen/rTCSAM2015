@@ -10,23 +10,23 @@
 #' @param scs - character vector of shell conditions to plot
 #' @param label - plot label
 #' @param ggtheme - ggplot2 theme
-#' @param showPlot - flag to show (print) plot immediately on current graphics device
+#' @param showPlot - flag (T/F) to show (print) plot immediately on current graphics device
+#' @param verbose - flag (T/F) to print diagnostic info
 #' 
 #' @return list of list of ggplot2 plot objects
-#' 
-#' @import reshape2
 #' 
 #' @export
 #' 
 plotFitsGG.SizeComps<-function(fits,
-                                mc,
-                                sxs=c(mc$dims$x$nms,"ALL_SEX"),
-                                mss=c(mc$dims$m$nms,"ALL_MATURITY"),
-                                scs=c(mc$dims$s$nms,"ALL_SHELL"),
-                                label="",
-                                ggtheme=theme_grey(),
-                                showPlot=TRUE){
-    cat("---Running plotFitsGG.SizeComps(...) for",label,"\n");
+                               mc,
+                               sxs=c(mc$dims$x$nms,"ALL_SEX"),
+                               mss=c(mc$dims$m$nms,"ALL_MATURITY"),
+                               scs=c(mc$dims$s$nms,"ALL_SHELL"),
+                               label="",
+                               ggtheme=theme_grey(),
+                               showPlot=TRUE,
+                               verbose=FALSE){
+    if (verbose) cat("---Running plotFitsGG.SizeComps(...) for",label,"\n");
     
     label<-gsub("[_]"," ",label);#replace "_"'s with blank spaces
     
@@ -80,9 +80,11 @@ plotFitsGG.SizeComps<-function(fits,
                     if (label!='') sbtp<-paste(label,sbtp,sep=': ')
                     
                     #check normalization
-                    tst<-dcast(pdfr[idx,],sx+ms+sc+yr~type,fun.aggregate=sum,value.var='comp')
-                    cat("Normalization check:\n");
-                    print(tst)
+                    tst<-reshape2::dcast(pdfr[idx,],sx+ms+sc+yr~type,fun.aggregate=sum,value.var='comp')
+                    if (verbose) {
+                        cat("Normalization check:\n");
+                        print(tst)
+                    }
                     
                     pl <- ggplot(aes(x=zb,y=comp,color=type,fill=type),data=pdfr[idx&odx,]);
                     pl <- pl + geom_bar(alpha=0.8,stat='identity');

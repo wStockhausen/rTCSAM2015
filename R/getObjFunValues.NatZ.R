@@ -4,6 +4,7 @@
 #'@description Function to get size comps components in the objective function as a melted dataframe.
 #'
 #'@param nAtZ - a list object reflecting a size comps' contributions to the objective function
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
@@ -15,11 +16,10 @@
 #'negative log-likelihood ('nll'), objective function value ('objfun'), input
 #'sample size ('ss') or effective sample size ('effN').
 #'
-#'@importFrom reshape2 melt
-#'
 #'@export
 #'
-getObjFunValues.NatZ<-function(nAtZ){    
+getObjFunValues.NatZ<-function(nAtZ,
+                               verbose=FALSE){    
     dfr<-NULL;
     nf<-length(nAtZ[]);
     for (f in 1:nf){

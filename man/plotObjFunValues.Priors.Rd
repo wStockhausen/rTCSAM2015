@@ -5,10 +5,10 @@
 \title{Plot prior values used in the objective function, grouped by category.}
 \usage{
 plotObjFunValues.Priors(mdfr, variable = "objfun", ggtheme = theme_grey(),
-  showPlot = FALSE)
+  showPlot = FALSE, verbose = FALSE)
 
 plotObjFunValues.Priors(mdfr, variable = "objfun", ggtheme = theme_grey(),
-  showPlot = FALSE)
+  showPlot = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{mdfr}{- melted dataframe of prior values from call to getObjFunValues.Priors(...)}
@@ -19,6 +19,8 @@ plotObjFunValues.Priors(mdfr, variable = "objfun", ggtheme = theme_grey(),
 
 \item{showPlot}{- flag to show plots}
 
+\item{verbose}{- flag (T/F) to print diagnostic info}
+
 \item{showPlots}{- flag to show plots}
 
 \item{mdfr}{- melted dataframe of prior values from call to getObjFunValues.Priors(...)}
@@ -26,6 +28,8 @@ plotObjFunValues.Priors(mdfr, variable = "objfun", ggtheme = theme_grey(),
 \item{variable}{- name of variable to plot}
 
 \item{ggtheme}{- a ggplot2 theme}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 list of ggplot2 objects corresponding to different categories of priors.

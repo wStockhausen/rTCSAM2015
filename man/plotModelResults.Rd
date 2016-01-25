@@ -6,7 +6,7 @@
 \usage{
 plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
   objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL,
-  width = 14, height = 8)
+  width = 14, height = 8, verbose = FALSE)
 }
 \arguments{
 \item{repObj}{- list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.}
@@ -26,6 +26,8 @@ plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
 \item{width}{- pdf page width (in inches)}
 
 \item{height}{- pdf page width (in inches)}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 list with possible elements:\cr

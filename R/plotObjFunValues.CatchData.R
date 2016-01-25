@@ -7,6 +7,7 @@
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
 #'@param showPlots - flag to show plots
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return list of ggplot2 objects corresponding to different categories of priors.
 #'
@@ -17,7 +18,8 @@
 plotObjFunValues.Priors<-function(mdfr,
                                   variable='objfun',
                                   ggtheme=theme_grey(),
-                                  showPlots=FALSE){
+                                  showPlots=FALSE,
+                                  verbose=FALSE){
     if (variable=='wgt'){
         ylab<-'likelihood weight';
     } else

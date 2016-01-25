@@ -4,10 +4,14 @@
 \alias{plotZScoresForFisheries}
 \title{Plot model fits to abundance, biomass and size frequencies as z-scores for fishery data components.}
 \usage{
-plotZScoresForFisheries(repObj, showPlot = FALSE)
+plotZScoresForFisheries(repObj, showPlot = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{repObj}{- model report list object}
+
+\item{showPlot}{- flag to show plots immediately}
+
+\item{verbose}{- flag (T/F) to print dagnostic info}
 }
 \value{
 list by fishery of lists with ggplot objects

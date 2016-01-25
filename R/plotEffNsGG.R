@@ -12,22 +12,23 @@
 #' @param label - plot label
 #' @param ggtheme - ggplot2 theme
 #' @param showPlot - flag to show (print) plot immediately on current graphics device
+#' @param verbose - flag (T/F) to print diagnostic info
 #' 
 #' @return list of ggplot2 plot objects
 #' 
-#' @import reshape2
 #' @import ggplot2
 #' 
 #' @export
 #' 
 plotEffNsGG<-function(fits,
-                        mc,
-                        sxs=c(mc$dims$x$nms,"ALL SEX"),
-                        mss=c(mc$dims$m$nms,"ALL MATURITY"),
-                        scs=c(mc$dims$s$nms,"ALL SHELL"),
-                        label="",
-                        ggtheme=theme_grey(),
-                        showPlot=TRUE){
+                      mc,
+                      sxs=c(mc$dims$x$nms,"ALL SEX"),
+                      mss=c(mc$dims$m$nms,"ALL MATURITY"),
+                      scs=c(mc$dims$s$nms,"ALL SHELL"),
+                      label="",
+                      ggtheme=theme_grey(),
+                      showPlot=TRUE,
+                      verbose=FALSE){
     
     sxs<-tolower(sxs); #use lower case for all indices
     mss<-tolower(mss);
@@ -65,7 +66,7 @@ plotEffNsGG<-function(fits,
                     if (substr(m,1,3)!="ALL") {sbt[2]<-m;}
                     if (substr(s,1,3)!="ALL") {sbt[3]<-s;}
                     sbtp<-tolower(paste(sbt[sbt!=""],collapse=", "));
-                    if (label!='') sbtp<-paste(label,sbtp,sep=': ');
+                    if (label!='') sbtp<-paste(label,sbtp,sep='\n');
                     
                     #extract ISSs and ESSs
                     idx<-(idfr$sx %in% x)&(idfr$ms %in% m)&(idfr$sc %in% s)

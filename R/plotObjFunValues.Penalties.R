@@ -7,6 +7,7 @@
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
 #'@param showPlot - flag to show plots immediately
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return ggplot2 object
 #'
@@ -17,7 +18,8 @@
 plotObjFunValues.Penalties<-function(mdfr,
                                      variable='objfun',
                                      ggtheme=theme_grey(),
-                                     showPlot=FALSE){
+                                     showPlot=FALSE,
+                                     verbose=FALSE){
     if (variable=='wgt'){
         ylab<-'likelihood weight';
     } else

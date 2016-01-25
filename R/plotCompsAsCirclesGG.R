@@ -17,6 +17,7 @@
 #'@param alpha - alpha level for transparency (0-1)
 #'@param ggtheme - ggplot2 theme
 #'@param showPlot - flag to show (print) plot immediately on current graphics device
+#'@param verbose - flag (T/F) to print dagnostic info
 #'
 #'@return ggplot2 object
 #'
@@ -37,7 +38,8 @@ plotCompsAsCirclesGG<-function(dfr,
                                ylab=NA,
                                alpha=0.6,
                                ggtheme=theme_grey(),
-                               showPlot=TRUE) {
+                               showPlot=TRUE,
+                               verbose=FALSE) {
   
     p <- ggplot(aes_string(x=x,y=y,size=z,fill=category),data=dfr);
     p <- p + scale_size_area(max_size=10);

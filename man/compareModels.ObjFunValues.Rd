@@ -5,7 +5,7 @@
 \title{Plot all objective function values.}
 \usage{
 compareModels.ObjFunValues(repObj, variable = "objfun",
-  ggtheme = theme_grey(), showPlot = FALSE)
+  ggtheme = theme_grey(), showPlot = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{repObj}{- model report object or list of report objects}
@@ -15,6 +15,8 @@ compareModels.ObjFunValues(repObj, variable = "objfun",
 \item{ggtheme}{- a ggplot2 theme}
 
 \item{showPlot}{- flag to show plots immediately}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
 list of ggplot2 objects corresponding to penalties, priors, and data plots.

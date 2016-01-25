@@ -12,8 +12,6 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@import reshape2
-#'
 #'@export
 #'
 compareModels.SurveyQs<-function(tcsam=NULL,
@@ -40,23 +38,23 @@ compareModels.SurveyQs<-function(tcsam=NULL,
     for (uV in uniqVs){
         mdfrp<-mdfr[mdfr$v==uV,];#select results for survey uV
         #plot fully-selected rates
-        ddfr<-dcast(mdfrp,modeltype+model+y+x~.,fun.aggregate=max,na.rm=FALSE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+y+x~.,fun.aggregate=max,na.rm=FALSE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='x~.',
                        title=uV,xlab='year',ylab='fully-selected Q',units='',lnscale=FALSE,
                        colour='model',guideTitleColor='model',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uV]]$maxQ_yx<-p;
         
         #plot average (across msz) rates
-        ddfr<-dcast(mdfrp,modeltype+model+y+x~.,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
+        ddfr<-reshape2::dcast(mdfrp,modeltype+model+y+x~.,fun.aggregate=mean,na.rm=TRUE,value.var='val',drop=TRUE)
         ddfr[['.']]<-ifelse(ddfr[['.']]==0,NA,ddfr[['.']]);
         p<-plotMDFR.XY(ddfr,x='y',agg.formula=NULL,faceting='x~.',
                        title=uV,xlab='year',ylab='size-averaged Q',units='',lnscale=FALSE,
                        colour='model',guideTitleColor='model',
-                       shape='modeltype',guideTitleShape='model type');
-        if (showPlot) print(p);
+                       shape='modeltype',guideTitleShape='model type',
+                       showPlot=showPlot);
         plots[[uV]]$avgQ_yx<-p;
     }#uniqVs
     

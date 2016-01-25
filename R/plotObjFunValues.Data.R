@@ -7,6 +7,7 @@
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
 #'@param showPlot - flag to show plots
+#'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return list of ggplot2 objects corresponding to different categories of priors.
 #'
@@ -17,7 +18,8 @@
 plotObjFunValues.Data<-function(mdfr,
                                  variable='objfun',
                                  ggtheme=theme_grey(),
-                                 showPlot=FALSE){
+                                 showPlot=FALSE,
+                                 verbose=FALSE){
     if (variable=='wgt'){
         fcn<-'average';
         ylab<-'likelihood weight';
@@ -73,12 +75,12 @@ plotObjFunValues.Data<-function(mdfr,
     
     ums<-as.character(unique(dfr$model))
     n<-length(ums);#number of models
-    cat("number of models =",n,'\n')
+    if (verbose) cat("number of models =",n,'\n')
     
     ucts<-as.character(unique(dfr$catch_type));
     
     rng<-range(dfr$value)
-    cat("range = [",paste(rng,collapse=', '),']\n',sep='')
+    if (verbose) cat("range = [",paste(rng,collapse=', '),']\n',sep='')
     
     ps<-list();
     if (n==1){
