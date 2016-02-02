@@ -14,7 +14,6 @@
 #'@return ggplot2 object
 #'
 #'@import ggplot2
-#'@import reshape2
 #'
 #'@export
 #'
@@ -30,7 +29,7 @@ plotSizeCompsGG.Single<-function(n_xmsz=NULL,
     if (!is.null(n_xmsz)){
         #size comps come in as array(s)
         if (is.array(n_xmsz)){
-            mdfr<-melt(n_xmsz,value.name='val');
+            mdfr<-reshape2::melt(n_xmsz,value.name='val');
             mdfr$model<-mdl;
             oneModel<-TRUE;
         } else if (is.list(n_xmsz)) {
@@ -38,7 +37,7 @@ plotSizeCompsGG.Single<-function(n_xmsz=NULL,
             mdls<-names(n_xmsz);
             mdfr<-NULL;
             for (mdl in mdls){
-                mdfrp<-melt(n_xmsz[[mdl]],value.name='val');
+                mdfrp<-reshape2::melt(n_xmsz[[mdl]],value.name='val');
                 mdfrp$model<-mdl;
                 mdfr<-rbind(mdfr,mdfrp);
             }
@@ -56,7 +55,7 @@ plotSizeCompsGG.Single<-function(n_xmsz=NULL,
                 yr<-as.character(res$mc$mnYr);
             }
             n_xmsz <- res[[component]]$n.xmsyz[,,,yr,];
-            mdfr<-melt(n_xmsz,value.name='val');
+            mdfr<-reshape2::melt(n_xmsz,value.name='val');
             mdfr$model<-res$mc$configName;
             oneModel<-TRUE;
         } else if (is.list(res)){
@@ -70,7 +69,7 @@ plotSizeCompsGG.Single<-function(n_xmsz=NULL,
                     yr<-as.character(res[[mdl]]$mc$mnYr);
                 }
                 n_xmsz <- (res[[mdl]])[[component]]$n.xmsyz[,,,yr,];
-                mdfrp<-melt(n_xmsz,value.name='val');
+                mdfrp<-reshape2::melt(n_xmsz,value.name='val');
                 mdfrp$model<-mdl;
                 mdfr<-rbind(mdfr,mdfrp);
             }

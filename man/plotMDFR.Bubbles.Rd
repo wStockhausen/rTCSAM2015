@@ -43,8 +43,7 @@ plotMDFR.Bubbles(mdfr, x = NULL, y = NULL, value.var = "val",
 
 \item{guideTitleColour}{- title for colour guide}
 
-\item{showPlot}{- flag to show plot immediately
-#'}
+\item{showPlot}{- flag to show plot immediately}
 }
 \value{
 ggplot2 object

@@ -33,4 +33,10 @@ plotMCMCResults.forArray3D(data, scaleBy = 1, doPlot = TRUE,
 \description{
 Function to calculate and plot posterior densities based on a 3d MCMC data array.
 }
+\details{
+Uses functions
+\itemize{
+ \item wtsUtilities::createColorScale(...)
+}
+}
 

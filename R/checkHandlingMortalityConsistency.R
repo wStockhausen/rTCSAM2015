@@ -13,7 +13,6 @@
 #'@return list of ggplot2 objects
 #'
 #'@import ggplot2
-#'@import reshape2
 #'
 #'@export
 #'
@@ -27,13 +26,13 @@ checkHandlingMortalityConsistency<-function(tcsam=NULL,
     path<-'mr/F_list/dsB_fyxms';
     mdfr<-getMDFR(path,tcsam,rsim);
     mdfr$f<-gsub("_"," ",mdfr$f,fixed=TRUE);#replace '_'s in fishery names with spaces
-    ds<-dcast(mdfr,modeltype+model+f+y~.,value.var='val',fun.aggregate=sum)
+    ds<-reshape2::dcast(mdfr,modeltype+model+f+y~.,value.var='val',fun.aggregate=sum)
     
     #extract discard mortality biomass
     path<-'mr/F_list/dmB_fyxms';
     mdfr<-getMDFR(path,tcsam,rsim);
     mdfr$f<-gsub("_"," ",mdfr$f,fixed=TRUE);#replace '_'s in fishery names with spaces
-    dm<-dcast(mdfr,modeltype+model+f+y~.,value.var='val',fun.aggregate=sum)
+    dm<-reshape2::dcast(mdfr,modeltype+model+f+y~.,value.var='val',fun.aggregate=sum)
     
     dm$ratio <-dm[['.']]/ds[['.']];
     

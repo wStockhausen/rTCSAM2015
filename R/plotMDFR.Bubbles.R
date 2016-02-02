@@ -20,12 +20,10 @@
 #'@param useColourGradient - flag (T/F) to use a color gradient for bubble color
 #'@param guideTitleColour - title for colour guide
 #'@param showPlot - flag to show plot immediately
-#'#'
+#'
 #'@return ggplot2 object
 #'
 #'@import ggplot2
-#'@import reshape2
-#'@importFrom wtsUtilities createColorPalette
 #'
 #'@export
 #'
@@ -52,7 +50,7 @@ plotMDFR.Bubbles<-function(mdfr,
     if (!is.null(agg.formula)){
         #aggregate using formula
         form<-paste(agg.formula,".",sep="~")
-        mdfr<-dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
+        mdfr<-reshape2::dcast(mdfr,form,fun.aggregate=agg.function,value.var=value.var);
     } else {
         #rename value.var column to '.'
         nms<-colnames(mdfr);

@@ -45,4 +45,10 @@ plotBars(y = NULL, x = NULL, w = NULL, df = NULL, xCol = NULL,
 \description{
 Function to create or add to a bar plot.
 }
+\details{
+Uses functions
+\itemize{
+ \item wtsUtilities::mod(...)
+}
+}
 

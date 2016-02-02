@@ -32,4 +32,10 @@ plotMCMCDensity(data, scaleBy = 1, plotEst = TRUE, add = TRUE,
 \description{
 Function to calculate and plot a posterior density based on an MCMC data vector.
 }
+\details{
+Uses functions
+\itemize{
+ \item wtsUtilities::addTransparency(...)
+}
+}
 

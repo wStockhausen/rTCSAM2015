@@ -9,7 +9,6 @@
 #'@return list of ggplot objects
 #'
 #'@import ggplot2 
-#'@importFrom reshape2 melt
 #'
 #'@export
 #'

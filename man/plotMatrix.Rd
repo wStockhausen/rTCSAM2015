@@ -34,4 +34,10 @@ plotMatrix(mat, zlab = "", xlab = "", ylab = "", zmax = NULL,
 \description{
 Function to plot a matrix as a color map.
 }
+\details{
+Uses functions
+\itemize{
+ \item wtsUtilities::createColorScale(...)
+}
+}
 

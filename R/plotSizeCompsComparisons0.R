@@ -12,7 +12,6 @@
 #'
 #'@return list of ggplot objects comprising the graph pages to plot
 #'
-#'@importFrom reshape2 melt
 #'@import ggplot2
 #'
 plotSizeCompsComparisons0<-function(name,

@@ -8,9 +8,10 @@
 #'@return a dataframe (or NULL).
 #'
 #'@details If stdFile is NULL, the user will be prompted to identify a 
-#'TCSAM2015 model std file to read.
-#'
-#'@importFrom wtsUtilities selectFile
+#'TCSAM2015 model std file to read. Uses functions
+#'\itemize{
+#'  \item wtsUtilities addFilter()
+#'}
 #'
 #'@export
 #'

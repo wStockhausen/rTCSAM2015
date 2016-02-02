@@ -19,7 +19,6 @@
 #'@return ggplot2 object
 #'
 #'@import ggplot2
-#'@import reshape2
 #'
 #'@export
 #'
@@ -46,8 +45,8 @@ plotAggregateCatchDataGG<-function(label=NULL,
     #observations
     odfr<-NULL;
     if (!is.null(obs)){
-        odfr<-melt(obs$data,value.name='val');
-        cvs <-melt(obs$cvs,value.name='cv');
+        odfr<-reshape2::melt(obs$data,value.name='val');
+        cvs <-reshape2::melt(obs$cvs,value.name='cv');
         odfr<-cbind(odfr,cv=cvs$cv);
         if (tolower(pdfType)=='normal'){
             #normal
@@ -70,7 +69,7 @@ plotAggregateCatchDataGG<-function(label=NULL,
         }
         odfr$facs<-paste(odfr$x,odfr$m,odfr$s)
         #find factor combinations which are NOT all 0's
-        tots<-dcast(odfr,x+m+s~.,value.var='val',fun.aggregate=sum,drop=TRUE)
+        tots<-reshape2::dcast(odfr,x+m+s~.,value.var='val',fun.aggregate=sum,drop=TRUE)
         tots<-tots[!(tots$`.`==0),]
         facs<-paste(tots$x,tots$m,tots$s)
         odfr<-odfr[odfr$facs %in% facs,]
@@ -90,7 +89,7 @@ plotAggregateCatchDataGG<-function(label=NULL,
     #model predictions
     mdfr<-NULL;
     if (!is.null(mod)){
-        mdfr<-melt(mod$data,value.name='val');
+        mdfr<-reshape2::melt(mod$data,value.name='val');
         mdfr$facs<-paste(mdfr$x,mdfr$m,mdfr$s)
         mdfr<-mdfr[mdfr$facs %in% facs,]
         if (logscale){mdfr$val<-log(mdfr$val);}

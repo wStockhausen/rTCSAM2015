@@ -6,8 +6,12 @@
 #'@return path to selected TCSAM2015 model report file, or NULL (if user canceled selection).
 #'
 #'@export
-#'@importFrom tcltk tk_choose.files
-#'@importFrom wtsUtilities addFilter
+#'
+#'@details Uses functions
+#'\itemize{
+#'  \item tcltk::tk_choose.files()
+#'  \item wtsUtilities addFilter()
+#'}
 #'
 selectReportFile<-function(){
     Filters<-wtsUtilities::addFilter("rep","report files (*.rep)","*.rep",Filters=NULL);

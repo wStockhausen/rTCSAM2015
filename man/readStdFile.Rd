@@ -17,6 +17,9 @@ Function to read a TCSAM2015 std file and return a dataframe.
 }
 \details{
 If stdFile is NULL, the user will be prompted to identify a 
-TCSAM2015 model std file to read.
+TCSAM2015 model std file to read. Uses functions
+\itemize{
+ \item wtsUtilities addFilter()
+}
 }
 

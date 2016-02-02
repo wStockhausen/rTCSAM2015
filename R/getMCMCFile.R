@@ -6,8 +6,12 @@
 #'@return path to selected TCSAM2015 MCMC results file, or NULL (if user canceled selection).
 #'
 #'@export
-#'@importFrom tcltk tk_choose.files
-#'@importFrom wtsUtilities addFilter
+#'
+#'@details Uses functions
+#'\itemize{
+#'  \item tcltk::tk_choose.files()
+#'  \item wtsUtilities addFilter()
+#'}
 #'
 getMCMCFile<-function(){
     Filters<-wtsUtilities::addFilter("R","R files (*.R)","*.R",Filters=NULL);

@@ -12,4 +12,11 @@ path to selected TCSAM2015 model report file, or NULL (if user canceled selectio
 \description{
 Allows the user to select a TCSAM2015 model report file using a file dialog.
 }
+\details{
+Uses functions
+\itemize{
+ \item tcltk::tk_choose.files()
+ \item wtsUtilities addFilter()
+}
+}
 

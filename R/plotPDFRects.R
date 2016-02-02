@@ -7,7 +7,11 @@
 #'@param colorscale - the name of the colorscale to use
 #'@param alpha - the transparency level for the resulting image
 #'
-#'@importFrom wtsUtilities createColorScale
+#'@details Uses functions
+#'\itemize{
+#'  \item wtsUtilities::createColorScale(...)
+#'}
+#'
 #'@import graphics
 #'
 #'@export

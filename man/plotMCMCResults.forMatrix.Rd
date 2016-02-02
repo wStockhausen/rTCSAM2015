@@ -35,4 +35,10 @@ plotMCMCResults.forMatrix(data, scaleBy = 1, doPlot = TRUE,
 \description{
 Function to calculate and plot posterior densities based on a MCMC data matrix.
 }
+\details{
+Uses functions
+\itemize{
+ \item wtsUtilities::createColorScale(...)
+}
+}
 

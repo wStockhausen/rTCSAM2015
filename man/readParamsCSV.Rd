@@ -17,6 +17,9 @@ Function to read a TCSAM2015 parameters csv file and return a dataframe.
 }
 \details{
 If csvFile is NULL, the user will be prompted to identify a 
-TCSAM2015 model parameters csv file to read.
+TCSAM2015 model parameters csv file to read. Uses functions
+\itemize{
+ \item wtsUtilities addFilter()
+}
 }
 

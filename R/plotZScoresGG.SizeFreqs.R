@@ -16,8 +16,6 @@
 #' 
 #' @return list of list of ggplot2 plot objects
 #' 
-#' @import reshape2
-#' 
 #' @export
 #' 
 plotZScoresGG.SizeFreqs<-function(fits,

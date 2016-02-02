@@ -17,7 +17,6 @@
 #'@return list of ggplot2 objects
 #'
 #'@import ggplot2
-#'@import reshape2
 #'
 #'@export
 #'

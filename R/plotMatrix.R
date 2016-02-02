@@ -15,8 +15,10 @@
 #'@param plotsize - 2 element vector giving plot size in pixels (c(W,H))
 #'@param showDiagonal - TRUE/FALSE to plot diagonal line
 #'
-#'@import graphics
-#'@importFrom wtsUtilities createColorScale
+#'@details Uses functions
+#'\itemize{
+#'  \item wtsUtilities::createColorScale(...)
+#'}
 #'
 #'@export
 #'

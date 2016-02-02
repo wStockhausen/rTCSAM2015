@@ -20,8 +20,10 @@
 #' @param leg.loc     - location for legend (e.g., "topright")
 #' @param leg.text    - text labels for legend
 #'
-#'@import graphics
-#'@importFrom wtsUtilities mod
+#'@details Uses functions
+#'\itemize{
+#'  \item wtsUtilities::mod(...)
+#'}
 #'
 #'@export
 plotBars<-function(y=NULL,

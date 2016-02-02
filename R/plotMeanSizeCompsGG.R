@@ -17,8 +17,6 @@
 #'
 #'@return list of ggplot objects comprising the graph pages to plot
 #'
-#'@importFrom sqldf sqldf
-#'@importFrom reshape2 melt
 #'@import ggplot2
 #'
 #'@export

@@ -15,8 +15,10 @@
 #'@param xlabel - label for x axis (if add=FALSE)
 #'@param label - label for plot (if add=FALSE)
 #'
-#'@import graphics
-#'@importFrom wtsUtilities createColorScale
+#'@details Uses functions
+#'\itemize{
+#'  \item wtsUtilities::createColorScale(...)
+#'}
 #'
 #'@export
 #'

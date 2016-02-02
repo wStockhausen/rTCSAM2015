@@ -16,4 +16,10 @@ plotPDFRects(o, y = NULL, colorscale = "jet", alpha = 0.5, add = TRUE)
 \description{
 Function to plot an objec of class 'pdfRects' on an existing plot.
 }
+\details{
+Uses functions
+\itemize{
+ \item wtsUtilities::createColorScale(...)
+}
+}
 

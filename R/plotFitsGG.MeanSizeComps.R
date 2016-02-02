@@ -87,7 +87,7 @@ plotFitsGG.MeanSizeComps<-function(fits,
     
     if (verbose){
         #check normalization again
-        tst<-dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
+        tst<-reshape2::dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
         cat("Repeat normalization check:\n");
         print(tst)
         print(names(tst));
