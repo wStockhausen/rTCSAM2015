@@ -17,11 +17,10 @@
 #'@param jit.seed - value for random number seed to generate jitter
 #'@param cleanup - flag (T/F) to clean up unnecessary files
 #'
-#'@details. If \code{cleanup} is TRUE, then the executable, .bar, .b0*, .p0*, .r0*, variance, 
-#'EchoOut.dat, CheckFile.dat, and fimn.log files are deleted. If not, then only the executable
-#'is deleted.\cr
+#'@details. If \code{cleanup} is TRUE, then .bar, .b0*, .p0*, .r0*, variance, 
+#'EchoOut.dat, CheckFile.dat, and fimn.log files are deleted.\cr
 #'If the path associated with \code{configFile} is a relative one, it should
-#'be relative to the \code{path} variable.
+#'be relative to the path for model output.
 #'
 #'@export
 #'
@@ -39,7 +38,7 @@ getRunCommands<-function(os='osx',
                          jit.seed=NULL,
                          cleanup=TRUE){
     nopath<-FALSE;
-    if ((path2model=='.')||(path2model=='./')||(path2model=="")) nopath=TRUE;
+    if ((path2model=='.')||(path2model=='./')||(path2model=='.\\')||(path2model=="")) nopath=TRUE;
     echo.on <-"echo on";
     echo.off<-"echo off";
     cln<-"";
@@ -60,7 +59,7 @@ getRunCommands<-function(os='osx',
         model1<-paste(model,'exe',sep='.');
         if (!nopath) cpy<-"copy &&path2model &&model1";
         rn.mdl<-"&&model -rs -nox  -configFile &&configFile &&mcmc &&nohess &&jitter &&jit.seed &&pin";
-        if (mcmc) rnmcmc<-"&&model -mceval";
+        if (mcmc) rn.mcmc<-"&&model  -configFile &&configFile -mceval";
         ##cln is correct for 'win', so do nothing
         run.cmds<-paste(echo.on,cpy,rn.mdl,rn.mcmc,cln,sep="\n");
         path2model<-gsub("/","\\",file.path(path2model,model1),fixed=TRUE);
@@ -68,7 +67,7 @@ getRunCommands<-function(os='osx',
         model1<-model;
         if (!nopath) cpy<-"cp &&path2model ./&&model";
         rn.mdl<-"./&&model -rs -nox  -configFile &&configFile &&mcmc &&nohess &&jitter &&jit.seed &&pin";
-        if (mcmc) rnmcmc<-"./&&model -mceval";
+        if (mcmc) rn.mcmc<-"./&&model  -configFile &&configFile -mceval";
         if (cleanup) cln<-gsub("del ","rm ",cln,fixed=TRUE);
         cdr<-paste('DIR="$( cd "$( dirname "$0" )" && pwd )"','cd ${DIR}',sep='\n');
         run.cmds<-paste("#!/bin/sh",echo.on,cdr,cpy,rn.mdl,rn.mcmc,cln,sep="\n");
