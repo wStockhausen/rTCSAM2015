@@ -2,7 +2,7 @@
 % Please edit documentation in R/getMCMCResults.R
 \name{getMCMCResults}
 \alias{getMCMCResults}
-\title{Read a TCSAM 2015 MCMC (.R) file.}
+\title{Read a TCSAM2015 MCMC (.R) file}
 \usage{
 getMCMCResults(mcmcfile = NULL)
 }
@@ -10,13 +10,13 @@ getMCMCResults(mcmcfile = NULL)
 \item{mcmcfile}{- results file from a TCSAM2015 MCMC run to source. can be NULL.}
 }
 \value{
-MCMC object as list. The returned list will be of class 'tcsam2015mcmc'.
+MCMC object as list. The returned list will be of class 'tcsam2015.mcmc'.
 }
 \description{
-Function to read a TCSAM 2015 MCMC (.R) file.
+Function to read a TCSAM2015 MCMC (.R) file.
 }
 \details{
 If resfile is NULL, the user will be prompted to identify a 
-TCSAM 2015 MCMC file from which to source the results list object.
+TCSAM2015 MCMC file from which to source the results list object.
 }
 

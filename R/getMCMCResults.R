@@ -1,14 +1,14 @@
 #'
-#'@title Read a TCSAM 2015 MCMC (.R) file.
+#'@title Read a TCSAM2015 MCMC (.R) file
 #'
-#'@description Function to read a TCSAM 2015 MCMC (.R) file.
+#'@description Function to read a TCSAM2015 MCMC (.R) file.
 #'
 #'@param mcmcfile - results file from a TCSAM2015 MCMC run to source. can be NULL.
 #'
-#'@return MCMC object as list. The returned list will be of class 'tcsam2015mcmc'.
+#'@return MCMC object as list. The returned list will be of class 'tcsam2015.mcmc'.
 #'
 #'@details If resfile is NULL, the user will be prompted to identify a 
-#'TCSAM 2015 MCMC file from which to source the results list object.
+#'TCSAM2015 MCMC file from which to source the results list object.
 #'
 #'@export
 #'
@@ -36,6 +36,6 @@ getMCMCResults<-function(mcmcfile=NULL){
     }
     n<-length(mcmc);
     mcmc<-mcmc[1:(n-1)];
-    class(mcmc)<-'tcsam2015mcmc';#set class attribute to 'tcsam2015mcmc' for identification
+    class(mcmc)<-'tcsam2015.mcmc';#set class attribute to 'tcsam2015mcmc' for identification
     return(invisible(mcmc));
 }

@@ -1,18 +1,18 @@
 #'
-#'@title Compiles MCMC results from a TCSAM2015 model run.
+#'@title Compiles MCMC results from a TCSAM2015 model run
 #'
 #'@description Function to compile MCMC results from a TCSAM2015 model run.
 #'
-#'@param mcmc - object of class 'tcsam2015mcmc' (the result of sourcing a TCSAM2015 MCMC results file)
+#'@param mcmc - object of class 'tcsam2015.mcmc' (the result of sourcing a TCSAM2015 MCMC results file)
 #'
 #'@return list by MCMC results compiled by model 'object' (e.g., parameter or other named MCMC output)
 #'
 #'@export
 #'
 compileMCMCResults<-function(mcmc){
-    if (class(mcmc)!='tcsam2015mcmc'){
+    if (class(mcmc)!='tcsam2015.mcmc'){
         cat('Error in compileMCMCResults(...).\n',
-            "Object 'mcmc' is not of class 'tcsam2015mcmc'\n",
+            "Object 'mcmc' is not of class 'tcsam2015.mcmc'\n",
             "Returning NULL\n");
         return(NULL);
     }

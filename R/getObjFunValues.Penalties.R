@@ -1,9 +1,9 @@
 #'
-#'@title Get model penalties in the objective function as a melted dataframe.
+#'@title Get model penalties in the objective function as a melted dataframe
 #'
 #'@description Function to get model penalties as a melted dataframe.
 #'
-#'@param repObj - tcsam2015 model results object or list of such
+#'@param repObj - tcsam2015.rep model results object or list of such
 #'@param mdl - name to associate with model results object
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
@@ -25,7 +25,7 @@
 getObjFunValues.Penalties<-function(repObj,
                                     mdl=NULL,
                                     verbose=FALSE){
-    if (class(repObj)=='tcsam2015'){
+    if (class(repObj)=='tcsam2015.rep'){
         #repObj is a tcsam2015 model results object
         if (is.null(mdl)) mdl<-repObj$mc$configName;
         penalties<-repObj$model.fits$penalties;
@@ -61,7 +61,7 @@ getObjFunValues.Penalties<-function(repObj,
         }
     } else {
         cat("Error in getPenalties(repObj).\n")
-        cat("'repObj' should be an object of class 'tcsam2015' or a list of such.\n")
+        cat("'repObj' should be an object of class 'tcsam2015.rep' or a list of such.\n")
         cat("Returning NULL.\n")
         return(NULL);
     }

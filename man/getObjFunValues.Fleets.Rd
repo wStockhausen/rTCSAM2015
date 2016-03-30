@@ -2,12 +2,12 @@
 % Please edit documentation in R/getObjFunValues.Fleets.R
 \name{getObjFunValues.Fleets}
 \alias{getObjFunValues.Fleets}
-\title{Get fleet data components in the objective function as a melted dataframe.}
+\title{Get fleet data components in the objective function as a melted dataframe}
 \usage{
 getObjFunValues.Fleets(res, mdl = NULL, type = "fishery", verbose = FALSE)
 }
 \arguments{
-\item{res}{- tcsam2015 model results object or list of such}
+\item{res}{- tcsam2015 model report object or list of such}
 
 \item{mdl}{- name to associate with model results object}
 
@@ -22,9 +22,9 @@ a melted dataframe
 Function to get fleet data components in the objective function as a melted dataframe.
 }
 \details{
-If res is a list of tcsam2015 model results objects, then the function
+If res is a list of tcsam2015 model report objects, then the function
 is called recursively for each object, with the associated list component name used as 
-mdl. If res is a tcsam2015 model results object and mdl is NULL (the default), then 
+mdl. If res is a tcsam2015 model report object and mdl is NULL (the default), then 
 res$mc$configName is used as the model name.
 
 The returned dataframe has columns named 

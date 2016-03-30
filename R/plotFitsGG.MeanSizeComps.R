@@ -1,5 +1,5 @@
 #'
-#'@title Plot mean size comps fits
+#' @title Plot mean size comps fits
 #'
 #' @description  Function to plot mean size comps fits using ggplot2.
 #' 
@@ -15,19 +15,21 @@
 #' 
 #' @return list of list of ggplot2 plot objects
 #' 
+#' @details none.
+#' 
 #' @import ggplot2
 #' 
 #' @export
 #' 
 plotFitsGG.MeanSizeComps<-function(fits,
-                                mc,
-                                sxs=c(mc$dims$x$nms,"ALL_SEX"),
-                                mss=c(mc$dims$m$nms,"ALL_MATURITY"),
-                                scs=c(mc$dims$s$nms,"ALL_SHELL"),
-                                label="",
-                                ggtheme=theme_grey(),
-                                showPlot=TRUE,
-                                verbose=FALSE){
+                                   mc,
+                                   sxs=c(mc$dims$x$nms,"ALL_SEX"),
+                                   mss=c(mc$dims$m$nms,"ALL_MATURITY"),
+                                   scs=c(mc$dims$s$nms,"ALL_SHELL"),
+                                   label="",
+                                   ggtheme=theme_grey(),
+                                   showPlot=TRUE,
+                                   verbose=FALSE){
     if (verbose) cat("---Running plotFitsGG.MeanSizeComps(...) for",label,"\n");
     
     label<-gsub("[_]"," ",label);#replace "_"'s
@@ -70,8 +72,8 @@ plotFitsGG.MeanSizeComps<-function(fits,
     pdfr$fac<-paste(pdfr$ms,pdfr$sc,sep=', ')
 
     #check normalization
+    tst<-reshape2::dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
     if (verbose){
-        tst<-reshape2::dcast(pdfr,sx+ms+sc~type,fun.aggregate=sum,value.var='comp')
         cat("Normalization check:\n");
         print(tst);
     }

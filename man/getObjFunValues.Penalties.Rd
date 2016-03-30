@@ -2,12 +2,12 @@
 % Please edit documentation in R/getObjFunValues.Penalties.R
 \name{getObjFunValues.Penalties}
 \alias{getObjFunValues.Penalties}
-\title{Get model penalties in the objective function as a melted dataframe.}
+\title{Get model penalties in the objective function as a melted dataframe}
 \usage{
 getObjFunValues.Penalties(repObj, mdl = NULL, verbose = FALSE)
 }
 \arguments{
-\item{repObj}{- tcsam2015 model results object or list of such}
+\item{repObj}{- tcsam2015.rep model results object or list of such}
 
 \item{mdl}{- name to associate with model results object}
 

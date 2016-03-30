@@ -1,18 +1,18 @@
 #'
-#'@title Get fleet data components in the objective function as a melted dataframe.
+#'@title Get fleet data components in the objective function as a melted dataframe
 #'
 #'@description Function to get fleet data components in the objective function as a melted dataframe.
 #'
-#'@param res - tcsam2015 model results object or list of such
+#'@param res - tcsam2015 model report object or list of such
 #'@param mdl - name to associate with model results object
 #'@param type - "fishery" or "survey"
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
-#'@details If res is a list of tcsam2015 model results objects, then the function
+#'@details If res is a list of tcsam2015 model report objects, then the function
 #'is called recursively for each object, with the associated list component name used as 
-#'mdl. If res is a tcsam2015 model results object and mdl is NULL (the default), then 
+#'mdl. If res is a tcsam2015 model report object and mdl is NULL (the default), then 
 #'res$mc$configName is used as the model name.
 #'
 #'The returned dataframe has columns named 
@@ -26,7 +26,7 @@
 #'@export
 #'
 getObjFunValues.Fleets<-function(res,mdl=NULL,type='fishery',verbose=FALSE){
-    if (class(res)=='tcsam2015'){
+    if (class(res)=='tcsam2015.rep'){
         #res is a tcsam2015 model results object
         dfr<-NULL;
         if (is.null(mdl)) mdl<-res$mc$configName;
@@ -55,7 +55,7 @@ getObjFunValues.Fleets<-function(res,mdl=NULL,type='fishery',verbose=FALSE){
             }#non-NULL fleet
         }#fleets
     } else if (class(res)=='list'){
-        #res is a list of tcsam2015 model results objects
+        #res is a list of tcsam2015 model report objects
         mdls<-names(res);
         dfr<-NULL;
         for (mdl in mdls){
@@ -63,7 +63,7 @@ getObjFunValues.Fleets<-function(res,mdl=NULL,type='fishery',verbose=FALSE){
         }
     } else {
         cat("Error in getObjFunValues.Fleets(res).\n")
-        cat("'res' should be an object of class 'tcsam2015' or a list of such.\n")
+        cat("'res' should be an object of class 'tcsam2015.rep' or a list of such.\n")
         cat("Returning NULL.\n")
         return(NULL);
     }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/compileMCMCResults.R
 \name{compileMCMCResults}
 \alias{compileMCMCResults}
-\title{Compiles MCMC results from a TCSAM2015 model run.}
+\title{Compiles MCMC results from a TCSAM2015 model run}
 \usage{
 compileMCMCResults(mcmc)
 }
 \arguments{
-\item{mcmc}{- object of class 'tcsam2015mcmc' (the result of sourcing a TCSAM2015 MCMC results file)}
+\item{mcmc}{- object of class 'tcsam2015.mcmc' (the result of sourcing a TCSAM2015 MCMC results file)}
 }
 \value{
 list by MCMC results compiled by model 'object' (e.g., parameter or other named MCMC output)

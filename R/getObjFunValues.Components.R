@@ -1,17 +1,17 @@
 #'
-#'@title Get model components in the objective function as a melted dataframe.
+#'@title Get model components in the objective function as a melted dataframe
 #'
 #'@description Function to get model components in the objective function as a melted dataframe.
 #'
-#'@param res - tcsam2015 model results object or list of such
+#'@param res - tcsam2015 model report object or list of such
 #'@param mdl - name to associate with model results object
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
-#'@details If res is a list of tcsam2015 model results objects, then the function
+#'@details If res is a list of tcsam2015 model report objects, then the function
 #'is called recursively for each object, with the associated list component name used as 
-#'mdl. If res is a tcsam2015 model results object and mdl is NULL (the default), then 
+#'mdl. If res is a tcsam2015 model report object and mdl is NULL (the default), then 
 #'res$mc$configName is used as the model name.
 #'
 #'The returned dataframe has columns named 
@@ -25,8 +25,8 @@
 getObjFunValues.Components<-function(res,
                                      mdl=NULL,
                                      verbose=FALSE){
-    if (class(res)=='tcsam2015'){
-        #res is a tcsam2015 model results object
+    if (class(res)=='tcsam2015.rep'){
+        #res is a tcsam2015 model report object
         if (is.null(mdl)) mdl<-res$mc$configName;
         comps<-res$model.fits$components;
         nmctgs<-names(comps);#names of model categories for components
@@ -53,7 +53,7 @@ getObjFunValues.Components<-function(res,
         }#categories
         mdfr<-reshape2::melt(dfr,id.vars=c('model','type','category','name','level'),measure.vars=c('wgt','nll','objfun'))
     } else if (class(res)=='list'){
-        #res is a list of tcsam2015 model results objects
+        #res is a list of tcsam2015 model report objects
         mdls<-names(res);
         mdfr<-NULL;
         for (mdl in mdls){
@@ -61,7 +61,7 @@ getObjFunValues.Components<-function(res,
         }
     } else {
         cat("Error in getObjFunValues.Components(res).\n")
-        cat("'res' should be an object of class 'tcsam2015' or a list of such.\n")
+        cat("'res' should be an object of class 'tcsam2015.rep' or a list of such.\n")
         cat("Returning NULL.\n")
         return(NULL);
     }

@@ -34,4 +34,7 @@ list of list of ggplot2 plot objects
 \description{
 Function to plot mean size comps fits using ggplot2.
 }
+\details{
+none.
+}
 

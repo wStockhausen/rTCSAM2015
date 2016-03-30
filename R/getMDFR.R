@@ -1,10 +1,10 @@
 #'
-#'@title Get model arrays as a melted dataframe from TCSAM2015 and rsimTCSAM models.
+#'@title Get model arrays as a melted dataframe from TCSAM2015 and rsimTCSAM models
 #'
 #'@description Function to get model objects as a melted dataframe from TCSAM2015 and rsimTCSAM models.
 #'
 #'@param path - path in models to requested array (using '/' as separator for list levels)
-#'@param tcsam - single TCSAM2015 model results object, or named list of such
+#'@param tcsam - single TCSAM2015 model report object, or named list of such
 #'@param rsim - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print diagnostics
 #'
@@ -15,8 +15,8 @@
 getMDFR<-function(path,tcsam=NULL,rsim=NULL,verbose=FALSE){
     mdfr<-NULL;
     if (!is.null(tcsam)){
-        if (class(tcsam)=='tcsam2015'){
-            #tcsam is a tcsam2015 model object
+        if (class(tcsam)=='tcsam2015.rep'){
+            #tcsam is a tcsam2015 model report object
             obj<-getObj(path,tcsam,verbose=verbose);
             if (!is.null(obj)){
                 mdfr<-reshape2::melt(obj,value.name='val',as.is=TRUE);
@@ -24,7 +24,7 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL,verbose=FALSE){
                 mdfr$modeltype<-'tcsam';
             }
         } else if (class(tcsam)=='list'){
-            #tcsam is a list of tcsam2015 model objects
+            #tcsam is a list of tcsam2015 model report objects
             nl<-length(tcsam);
             nms<-names(tcsam);
             for (l in 1:nl){
@@ -38,7 +38,7 @@ getMDFR<-function(path,tcsam=NULL,rsim=NULL,verbose=FALSE){
             }
         } else {
             cat("Error in getMDFR(path,tcsam,rsim).\n")
-            cat("'tcsam' should be NULL, an object of class 'tcsam2015', or a list of such.\n")
+            cat("'tcsam' should be NULL, an object of class 'tcsam2015.rep', or a list of such.\n")
             cat("Returning NULL.\n")
             return(NULL);
         }
