@@ -40,8 +40,8 @@ plotZScoresForFleets<-function(repObj,
                                                   type=paste(type,gsub("."," ",ctNm,fixed=TRUE)),
                                                   showPlot=showPlot,
                                                   verbose=verbose);
+                    plots.ct[[ctNm]]<-plts;
                 }
-                plots.ct[[ctNm]]<-plts;
             }##ctNms
             plots[[fltNm]]<-plots.ct;
         }

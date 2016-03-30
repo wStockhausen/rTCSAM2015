@@ -3,12 +3,13 @@
 #'
 #'@description Function to compare population-related quantities from TCSAM2015 and rsimTCSAM model runs.
 #'
-#'@param tcsams - single TCSAM2015 model results object, or named list of such
+#'@param tcsams - single TCSAM2015 model report object, or named list of such
 #'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param showPlot - flag to show/print plots immediately
 #'@param pdf - name of pdf file to record plot output to
 #'@param width - pdf page width (in inches)
 #'@param height - pdf page width (in inches)
+#'@param verbose - flag (T/F) to print debug info
 #'
 #'@return list of ggplot2 objects
 #'
@@ -20,14 +21,15 @@ compareModels.PopQuants<-function(tcsams=NULL,
                                   showPlot=TRUE,
                                   pdf=NULL,
                                   width=8,
-                                  height=6){
+                                  height=6,
+                                  verbose=FALSE){
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=pdf,width=width,height=height);
         on.exit(dev.close())
     }
     
-    if (class(tcsams)=='tcsam2015'){
+    if (class(tcsams)[1]=='tcsam2015.rep'){
         tcsams<-list(tcsam=tcsams);#wrap in list
     }
     if (class(rsims)=='rsimTCSAM'){
@@ -37,6 +39,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots<-list();
     
     #natural mortality
+    if (verbose) cat("Plotting natural mortality info\n");
     mdfr<-NULL;
     if (!is.null(tcsams)){
         mdfr<-getMDFR('mp/M_cxm',tcsams,NULL);
@@ -70,6 +73,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$M_cxm<-p;
     
     #mean growth increments
+    if (verbose) cat("Plotting mean growth increments\n");
     mdfr<-NULL;
     if (!is.null(tcsams)){
         mdfr<-getMDFR('mp/T_list/mnZAM_cz',tcsams,NULL);
@@ -108,6 +112,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$mnZAM_cz<-p;
     
     #growth transition matrices
+    if (verbose) cat("Plotting growth transition matrices\n");
     mdfr<-NULL;
     if (!is.null(tcsams)){
         mdfr<-getMDFR('mp/T_list/T_czz',tcsams,NULL);
@@ -144,6 +149,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$T_czz<-p;
     
     #molt-to-maturity
+    if (verbose) cat("Plotting molt to maturity info\n");
     mdfr<-NULL;
     if (!is.null(tcsams)){
         mdfr<-getMDFR('mp/prMolt2Mat_cz',tcsams,NULL);
@@ -181,6 +187,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$prMolt2Mat_cz<-p;
         
     #recruitment size distribution
+    if (verbose) cat("Plotting recruitment size distribution\n");
     path<-'mp/R_list/R_cz';
     if (!is.null(tcsams)){
         mdfr<-getMDFR(path,tcsams,NULL);
@@ -216,6 +223,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$R_cz<-p;
     
     #recruitment sex ratio
+    if (verbose) cat("Plotting recruitment sex ratio\n");
     path<-'mp/R_list/Rx_c';
     if (!is.null(tcsam)){
         mdfr<-getMDFR(path,tcsams,NULL);
@@ -249,6 +257,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$Rx_c<-p;
     
     #initial size distribution
+    if (verbose) cat("Plotting initial size distribution\n");
     path<-'mr/iN_xmsz';
     mdfr<-getMDFR(path,tcsams,rsims);
     mdfr<-removeImmOS(mdfr);
@@ -260,6 +269,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$iN_xmsz<-p;
         
     #recruitment
+    if (verbose) cat("Plotting recruitment time series\n");
     path<-'mp/R_list/R_y';
     mdfr<-getMDFR(path,tcsams,rsims);
     p<-plotMDFR.XY(mdfr,x='y',agg.formula=NULL,faceting=NULL,
@@ -276,6 +286,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$lnR_y<-p;
     
     #Mature biomass
+    if (verbose) cat("Plotting mature biomass time series\n");
     path<-'mr/P_list/MB_yx';
     mdfr<-getMDFR(path,tcsams,rsims);
     p<-plotMDFR.XY(mdfr,x='y',agg.formula='model+y+x',faceting='x~.',
@@ -286,6 +297,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$MB_yx<-p;
     
     #Population biomass
+    if (verbose) cat("Plotting population biomass time series\n");
     path<-'mr/P_list/B_yxms';
     mdfr<-getMDFR(path,tcsams,rsims);
     mdfr<-removeImmOS(mdfr);
@@ -297,6 +309,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$B_yx<-p;
     
     #Population abundance
+    if (verbose) cat("Plotting poulation abundance time series\n");
     path<-'mr/P_list/N_yxmsz';
     mdfr<-getMDFR(path,tcsams,rsims);
     mdfr<-removeImmOS(mdfr);
@@ -308,6 +321,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     plots$N_yx<-p;
     
     #Population abundance-at-size
+    if (verbose) cat("Plotting poulation abundance-at-size\n");
     path<-'mr/P_list/N_yxmsz';
     mdfr<-getMDFR(path,tcsams,rsims);
     mdfr<-removeImmOS(mdfr);

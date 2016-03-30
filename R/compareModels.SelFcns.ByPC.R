@@ -3,7 +3,7 @@
 #'
 #'@description Function to compare selectivity functions from TCSAM2015 and rsimTCSAM model runs.
 #'
-#'@param tcsam - single TCSAM2015 model results object, or named list of such
+#'@param tcsam - single TCSAM2015 model report object, or named list of such
 #'@param rsim - single rsimTCSAM results object, or named list of such
 #'@param showPlot - flag to show/print plots immediately
 #'@param pdf - name of pdf file to record plot output to
@@ -33,7 +33,7 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
     #if only tcsam models are present
     if (!is.null(tcsam)&&is.null(rsim)){
         plots<-list();
-        if (class(tcsam)=='tcsam2015'){
+        if (class(tcsam)[1]=='tcsam2015.rep'){
             #need to wrap it in a list
             tcsam<-list(tcsam=tcsam);
         }

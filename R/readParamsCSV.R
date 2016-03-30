@@ -24,7 +24,7 @@ readParamsCSV<-function(csvFile=NULL){
     obj.prs<-NULL;
     if (!is.null(in.prs)&&file.exists(in.prs)){
         obj.prs<-read.csv(in.prs,stringsAsFactors=FALSE);
-        class(obj.prs)<-'tcsam2015.prs';#set class attribute to 'tcsam2015.prs' for identification
+        class(obj.prs)<-c('tcsam2015.prs',class(obj.prs));#set class attribute to 'tcsam2015.prs' for identification
     } else {
         cat('No parameters csv file specified, or file does not exist.\n',
             'Returning NULL...\n');

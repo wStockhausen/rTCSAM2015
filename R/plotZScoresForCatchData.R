@@ -60,7 +60,7 @@ plotZScoresForCatchData<-function(fit,
         
         if (verbose) cat("Plotting ESSs for size frequencies.\n")
         plots$effn<-plotEffNsGG(fit$n.at.z,
-                                repObj$mc,
+                                mc,
                                 label=paste0(fleet,"\n",type),
                                 showPlot=showPlot,
                                 verbose=verbose);

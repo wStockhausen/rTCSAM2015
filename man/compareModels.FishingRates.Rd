@@ -5,7 +5,7 @@
 \title{Compare fishing rates from TCSAM2015 and rsimTCSAM model runs.}
 \usage{
 compareModels.FishingRates(tcsam = NULL, rsim = NULL, showPlot = TRUE,
-  pdf = NULL, width = 8, height = 6)
+  pdf = NULL, width = 8, height = 6, verbose = FALSE)
 }
 \arguments{
 \item{tcsam}{- single TCSAM2015 model results object, or named list of such}
@@ -19,6 +19,8 @@ compareModels.FishingRates(tcsam = NULL, rsim = NULL, showPlot = TRUE,
 \item{width}{- pdf page width (in inches)}
 
 \item{height}{- pdf page width (in inches)}
+
+\item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
 list of ggplot2 objects

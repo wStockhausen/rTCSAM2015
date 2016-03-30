@@ -6,6 +6,8 @@
 #'
 #'@return multi-level list with ggplot2 objects
 #'
+#'@details none yet!
+#'
 #'@export
 #'
 plotDataModelComparisons<-function(repObj,showPlot=FALSE){

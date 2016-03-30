@@ -105,7 +105,7 @@ plotAggregateCatchDataGG<-function(label=NULL,
 #     print(names(cdfr));
 #     print(cdfr);
     
-    pd<-position_identity(0.0)
+    pd<-position_identity()
     p <- ggplot(aes_string(x='y',y='val',colour='type',fill='type',shape='type',linetype='type'),data=cdfr)
     p <- p + scale_linetype_manual(values=c(observed=3,estimated=1))
     p <- p + scale_shape_manual(values=c(observed=19,estimated=1))

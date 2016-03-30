@@ -15,7 +15,7 @@
 getMDFR<-function(path,tcsam=NULL,rsim=NULL,verbose=FALSE){
     mdfr<-NULL;
     if (!is.null(tcsam)){
-        if (class(tcsam)=='tcsam2015.rep'){
+        if (class(tcsam)[1]=='tcsam2015.rep'){
             #tcsam is a tcsam2015 model report object
             obj<-getObj(path,tcsam,verbose=verbose);
             if (!is.null(obj)){

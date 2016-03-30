@@ -8,7 +8,7 @@ compareModels.SelFcns.ByPC(tcsam = NULL, rsim = NULL, showPlot = TRUE,
   pdf = NULL, width = 8, height = 6)
 }
 \arguments{
-\item{tcsam}{- single TCSAM2015 model results object, or named list of such}
+\item{tcsam}{- single TCSAM2015 model report object, or named list of such}
 
 \item{rsim}{- single rsimTCSAM results object, or named list of such}
 

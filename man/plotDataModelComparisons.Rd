@@ -14,4 +14,7 @@ plotDataModelComparisons(repObj, showPlot = FALSE)
 \value{
 multi-level list with ggplot2 objects
 }
+\details{
+none yet!
+}
 

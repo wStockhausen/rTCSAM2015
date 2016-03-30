@@ -5,10 +5,10 @@
 \title{Compare population-related quantities from TCSAM2015 and rsimTCSAM model runs.}
 \usage{
 compareModels.PopQuants(tcsams = NULL, rsims = NULL, showPlot = TRUE,
-  pdf = NULL, width = 8, height = 6)
+  pdf = NULL, width = 8, height = 6, verbose = FALSE)
 }
 \arguments{
-\item{tcsams}{- single TCSAM2015 model results object, or named list of such}
+\item{tcsams}{- single TCSAM2015 model report object, or named list of such}
 
 \item{rsims}{- single rsimTCSAM results object, or named list of such}
 
@@ -19,6 +19,8 @@ compareModels.PopQuants(tcsams = NULL, rsims = NULL, showPlot = TRUE,
 \item{width}{- pdf page width (in inches)}
 
 \item{height}{- pdf page width (in inches)}
+
+\item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
 list of ggplot2 objects

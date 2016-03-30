@@ -41,7 +41,7 @@ readReportFile<-function(repfile=NULL){
                     "\tReturning NULL.\n",sep="");
                 return(NULL);
         }
-        class(res)<-'tcsam2015.rep';#set class attribute to 'tcsam2015.rep' for identification
+        class(res)<-c('tcsam2015.rep',class(res));#set class attribute to 'tcsam2015.rep' for identification
     } else {
         cat('\tFile "',repfile,'" does not exist.\n\tReturning NULL\n',sep='');
     }
