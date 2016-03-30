@@ -26,8 +26,8 @@
 #'@param plotResults - T/F to plot results using \code{???}
 #'@param cleanup - flag (T/F) to clean up unnecessary files
 #'
-#'@return - dataframe with 2 columns (name, value) with jitter jit.seed (if jittered) 
-#'and par file info, or NULL if par file does not exist.
+#'@return - dataframe of class 'tcam2015.par', with 2 columns (name, value) with jitter jit.seed (if jittered) 
+#'and par file info, or NULL if par file does not exist. 
 #'
 #'@details If the path associated with \code{configFile} is a relative one, it should
 #'be relative to the \code{path} variable.
@@ -107,15 +107,19 @@ runTCSAM2015<-function(os='osx',
     }
     
     if (plotResults){
-        # obj.rep<-getRep('TCSAM_WTS.oldstyle.R');
-        # obj.std<-getStd(paste(model,'.std',sep=''));
-        # obj.prs<-getActiveParams('TCSAM_WTS.final_params.active.csv');
-        # plotTCSAM2013I(obj.rep,
-        #                obj.std,
-        #                obj.prs,
-        #                mdl=model);
+        repObj<-getRep(paste0(model,".rep"));
+        prsObj<-getPrs("TCSAM2015.final_params.all.csv");
+        stdObj<-getStd(paste0(model,".std"));
+        plotModelResultsI( repObj=repObj,
+                           prsObj=prsObj,
+                           stdObj=stdObj,
+                           ggtheme=theme_grey(),
+                           showPlot=TRUE,
+                           pdf="TCSAM2015.pdf",
+                           width=14,height=8)  
     }
 
     #return dataframe (and return to original folder as working directory)
+    class(dfr)<-'tcsam2015.par';
     return(dfr);
 }

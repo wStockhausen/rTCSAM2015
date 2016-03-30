@@ -2,7 +2,7 @@
 % Please edit documentation in R/readStdFile.R
 \name{readStdFile}
 \alias{readStdFile}
-\title{Read a TCSAM2015 model std file and return a dataframe.}
+\title{Read a TCSAM2015 model std file and return a dataframe of class 'tcsam2015.prs'}
 \usage{
 readStdFile(stdFile = NULL)
 }
@@ -10,16 +10,16 @@ readStdFile(stdFile = NULL)
 \item{stdfile}{- std file from a TCSAM2015 model run. can be NULL.}
 }
 \value{
-a dataframe (or NULL).
+a dataframe of class 'tcsam2015.std' (or NULL).
 }
 \description{
-Function to read a TCSAM2015 std file and return a dataframe.
+Function to read a TCSAM2015 std file and return a dataframe of class 'tcsam2015.prs'.
 }
 \details{
 If stdFile is NULL, the user will be prompted to identify a 
 TCSAM2015 model std file to read. Uses functions
 \itemize{
- \item wtsUtilities addFilter()
+ \item \code{wtsUtilities::selectFile()}
 }
 }
 

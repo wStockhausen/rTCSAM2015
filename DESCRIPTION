@@ -2,13 +2,13 @@ Package: rTCSAM2015
 Type: Package
 Title: A set of tools to set up input for, and interact with output from, a
     TCSAM2015 model run, as well as to compare TCSAM2015 and rsimTCAM runs.
-Version: 2016.03.15
-Date: 2016-03-15
+Version: 2016.03.30
+Date: 2016-03-30
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
 Description: This package provides a set of tools to set up input for,
     and interact with output from, a TCSAM2015 model run, as well as
-    to compare TCSAM2015 and rsimTCAM runs.
+    to compare TCSAM2015 and rsimTCSAM runs.
 License: MIT + file LICSENSE
 Depends:
     R (>= 3.1.2)

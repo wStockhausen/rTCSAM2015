@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotModelResults.R
 \name{plotModelResults}
 \alias{plotModelResults}
-\title{Plot TCSAM 2015 model output.}
+\title{Plot TCSAM2015 model output.}
 \usage{
 plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
   objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL,
@@ -31,18 +31,18 @@ plotModelResults(repObj = NULL, prsObj = NULL, stdObj = NULL,
 }
 \value{
 list with possible elements:\cr
-* repObj - TCSAM2015 report object (if report file was read)
-* prsObj - TCSAM2015 parameters dataframe (if parameters csv file was read)
-* stdObj - TCSAM2015 std devs dataframe (if std file was read)
+* repObj - TCSAM2015 report list object (if report file was read)
+* prsObj - TCSAM2015 parameters dataframe object (if parameters csv file was read)
+* stdObj - TCSAM2015 std devs dataframe object (if std file was read)
 * plots: multi-level list of ggplot2 objects
 }
 \description{
-Function to plot data and repObjults from a TCSAM2015 model run.
+Function to plot data and results from a TCSAM2015 model run.
 }
 \details{
 If repObj is a character string (the path to a report file), the file will be read in.
 If repObj is NULL, the user will be prompted to identify a 
-model report file from which to source the repObjults object. Similarly for prsObj and stdObj.
+model report file from which to source the report object. Similarly for prsObj and stdObj.
 Any of these objects obtained by reading a file will be an element in the returned list.
 }
 

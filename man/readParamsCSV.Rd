@@ -10,7 +10,7 @@ readParamsCSV(csvFile = NULL)
 \item{csvFile}{- parameters csv file from a TCSAM2015 model run. can be NULL.}
 }
 \value{
-a dataframe (or NULL).
+a dataframe of class 'tcsam2015.prs' (or NULL).
 }
 \description{
 Function to read a TCSAM2015 parameters csv file and return a dataframe.

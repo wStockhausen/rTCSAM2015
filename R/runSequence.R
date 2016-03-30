@@ -9,7 +9,8 @@
 #'are copied from the previous run's par file. The file 'best.txt' identifies the run
 #'with the best objective function value. The "best" sub-folder contains results from
 #'re-running the best run, this time estimating the hessian and obtaining the std file
-#'(if the hessian is invertible).
+#'(if the hessian is invertible).\cr\cr
+#'Uses function \code{wtsUtilities::formatZeros()}.
 #'
 #'@param os   - 'win' or 'mac' or 'osx'
 #'@param path - path for model output
@@ -25,8 +26,6 @@
 #'
 #'@return - list indicatng index of best run, the folder with the best run, and a list of results 
 #'from the parameter files for each model run.
-#'
-#'@importFrom wtsUtilities formatZeros
 #'
 #'@export
 #'
@@ -47,7 +46,7 @@ runSequence<-function(os='osx',
     for (r in 1:numRuns){
         pin<-ifelse(r==1,FALSE,TRUE);
         if (pin){par<-readLines(file.path(p2f,paste(model,'.par',sep='')));}
-        fldr<-paste('run',formatZeros(r,width=max(2,ceiling(log10(numRuns)))),sep='');
+        fldr<-paste('run',wtsUtilities::formatZeros(r,width=max(2,ceiling(log10(numRuns)))),sep='');
         p2f<-file.path(path,fldr);
         if (!file.exists(p2f)) dir.create(p2f,recursive=TRUE);
         if (pin) {writeLines(par,file.path(p2f,paste(model,'.pin',sep='')));}

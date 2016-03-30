@@ -10,7 +10,7 @@ readReportFile(repfile = NULL)
 \item{repfile}{- report file from a TCSAM2015 model run to source. can be NULL.}
 }
 \value{
-report model object (a list). The returned object will be a list of class 'tcsam2015'.
+report model object (a list). The returned object will be a list of class 'tcsam2015.rep'.
 }
 \description{
 Function to read a TCSAM2015 report file (.rep).
@@ -18,6 +18,6 @@ Function to read a TCSAM2015 report file (.rep).
 \details{
 If repfile is NULL, the user will be prompted to identify a 
 TCSAM2015 model report file from which to source the results object.
-The returned object will be a list of class 'tcsam2015'.
+The returned object will be a list of class 'tcsam2015.rep'.
 }
 

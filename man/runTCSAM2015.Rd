@@ -41,7 +41,7 @@ runTCSAM2015(os = "osx", path = ".", model = "tcsam2015",
 \item{cleanup}{- flag (T/F) to clean up unnecessary files}
 }
 \value{
-- dataframe with 2 columns (name, value) with jitter jit.seed (if jittered) 
+- dataframe of class 'tcam2015.par', with 2 columns (name, value) with jitter jit.seed (if jittered) 
 and par file info, or NULL if par file does not exist.
 }
 \description{

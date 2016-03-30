@@ -5,17 +5,18 @@
 #'
 #'@param repfile - report file from a TCSAM2015 model run to source. can be NULL.
 #'
-#'@return report model object (a list). The returned object will be a list of class 'tcsam2015'.
+#'@return report model object (a list). The returned object will be a list of class 'tcsam2015.rep'.
 #'
 #'@details If repfile is NULL, the user will be prompted to identify a 
 #'TCSAM2015 model report file from which to source the results object.
-#'The returned object will be a list of class 'tcsam2015'.
+#'The returned object will be a list of class 'tcsam2015.rep'.
 #'
 #'@export
 #'
 readReportFile<-function(repfile=NULL){
+    res<-NULL;
     if(is.null(repfile)){
-        repfile = selectReportFile();
+        repfile<-selectReportFile();
         if (is.null(repfile)) {
             cat("User canceled file selection!! Returning NULL as model results.\n")
             return(NULL);#user canceled file selection
@@ -23,18 +24,26 @@ readReportFile<-function(repfile=NULL){
         strs<-strsplit(repfile,'.',fixed=TRUE);
         n<-length(strs[[1]]);
         if (tolower(strs[[1]][n])!="rep"){
-            ##do nothing--skip 
-        }
-    }
-    cat("Reading model report from file:\n",repfile,"\n")
-    source(repfile,local=TRUE);
-    if(!any(names(res)=='mc')){
             cat("The file '",repfile,"'\n",
                 "\tdoes not appear to be a TCSAM2015 model report file.\n",
-                "\tTCSAM2015 results files are R lists, with 'mc' as the first element.\n",
+                "\tTCSAM2015 report files have extension '.rep'.\n",
                 "\tReturning NULL.\n",sep="");
             return(NULL);
+        }
     }
-    class(res)<-'tcsam2015';#set class attribute to 'tcsam2015' for identification
+    if (file.exists(repfile)){
+        cat("Reading model report from file:\n",repfile,"\n")
+        source(repfile,local=TRUE);
+        if(!any(names(res)=='mc')){
+                cat("The file '",repfile,"'\n",
+                    "\tdoes not appear to be a TCSAM2015 model report file.\n",
+                    "\tTCSAM2015 results files are R lists, with 'mc' as the first element.\n",
+                    "\tReturning NULL.\n",sep="");
+                return(NULL);
+        }
+        class(res)<-'tcsam2015.rep';#set class attribute to 'tcsam2015.rep' for identification
+    } else {
+        cat('\tFile "',repfile,'" does not exist.\n\tReturning NULL\n',sep='');
+    }
     return(invisible(res));
 }
