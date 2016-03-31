@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotZScoresForFleets.R
 \name{plotZScoresForFleets}
 \alias{plotZScoresForFleets}
-\title{Plot model fits to abundance, biomass and size frequencies as z-scores for fishery data components.}
+\title{Plot model fits to abundance, biomass and size frequencies as z-scores for fleet data components.}
 \usage{
 plotZScoresForFleets(repObj, type = "fishery", showPlot = TRUE,
   verbose = FALSE)
@@ -17,6 +17,9 @@ plotZScoresForFleets(repObj, type = "fishery", showPlot = TRUE,
 \item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
-list by fishery of lists with ggplot objects
+list by fleet of lists with ggplot objects
+}
+\details{
+Uses \code{plotZScoresForCatchData()}.
 }
 

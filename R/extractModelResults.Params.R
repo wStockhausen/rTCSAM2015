@@ -26,26 +26,29 @@ extractModelResults.Params<-function(objs,
             nr<-nrow(prsp);
             if (nr>0){
                 for (r in 1:nr){
-                    rw<-list();
-                    rw$case <-case;
-                    rw$type <-'scalar';
-                    prmw  <- gsub("[[:blank:]]",'',param,fixed=FALSE);#need to remove whitespace
-                    splt<-strsplit(prmw,"[[:punct:]]");
-                    prm<-paste(splt[[1]][1],"[",wtsUtilities::formatZeros(splt[[1]][2],width=2),"]",sep='')
-                    rw$param<-prm;
-                    if (nr>1) {
-                        rw$type <-'vector';
-                        rw$param<-paste(prm,"[",wtsUtilities::formatZeros(r,width=2),"]",sep='');
+                    ##process only defined parameters 
+                    if (!((prsp$phase[r]==-1)&&(prsp$min[r]==-1)&&(prsp$max[r]==-1))){
+                        rw<-list();
+                        rw$case <-case;
+                        rw$type <-'scalar';
+                        prmw  <- gsub("[[:blank:]]",'',param,fixed=FALSE);#need to remove whitespace
+                        splt<-strsplit(prmw,"[[:punct:]]");
+                        prm<-paste(splt[[1]][1],"[",wtsUtilities::formatZeros(splt[[1]][2],width=2),"]",sep='')
+                        rw$param<-prm;
+                        if (nr>1) {
+                            rw$type <-'vector';
+                            rw$param<-paste(prm,"[",wtsUtilities::formatZeros(r,width=2),"]",sep='');
+                        }
+                        rw$value<-prsp$value[r];
+                        rw$min  <-prsp$min[r];
+                        rw$max  <-prsp$max[r];
+                        rw$scl  <- 0;
+                        if (is.finite(rw$min)){
+                            if (abs(rw$value-rw$min)/(rw$max-rw$min)<dp/100) rw$scl <- -1;
+                            if (abs(rw$value-rw$max)/(rw$max-rw$min)<dp/100) rw$scl <-  1;
+                        }#finite limits
+                        dfr<-rbind(dfr,as.data.frame(rw,stringsAsFactors=FALSE));
                     }
-                    rw$value<-prsp$value[r];
-                    rw$min  <-prsp$min[r];
-                    rw$max  <-prsp$max[r];
-                    rw$scl  <- 0;
-                    if (is.finite(rw$min)){
-                        if (abs(rw$value-rw$min)/(rw$max-rw$min)<dp/100) rw$scl <- -1;
-                        if (abs(rw$value-rw$max)/(rw$max-rw$min)<dp/100) rw$scl <-  1;
-                    }#finite limits
-                    dfr<-rbind(dfr,as.data.frame(rw,stringsAsFactors=FALSE));
                 }#r
             }#nr>0
         }#params

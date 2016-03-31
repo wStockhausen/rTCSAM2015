@@ -10,6 +10,8 @@
 #'
 #'@return list of lists of ggplot objects
 #'
+#'@details Requires reshape2 and ggplot2 packages.
+#'
 #'@import ggplot2
 #'
 #'@export
@@ -48,6 +50,7 @@ plotZScoresForAll<-function(repObj,
     pd<-position_identity();
     pR <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
     pR <- pR + geom_point(position=pd,size=3,alpha=0.8)
+    pR <- pR + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
     pR <- pR + ylim(ylim);
     pR <- pR + xlab('year')
     pR <- pR + ylab('recruitment deviations')
@@ -70,6 +73,7 @@ plotZScoresForAll<-function(repObj,
     pd<-position_dodge(0.2)
     pC <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
     pC <- pC + geom_point(position=pd,size=3,alpha=0.8)
+    pC <- pC + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
     pC <- pC + ylim(ylim);
     pC <- pC + xlab('year')
     pC <- pC + ylab('fishery capture deviations')
@@ -96,6 +100,7 @@ plotZScoresForAll<-function(repObj,
             pd<-position_dodge(0.2)
             pS <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
             pS <- pS + geom_point(position=pd,size=3,alpha=0.8)
+            pS <- pS + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
             pS <- pS + ylim(ylim);
             pS <- pS + xlab('year')
             pS <- pS + ylab('deviation')

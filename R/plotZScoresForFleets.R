@@ -1,12 +1,14 @@
 #'
-#'@title Plot model fits to abundance, biomass and size frequencies as z-scores for fishery data components.
+#'@title Plot model fits to abundance, biomass and size frequencies as z-scores for fleet data components.
 #'
 #'@param repObj - model report list object
 #'@param type - fleet type ('fishery' or 'survey')
 #'@param showPlot - flag (T/F) to show plots immediately
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
-#'@return list by fishery of lists with ggplot objects
+#'@return list by fleet of lists with ggplot objects
+#'
+#'@details Uses \code{plotZScoresForCatchData()}.
 #'
 #'@export
 #'

@@ -22,4 +22,7 @@ list of lists of ggplot objects
 \description{
 Function to plot z-scores for all components.
 }
+\details{
+Requires reshape2 and ggplot2 packages.
+}
 

@@ -20,7 +20,7 @@
 #'
 #'@export
 #'
-plotModelResultsI<-function(repObj=NULL,
+plotTCSAM2015I<-function(repObj=NULL,
                             prsObj=NULL,
                             stdObj=NULL,
                             objList=NULL,

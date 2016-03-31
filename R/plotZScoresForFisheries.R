@@ -7,6 +7,8 @@
 #'
 #'@return list by fishery of lists with ggplot objects
 #'
+#'@details Superseded by \code{plotZScoresForFleets()}.
+#'
 #'@export
 #'
 plotZScoresForFisheries<-function(repObj,

@@ -20,4 +20,7 @@ plotZScores(afits, xlim = NULL, ylim = NULL, xlab = "years",
 
 \item{label}{- plot label}
 }
+\details{
+Standard graphics approach to plotting z-scores.
+}
 

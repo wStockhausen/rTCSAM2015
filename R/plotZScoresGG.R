@@ -131,6 +131,7 @@ plotZScoresGG<-function(afits,
     ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
     p3 <- ggplot(aes_string(x='year',y='zscr',colour='s',shape='s',fill='s'),data=cdfr)
     p3 <- p3 + geom_point(position=pd,size=3,alpha=0.8)
+    p3 <- p3 + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
     p3 <- p3 + xlim(xlim);
     p3 <- p3 + ylim(ylim);
     p3 <- p3 + ylab('z-scores')

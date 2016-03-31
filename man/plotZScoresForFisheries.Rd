@@ -16,4 +16,7 @@ plotZScoresForFisheries(repObj, showPlot = TRUE, verbose = FALSE)
 \value{
 list by fishery of lists with ggplot objects
 }
+\details{
+Superseded by \code{plotZScoresForFleets()}.
+}
 

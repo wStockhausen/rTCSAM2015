@@ -27,7 +27,7 @@
 #'
 #'@export
 #'
-plotModelResults<-function(repObj=NULL,
+plotTCSAM2015<-function(repObj=NULL,
                            prsObj=NULL,
                            stdObj=NULL,
                            objList=NULL,
@@ -72,7 +72,7 @@ plotModelResults<-function(repObj=NULL,
         if (!is.null(stdObj)) returnSTD<-TRUE;
     }
     
-    plots<-plotModelResultsI(repObj=repObj,
+    plots<-plotTCSAM2015I(repObj=repObj,
                              prsObj=prsObj,
                              stdObj=stdObj,
                              ggtheme=ggtheme,
@@ -90,4 +90,4 @@ plotModelResults<-function(repObj=NULL,
     return(invisible(ret));
 }
 
-#plotModelResults(repObj,pdf='test.pdf');
+#plotTCSAM2015(repObj,pdf='test.pdf');

@@ -12,4 +12,7 @@ plotZScoresForSurveys(repObj, showPlot = FALSE)
 \value{
 list by survey of lists with ggplot objects
 }
+\details{
+Superseded by \code{plotZScoresForFleets()}.
+}
 

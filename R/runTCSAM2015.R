@@ -110,7 +110,7 @@ runTCSAM2015<-function(os='osx',
         repObj<-getRep(paste0(model,".rep"));
         prsObj<-getPrs("TCSAM2015.final_params.all.csv");
         stdObj<-getStd(paste0(model,".std"));
-        plotModelResultsI( repObj=repObj,
+        plotTCSAM2015I( repObj=repObj,
                            prsObj=prsObj,
                            stdObj=stdObj,
                            ggtheme=theme_grey(),
