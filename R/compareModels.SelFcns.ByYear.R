@@ -52,18 +52,18 @@ compareModels.SelFcns.ByYear<-function(tcsam=NULL,
             for (pc in 1:srv.nPCs){
                 pci<-srv.pgi$pcs[[pc]];
                 n<-tcsam[[mdl]]$mc$dims$v$nms[as.numeric(pci$SURVEY)];
-                y<-pci$YEAR_BLOCK;
+                y<-gsub(";","\n",gsub("]","",gsub("[","",pci$YEAR_BLOCK,fixed=TRUE),fixed=TRUE),fixed=TRUE);
                 x<-tolower(pci$SEX);
                 idx.SelFcn<-pci$ids.PC['idx.SelFcn']
                 #idx<-(mdfr$pc==idx.SelFcn)&(mdfr$modeltype=='tcsam');
                 idx<-(mdfr$pc==idx.SelFcn)&(mdfr$model==mdl);
                 for (i in 1:length(idx)){
                     if (idx[i]){
-                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='/');
-                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='/');
-                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'survey',sep='/');
+                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
+                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
+                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'survey',sep='\n');
                         mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
-                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='/');
+                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='\n');
                     }
                 }
             }#surveys
@@ -74,18 +74,18 @@ compareModels.SelFcns.ByYear<-function(tcsam=NULL,
             for (pc in 1:fsh.nPCs){
                 pci<-fsh.pgi$pcs[[pc]];
                 n<-tcsam[[mdl]]$mc$dims$f$nms[as.numeric(pci$FISHERY)];
-                y<-pci$YEAR_BLOCK;
+                y<-gsub(";","\n",gsub("]","",gsub("[","",pci$YEAR_BLOCK,fixed=TRUE),fixed=TRUE),fixed=TRUE);
                 x<-tolower(pci$SEX);
                 idx.SelFcn<-pci$ids.PC['idx.SelFcn']
                 #idx<-(mdfr$pc==idx.SelFcn)&(mdfr$modeltype=='tcsam');
                 idx<-(mdfr$pc==idx.SelFcn)&(mdfr$model==mdl);
                 for (i in 1:length(idx)){
                     if (idx[i]){
-                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='/');
-                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='/');
-                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'fishery',sep='/');
+                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
+                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
+                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'fishery',sep='\n');
                         mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
-                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='/');
+                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='\n');
                     }
                 }
                 idx.RetFcn<-pci$ids.PC['idx.RetFcn'];

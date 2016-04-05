@@ -1,11 +1,11 @@
 #'
-#'@title Plot TCSAM2015 model output.
+#'@title Plot TCSAM2015 model output
 #'
 #'@description Function to plot data and results from a TCSAM2015 model run.
 #'
-#'@param repObj - list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.
-#'@param prsObj - list object based on reading a TCSAM2015 active parameters csv file. can be NULL or a filename.
-#'@param stdObj - list object based on reading a TCSAM2015 std file. can be NULL or a filename.
+#'@param repObj - tcsam2015.rep list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.
+#'@param prsObj - tcsam2015.prs dataframe object based on reading TCSAM2015 parameters csv files. can be 'active' or 'all', as well.
+#'@param stdObj - tcsam2015.std dataframe object based on reading a TCSAM2015 std file. can be NULL or a filename.
 #'@param objList - list with optional elements repObj, prsObj, stdObj (an optional way to provide the Obj's)
 #'@param ggtheme - a ggplot2 theme to use with ggplot2 plots
 #'@param showPlot - flag to show plots immediately
@@ -22,8 +22,9 @@
 #'
 #'@details If repObj is a character string (the path to a report file), the file will be read in.
 #'If repObj is NULL, the user will be prompted to identify a 
-#'model report file from which to source the report object. Similarly for prsObj and stdObj.
-#'Any of these objects obtained by reading a file will be an element in the returned list.
+#'model report file from which to source the report object. Similarly for stdObj. prsObj can be 'all' or 'active', but
+#'the filenames are inferred.
+#'Any of these objects obtained by reading will be an element in the returned list.
 #'
 #'@export
 #'
@@ -54,7 +55,7 @@ plotTCSAM2015<-function(repObj=NULL,
         }
         returnRep<-TRUE;
     }    
-    if (class(repObj)!="tcsam2015"){
+    if (!inherits(repObj,"tcsam2015.rep")){
         cat("Input object 'repObj' does not appear to be a TCSAM2015 model report object",
             "Aborting...\n",sep='\n')
         return(NULL);

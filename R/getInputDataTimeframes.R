@@ -3,8 +3,10 @@
 #'
 #'@description A function to get a dataframe that describes the input data time frames.
 #'
-#'@param tcsam - tcsam list object 
+#'@param tcsam - tcsam2015.rep list object 
 #'@param verbose - flag (T/F) to print diagnostic info
+#'
+#'@return A dataframe.
 #'
 #'@details returns a dataframe with columns
 #'\itemize{
@@ -18,11 +20,11 @@
 #'
 #'@export
 #'
-getDFR.InputDataTimeframes<-function(tcsam,verbose=FALSE){
-    if (class(tcsam)!='tcsam2015'){
-        cat("Error in getDFR.InputDataTimeframes().\n");
-        cat("Input object hass class",class(tcsam),"not class 'tcsam'\n");
-        exit(-1);
+getInputDataTimeframes<-function(tcsam,verbose=FALSE){
+    if (!inherits(tcsam,'tcsam2015.rep')){
+        cat("Error in getInputDataTimeframes().\n");
+        cat("Input object hass class",class(tcsam),"not class 'tcsam2015.rep'\n");
+        return(NULL);
     }
     srvs <- tcsam$mc$dims$v$nms;#survey names
     fshs <- tcsam$mc$dims$f$nms;#fishery names

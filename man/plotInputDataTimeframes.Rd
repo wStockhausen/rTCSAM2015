@@ -7,7 +7,7 @@
 plotInputDataTimeframes(dfr, showPlot = FALSE)
 }
 \arguments{
-\item{dfr}{- dataframe with input data time frames}
+\item{dfr}{- dataframe with input data time frames (or a tcsam2015.rep object)}
 
 \item{showPlot}{- flag (T/F) to print plot}
 }
@@ -16,5 +16,9 @@ returns a ggplot2 object
 }
 \description{
 A function to plot an input data timeframe dataframe.
+}
+\details{
+If dfr is a tcsam2015.rep object, \code{getInputDataTimeframes()} is called on it
+to get a dataframe in the proper format.
 }
 

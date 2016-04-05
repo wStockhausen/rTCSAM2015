@@ -2,18 +2,18 @@
 % Please edit documentation in R/plotTCSAM2015.R
 \name{plotTCSAM2015}
 \alias{plotTCSAM2015}
-\title{Plot TCSAM2015 model output.}
+\title{Plot TCSAM2015 model output}
 \usage{
 plotTCSAM2015(repObj = NULL, prsObj = NULL, stdObj = NULL,
   objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL,
   width = 14, height = 8, verbose = FALSE)
 }
 \arguments{
-\item{repObj}{- list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.}
+\item{repObj}{- tcsam2015.rep list object based on sourcing a TCSAM2015 model report file. can be NULL or a filename.}
 
-\item{prsObj}{- list object based on reading a TCSAM2015 active parameters csv file. can be NULL or a filename.}
+\item{prsObj}{- tcsam2015.prs dataframe object based on reading TCSAM2015 parameters csv files. can be 'active' or 'all', as well.}
 
-\item{stdObj}{- list object based on reading a TCSAM2015 std file. can be NULL or a filename.}
+\item{stdObj}{- tcsam2015.std dataframe object based on reading a TCSAM2015 std file. can be NULL or a filename.}
 
 \item{objList}{- list with optional elements repObj, prsObj, stdObj (an optional way to provide the Obj's)}
 
@@ -42,7 +42,8 @@ Function to plot data and results from a TCSAM2015 model run.
 \details{
 If repObj is a character string (the path to a report file), the file will be read in.
 If repObj is NULL, the user will be prompted to identify a 
-model report file from which to source the report object. Similarly for prsObj and stdObj.
-Any of these objects obtained by reading a file will be an element in the returned list.
+model report file from which to source the report object. Similarly for stdObj. prsObj can be 'all' or 'active', but
+the filenames are inferred.
+Any of these objects obtained by reading will be an element in the returned list.
 }
 

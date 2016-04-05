@@ -5,7 +5,7 @@
 #'
 #'@param in.par = filename of par file
 #'
-#'@return list object corresponding to the par file (or NULL if file does not exist)
+#'@return a prs object (a dtaframe of class 'tcsam2015.par') corresponding to the par file (or NULL if file does not exist)
 #'
 #'@details Uses \code{wtsUtilities::selectFile} to open a file dialog if in.par is NULL.
 #' 
@@ -38,6 +38,8 @@ readParFile<-function(in.par=NULL){
         if (length(valu)>1) nams <- paste(nam,'[',1:length(valu),']',sep='');
         dfr <- rbind(dfr,data.frame(name=nams,value=valu,stringsAsFactors=FALSE));
     }
+    
+    class(dfr)<-c("tcasm2015.par",class(dfr));
     
     return(dfr)
 }

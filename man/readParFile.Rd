@@ -10,7 +10,7 @@ readParFile(in.par = NULL)
 \item{in.par}{= filename of par file}
 }
 \value{
-list object corresponding to the par file (or NULL if file does not exist)
+a prs object (a dtaframe of class 'tcsam2015.par') corresponding to the par file (or NULL if file does not exist)
 }
 \description{
 Function to create a TCSAM2015 par object from a par file.

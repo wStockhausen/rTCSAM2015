@@ -1,5 +1,5 @@
 #'
-#'@title Plot TCSAM2015 model output.
+#'@title Plot TCSAM2015 model output
 #'
 #'@description Function to plot data and results from a TCSAM2015 model run.
 #'
@@ -45,6 +45,11 @@ plotTCSAM2015I<-function(repObj=NULL,
     }
     
     plots<-list();
+    
+    #plot data time frames
+    cat("----------------------------------------------\n")
+    cat("plotting input data time frames.\n")
+    plots$datatimeframes<-plotInputDataTimeframes(repObj,showPlot=showPlot);
     
     if (!is.null(prsObj)){
         #plot model parameter estimates and std devs (but not priors)

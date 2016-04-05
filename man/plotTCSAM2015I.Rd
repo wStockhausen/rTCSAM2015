@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotTCSAM2015I.R
 \name{plotTCSAM2015I}
 \alias{plotTCSAM2015I}
-\title{Plot TCSAM2015 model output.}
+\title{Plot TCSAM2015 model output}
 \usage{
 plotTCSAM2015I(repObj = NULL, prsObj = NULL, stdObj = NULL,
   objList = NULL, ggtheme = theme_grey(), showPlot = TRUE, pdf = NULL,
