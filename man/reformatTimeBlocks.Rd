@@ -2,7 +2,7 @@
 % Please edit documentation in R/reformatTimeBlocks.R
 \name{reformatTimeBlocks}
 \alias{reformatTimeBlocks}
-\title{Reformat rsim, tcsam notation for time blocks to a standard format.}
+\title{Reformat rsim, tcsam notation for time blocks to a standard format}
 \usage{
 reformatTimeBlocks(tb0, dims)
 }
@@ -15,6 +15,10 @@ reformatTimeBlocks(tb0, dims)
 time block string in "standardized" format
 }
 \description{
-eformat rsim, tcsam notation for time blocks to a standard format.
+Reformat rsim, tcsam notation for time blocks to a standard format.
+}
+\details{
+For 2 time periods and a single year, the standardized format 
+looks like 'yyy1-yyy2;yyy3-yyy4;yyy5'.
 }
 

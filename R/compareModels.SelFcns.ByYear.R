@@ -1,7 +1,7 @@
 #'
-#'@title Compare selectivity functions from TCSAM2015 and rsimTCSAM model runs
+#'@title Compare selectivity functions from TCSAM2015 and rsimTCSAM model runs by year
 #'
-#'@description Function to compare selectivity functions from TCSAM2015 and rsimTCSAM model runs.
+#'@description Function to compare selectivity functions from TCSAM2015 and rsimTCSAM model runs by year.
 #'
 #'@param tcsam - single TCSAM2015 model report object, or named list of such
 #'@param rsim - single rsimTCSAM results object, or named list of such
@@ -12,20 +12,18 @@
 #'
 #'@return list of ggplot2 objects
 #'
-#'@details Uses \code{wtsUtilities::formatZeros(...)}.
-#'
 #'@export
 #'
-compareModels.SelFcns.ByPC<-function(tcsam=NULL,
-                                     rsim=NULL,
-                                     showPlot=TRUE,
-                                     pdf=NULL,
-                                     width=8,
-                                     height=6){
+compareModels.SelFcns.ByYear<-function(tcsam=NULL,
+                                       rsim=NULL,
+                                       showPlot=TRUE,
+                                       pdf=NULL,
+                                       width=8,
+                                       height=6){
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=pdf,width=width,height=height);
-        on.exit(dev.close());
+        on.exit(dev.close())
     }
         
     #selectivity/retention
@@ -54,18 +52,18 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
             for (pc in 1:srv.nPCs){
                 pci<-srv.pgi$pcs[[pc]];
                 n<-tcsam[[mdl]]$mc$dims$v$nms[as.numeric(pci$SURVEY)];
-                y<-gsub(";","\n",gsub("]","",gsub("[","",pci$YEAR_BLOCK,fixed=TRUE),fixed=TRUE),fixed=TRUE);
+                y<-pci$YEAR_BLOCK;
                 x<-tolower(pci$SEX);
                 idx.SelFcn<-pci$ids.PC['idx.SelFcn']
                 #idx<-(mdfr$pc==idx.SelFcn)&(mdfr$modeltype=='tcsam');
                 idx<-(mdfr$pc==idx.SelFcn)&(mdfr$model==mdl);
                 for (i in 1:length(idx)){
                     if (idx[i]){
-                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
-                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
-                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'survey',sep='\n');
+                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='/');
+                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='/');
+                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'survey',sep='/');
                         mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
-                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='\n');
+                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='/');
                     }
                 }
             }#surveys
@@ -76,18 +74,18 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
             for (pc in 1:fsh.nPCs){
                 pci<-fsh.pgi$pcs[[pc]];
                 n<-tcsam[[mdl]]$mc$dims$f$nms[as.numeric(pci$FISHERY)];
-                y<-gsub(";","\n",gsub("]","",gsub("[","",pci$YEAR_BLOCK,fixed=TRUE),fixed=TRUE),fixed=TRUE);
+                y<-pci$YEAR_BLOCK;
                 x<-tolower(pci$SEX);
                 idx.SelFcn<-pci$ids.PC['idx.SelFcn']
                 #idx<-(mdfr$pc==idx.SelFcn)&(mdfr$modeltype=='tcsam');
                 idx<-(mdfr$pc==idx.SelFcn)&(mdfr$model==mdl);
                 for (i in 1:length(idx)){
                     if (idx[i]){
-                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
-                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
-                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'fishery',sep='\n');
+                        mdfr$y[i]<-appendString(mdfr$y[i],y,sep='/');
+                        mdfr$x[i]<-appendString(mdfr$x[i],x,sep='/');
+                        mdfr$prctype[i]<-appendString(mdfr$prctype[i],'fishery',sep='/');
                         mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
-                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='\n');
+                        mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='/');
                     }
                 }
                 idx.RetFcn<-pci$ids.PC['idx.RetFcn'];
@@ -95,11 +93,11 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                     idx<-(mdfr$pc==idx.RetFcn);
                     for (i in 1:length(idx)){
                         if (idx[i]){
-                            mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
-                            mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
-                            mdfr$prctype[i]<-appendString(mdfr$prctype[i],'fishery',sep='\n');
+                            mdfr$y[i]<-appendString(mdfr$y[i],y,sep='/');
+                            mdfr$x[i]<-appendString(mdfr$x[i],x,sep='/');
+                            mdfr$prctype[i]<-appendString(mdfr$prctype[i],'fishery',sep='/');
                             mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
-                            mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'retention',sep='\n');
+                            mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'retention',sep='/');
                         }
                     }
                 }
