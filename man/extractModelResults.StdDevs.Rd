@@ -20,4 +20,7 @@ extractModelResults.StdDevs(objs, fac = 2, verbose = FALSE)
 This function extracts the posterior distributions of parameters and
 sdreport variables as implied by their estimated standard errors from several models.
 }
+\details{
+Uses function \code{wtsUtilities::formatZeros(...)}.
+}
 

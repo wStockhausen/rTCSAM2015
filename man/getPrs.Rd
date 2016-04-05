@@ -2,22 +2,23 @@
 % Please edit documentation in R/getPrs.R
 \name{getPrs}
 \alias{getPrs}
-\title{Get a TCSAM2015 prs object by reading a parameters csv file}
+\title{Get a TCSAM2015 prs object by reading initial and final parameters csv files.}
 \usage{
-getPrs(csvFile)
+getPrs(type = "all", inp.dir = ".")
 }
 \arguments{
-\item{csvFile}{- parameters csv file from a TCSAM2015 model run. can be NULL.}
+\item{type}{- 'all' or 'active'}
 }
 \value{
-prs model object (a list). The returned object will be a list of class 'tcsam2015.prs'.
+A prs model object (a dataframe). The returned object will be a list of class 'tcsam2015.prs'.
 }
 \description{
-Function to get a TCSAM2015 prs object by reading a parameters csv file.
+Function to get a TCSAM2015 prs object by reading initial and final parameters csv file.
 }
 \details{
-If \code{csvFile} is NULL, the user will be prompted to identify a 
-TCSAM2015 model report file from which to source the results object.
-The returned object will be a list of class 'tcsam2015.prs'.
+To create the prs object, this function reads 2 csv-type parameter value files,
+one associated with the initial parameter values and one associated with the final values.
+The user can select to return either all the parameters, or only the active parameters (ones
+with phase > 0). The returned object will be a dataframe of class 'tcsam2015.prs'.
 }
 

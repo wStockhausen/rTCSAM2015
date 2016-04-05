@@ -10,7 +10,7 @@ readParamsCSV(csvFile = NULL)
 \item{csvFile}{- parameters csv file from a TCSAM2015 model run. can be NULL.}
 }
 \value{
-a dataframe of class 'tcsam2015.prs' (or NULL).
+a dataframe (or NULL).
 }
 \description{
 Function to read a TCSAM2015 parameters csv file and return a dataframe.
@@ -19,7 +19,7 @@ Function to read a TCSAM2015 parameters csv file and return a dataframe.
 If csvFile is NULL, the user will be prompted to identify a 
 TCSAM2015 model parameters csv file to read. Uses functions
 \itemize{
- \item wtsUtilities addFilter()
+ \item \code{wtsUtilities::selectFile(...)}
 }
 }
 

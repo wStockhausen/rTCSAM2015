@@ -1,9 +1,11 @@
 #'
-#'@title Plot comparisons of model and data size compositions by year and sex.
+#'@title Plot comparisons of model and data size compositions by year and sex
 #'
 #'@description Function to plot comparisons of model and data size compositions by year for
-#'specified sexes. Maturity/shell condition combinations
-#'for a given year x sex combination are distinguished by different colors.
+#'specified sexes. 
+#'
+#'@details Maturity/shell condition combinations for a given year x sex combination 
+#'are distinguished by different colors.
 #'
 #'@param name - name of size comps source
 #'@param od - observed size comps list object (may be NULL)

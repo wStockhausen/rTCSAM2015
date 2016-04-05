@@ -5,12 +5,12 @@
 #'
 #'@param csvFile - parameters csv file from a TCSAM2015 model run. can be NULL.
 #'
-#'@return a dataframe of class 'tcsam2015.prs' (or NULL).
+#'@return a dataframe (or NULL).
 #'
 #'@details If csvFile is NULL, the user will be prompted to identify a 
 #'TCSAM2015 model parameters csv file to read. Uses functions
 #'\itemize{
-#'  \item wtsUtilities addFilter()
+#'  \item \code{wtsUtilities::selectFile(...)}
 #'}
 #'
 #'@export
@@ -24,7 +24,6 @@ readParamsCSV<-function(csvFile=NULL){
     obj.prs<-NULL;
     if (!is.null(in.prs)&&file.exists(in.prs)){
         obj.prs<-read.csv(in.prs,stringsAsFactors=FALSE);
-        class(obj.prs)<-c('tcsam2015.prs',class(obj.prs));#set class attribute to 'tcsam2015.prs' for identification
     } else {
         cat('No parameters csv file specified, or file does not exist.\n',
             'Returning NULL...\n');

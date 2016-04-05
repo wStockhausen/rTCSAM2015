@@ -10,6 +10,8 @@
 #'
 #'@return - dataframe with uncertainty info
 #'
+#'@details Uses function \code{wtsUtilities::formatZeros(...)}.
+#'
 #'@export
 #'
 extractModelResults.StdDevs<-function(objs,
@@ -41,7 +43,7 @@ extractModelResults.StdDevs<-function(objs,
                         y<-0.9*exp(-0.5*((x-estp)/stdv)^2);
                         if (nr>1) {
                             type<-'vector';
-                            paramp<-paste(prm,"[",formatZeros(r,width=2),"]",sep='');
+                            paramp<-paste(prm,"[",wtsUtilities::formatZeros(r,width=2),"]",sep='');
                         }
                         vri<-list(case=case,type=type,par=par,param=paramp,x=x,y=y);
                         vfr<-rbind(vfr,as.data.frame(vri,stringsAsFactors=FALSE));

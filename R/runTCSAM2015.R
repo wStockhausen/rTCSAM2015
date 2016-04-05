@@ -103,20 +103,20 @@ runTCSAM2015<-function(os='osx',
     #get jitter info
     if (jitter&(!is.null(dfr))) {
         tbl<-read.csv('jitterInfo.csv',header=TRUE);
-        dfr<-rbind(data.frame(name='jit.seed',value=tbl$jit.seed[1]),dfr);
+        dfr<-rbind(data.frame(name='seed',value=tbl$seed[1]),dfr);
     }
     
     if (plotResults){
         repObj<-getRep(paste0(model,".rep"));
-        prsObj<-getPrs("TCSAM2015.final_params.all.csv");
+        prsObj<-getPrs(type='all');
         stdObj<-getStd(paste0(model,".std"));
-        plotTCSAM2015I( repObj=repObj,
-                           prsObj=prsObj,
-                           stdObj=stdObj,
-                           ggtheme=theme_grey(),
-                           showPlot=TRUE,
-                           pdf="TCSAM2015.pdf",
-                           width=14,height=8)  
+        plotTCSAM2015I(repObj=repObj,
+                       prsObj=prsObj,
+                       stdObj=stdObj,
+                       ggtheme=theme_grey(),
+                       showPlot=TRUE,
+                       pdf="TCSAM2015.pdf",
+                       width=14,height=8)  
     }
 
     #return dataframe (and return to original folder as working directory)

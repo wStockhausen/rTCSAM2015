@@ -49,7 +49,7 @@ getRunCommands<-function(os='osx',
             del &&model.p0*
             del &&model.r0*
             del variance
-            del EchoOut.dat
+            del EchoData.dat
             del CheckFile.dat
             del fmin.log";
     }

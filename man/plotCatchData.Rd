@@ -16,6 +16,8 @@ plotCatchData(name = NULL, obs = NULL, mod = NULL, logscale = FALSE,
 
 \item{logscale}{- flag (T/F) to plot on ln-scale}
 
+\item{normalize}{- flag (T/F) to normalize size comps before plotting}
+
 \item{label}{- base label for plots}
 
 \item{showPlot}{- flag to show plots immediately}

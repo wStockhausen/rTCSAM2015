@@ -10,6 +10,8 @@
 #'
 #'@return - dataframe with the parameter information
 #'
+#'@details Returned dataframe has columns case, type, param, init, value, min, max, and scl.
+#'
 #'@export
 #'
 extractModelResults.Params<-function(objs,
@@ -39,6 +41,7 @@ extractModelResults.Params<-function(objs,
                             rw$type <-'vector';
                             rw$param<-paste(prm,"[",wtsUtilities::formatZeros(r,width=2),"]",sep='');
                         }
+                        rw$init <-prsp$init[r];
                         rw$value<-prsp$value[r];
                         rw$min  <-prsp$min[r];
                         rw$max  <-prsp$max[r];

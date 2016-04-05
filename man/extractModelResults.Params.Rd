@@ -20,4 +20,7 @@ extractModelResults.Params(objs, dp = 0.01, verbose = FALSE)
 This function extracts parameters values, together with their limits
 (if any) from several models.
 }
+\details{
+Returned dataframe has columns case, type, param, init, value, min, max, and scl.
+}
 

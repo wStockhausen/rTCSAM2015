@@ -7,6 +7,7 @@
 #'@param obs - list of observed data 
 #'@param mod - list of model-predicted data
 #'@param logscale - flag (T/F) to plot on ln-scale
+#'@param normalize - flag (T/F) to normalize size comps before plotting
 #'@param label - base label for plots
 #'@param showPlot - flag to show plots immediately
 #'
