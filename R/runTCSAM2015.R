@@ -120,6 +120,6 @@ runTCSAM2015<-function(os='osx',
     }
 
     #return dataframe (and return to original folder as working directory)
-    class(dfr)<-'tcsam2015.par';
+    if (!is.null(dfr)) class(dfr)<-'tcsam2015.par';
     return(dfr);
 }
