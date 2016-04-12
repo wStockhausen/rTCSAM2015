@@ -102,8 +102,13 @@ plotTCSAM2015I<-function(repObj=NULL,
     
     #plot selectivities
     cat("----------------------------------------------\n")
-    cat("plotting selectivities.\n")
-    plots$selfcns<-compareModels.SelFcns.ByPC(repObj,showPlot=showPlot);
+    cat("plotting selectivities by parameter group.\n")
+    plots$selfcns.byPC<-compareModels.SelFcns.ByPC(repObj,showPlot=showPlot);
+
+    #plot selectivities
+    cat("----------------------------------------------\n")
+    cat("plotting selectivities by year.\n")
+    plots$selfcns.byYr<-plotSelFcns.ByYear(repObj,showPlot=showPlot);
 
     #plot simulated and observed data
     cat("----------------------------------------------\n")

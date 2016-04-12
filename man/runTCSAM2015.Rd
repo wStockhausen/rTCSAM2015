@@ -7,7 +7,8 @@
 runTCSAM2015(os = "osx", path = ".", model = "tcsam2015",
   path2model = "", configFile = "", pin = FALSE, hess = FALSE,
   mcmc = FALSE, mc.N = 1e+06, mc.save = 1000, mc.scale = 1000,
-  jitter = FALSE, jit.seed = NULL, plotResults = hess, cleanup = TRUE)
+  jitter = FALSE, jit.seed = NULL, calcOFL = FALSE, plotResults = hess,
+  cleanup = TRUE)
 }
 \arguments{
 \item{os}{- 'win' or 'mac' or 'osx'}
@@ -36,7 +37,9 @@ runTCSAM2015(os = "osx", path = ".", model = "tcsam2015",
 
 \item{jit.seed}{- seed for random number generator (or NULL)}
 
-\item{plotResults}{- T/F to plot results using \code{???}}
+\item{calcOFL}{- flag (T/F) to perform OFL calculations}
+
+\item{plotResults}{- T/F to plot results using \code{plotTCSAM2015I(...)}}
 
 \item{cleanup}{- flag (T/F) to clean up unnecessary files}
 }

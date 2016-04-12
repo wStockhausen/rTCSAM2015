@@ -29,21 +29,23 @@ plotModelResults.ScalarParams<-function(dfr,
         pdf(file=pdf,width=8.5,height=11,onefile=TRUE);
         on.exit(dev.off());
     }
-    ups<-unique(dfr$param);  #unique parameters
-    np<-length(ups);         #number of unique parameters
-    npg<-ceiling(np/(nc*nr));#number of pages
+    ups<-sort(unique(dfr$param));  #unique parameters
+    np<-length(ups);               #number of unique parameters
+    npg<-ceiling(np/(nc*nr));      #number of pages
     plots<-list();
     for (pg in 1:npg){
-       idx<- dfr$param %in% ups[1:(nc*nr)+(pg-1)*nc*nr]
-       dfrsp<-dfr[idx,];
-       if (!is.null(vfr)){
-           idx<- vfr$param %in% ups[1:(nc*nr)+(pg-1)*nc*nr]
+        upsp <- ups[1:(nc*nr)+(pg-1)*nc*nr];
+        idx<- dfr$param %in% upsp
+        dfrsp<-dfr[idx,];
+        if (!is.null(vfr)){
+           idx<- vfr$param %in% upsp
            vfrsp<-vfr[idx,];
-       }
+        }
        p <- ggplot(data=dfrsp)
-       p <- p + geom_rect(mapping=aes_string(xmin='min',xmax='max'),ymin=I(0),ymax=I(1),alpha=0.5,fill='grey')
-       p <- p + geom_vline(aes_string(xintercept='init',colour='case'),linetype=2,alpha=0.7,size=1)
-       p <- p + geom_vline(aes_string(xintercept='value',colour='case'),linetype=1,size=1)
+       p <- p + geom_rect(mapping=aes_string(xmin='min',xmax='max'),ymin=I(0),ymax=I(0.7),alpha=0.5,fill='grey')
+       p <- p + geom_vline(aes_string(xintercept='init',colour='case'),linetype=2,alpha=0.7,size=1);
+       p <- p + geom_vline(aes_string(xintercept='value',colour='case'),linetype=1,size=1);
+##       p <- p + geom_point(aes_string(x='value',colour='scl'),size=4,y=I(0.5))
        p <- p + guides(colour=guide_legend())
        p <- p + scale_y_continuous(breaks=NULL)
        p <- p + labs(x='parameter value',y='')

@@ -4,23 +4,25 @@
 \alias{extractModelResults.Params}
 \title{Function to extract parameter values from different models.}
 \usage{
-extractModelResults.Params(objs, dp = 0.01, verbose = FALSE)
+extractModelResults.Params(objs, dp = 0.01, fac = 2, verbose = FALSE)
 }
 \arguments{
 \item{objs}{- list of model results objects (each is a list with elements 'prsObj' and 'stdObj')}
 
 \item{dp}{- percent difference between parameter value and upper/lower limits used to flag outliers}
 
+\item{fac}{- number of std devs to extend uncertainty plots}
+
 \item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
-- dataframe with the parameter information
+- list with two dataframes, one with the parameter info (prsDFR), one with uncertainty info (stdDFR).
 }
 \description{
 This function extracts parameters values, together with their limits
 (if any) from several models.
 }
 \details{
-Returned dataframe has columns case, type, param, init, value, min, max, and scl.
+Returned parameter info dataframe has columns case, type, param, init, value, min, max, and scl.
 }
 

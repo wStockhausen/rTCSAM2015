@@ -13,7 +13,13 @@
 #'@param fill - column nameto which fill aesthetic is mapped
 #'@param linetype - column name to which linetype aesthetic is mapped
 #'@param shape -  column name to which shape aesthetic is mapped
-#'@param faceting - faceting formula
+#'@param faceting - faceting formula for facet_grid'ing
+#'@param facet_wrap - faceting formula for facet_wrap'ing
+#'@param nrow - number of rows when using facet_wrap
+#'@param ncol - number of columns when using facet_wrap
+#'@param scales - scaling flag when faceting
+#'@param xlim - x axis limits
+#'@param ylim - y axis limits
 #'@param xlab - x axis label
 #'@param ylab - y axis label
 #'@param units - combined with y axis label
@@ -44,6 +50,12 @@ plotMDFR.XY<-function(mdfr,
                        linetype=NULL,
                        shape=NULL,
                        faceting=NULL,
+                       facet_wrap=NULL,
+                       nrow=NULL,
+                       ncol=NULL,
+                       scales="fixed",
+                       xlim=NULL,
+                       ylim=NULL,
                        xlab="",
                        ylab="",
                        units="",
@@ -87,14 +99,17 @@ plotMDFR.XY<-function(mdfr,
                              colour=abline$colour,linetype=abline$linetype,
                              size=abline$size,alpha=abline$alpha)
     }
+    if (!is.null(xlim))     p <- p + coord_cartesian(xlim=xlim);
+    if (!is.null(ylim))     p <- p + coord_cartesian(ylim=ylim);
     if (!is.null(xlab))     p <- p + xlab(xlab);
-    if (!is.null(ylab))     p <- p + ylab(ylb);
+    if (!is.null(ylab))     p <- p + ylab(ylab);
     if (!is.null(title))    p <- p + ggtitle(title);
-    if (!is.null(faceting)) p <- p + facet_grid(faceting);
-    if (!is.null(guideTitleColour))   p <- p + guides(colour=guide_legend(title=guideTitleColour,    override.aes=list(alpha=1.0,size=6,order=1)));
-    if (!is.null(guideTitleFill))     p <- p + guides(fill=guide_legend(title=guideTitleFill,        override.aes=list(alpha=1.0,size=6,order=1)));
-    if (!is.null(guideTitleLineType)) p <- p + guides(linetype=guide_legend(title=guideTitleLineType,override.aes=list(alpha=1.0,size=6,order=1)));
-    if (!is.null(guideTitleShape))    p <- p + guides(shape=guide_legend(title=guideTitleShape,      override.aes=list(alpha=1.0,size=6,order=1)));
+    if (!is.null(faceting)) p <- p + facet_grid(faceting,scales=scales);
+    if (!is.null(facet_wrap))         p <- p + facet_wrap(facet_wrap,nrow=nrow,ncol=ncol,scales=scales)
+    if (!is.null(guideTitleColour))   p <- p + guides(colour  =guide_legend(title=guideTitleColour,override.aes=list(alpha=1.0,size=6,order=1)));
+    if (!is.null(guideTitleFill))     p <- p + guides(fill    =guide_legend(title=guideTitleFill));
+    if (!is.null(guideTitleLineType)) p <- p + guides(linetype=guide_legend(title=guideTitleLineType));
+    if (!is.null(guideTitleShape))    p <- p + guides(shape   =guide_legend(title=guideTitleShape));
     if (showPlot) print(p);
     return(p)
 }

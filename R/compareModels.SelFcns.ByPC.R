@@ -25,7 +25,7 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=pdf,width=width,height=height);
-        on.exit(dev.close());
+        on.exit(dev.off());
     }
         
     #selectivity/retention
@@ -35,11 +35,10 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
     #if only tcsam models are present
     if (!is.null(tcsam)&&is.null(rsim)){
         plots<-list();
-        if (inherits(tcsam,"tcsam2015.rep")){
-            #need to wrap it in a list
-            tcsam<-list(tcsam=tcsam);
-        }
         
+        #make sure tcsam is a list of report objects
+        if (inherits(tcsam,"tcsam2015.rep")) tcsam<-list(tcsam=tcsam);
+
         #process list to extract selectivity function labels
         mdfr$y<-'';
         mdfr$x<-'';
@@ -59,7 +58,8 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                 idx.SelFcn<-pci$ids.PC['idx.SelFcn']
                 #idx<-(mdfr$pc==idx.SelFcn)&(mdfr$modeltype=='tcsam');
                 idx<-(mdfr$pc==idx.SelFcn)&(mdfr$model==mdl);
-                for (i in 1:length(idx)){
+                i<-1;
+                while (i<=length(idx)){
                     if (idx[i]){
                         mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
                         mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
@@ -67,6 +67,7 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                         mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
                         mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='\n');
                     }
+                    i<-i+1;
                 }
             }#surveys
             
@@ -81,7 +82,8 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                 idx.SelFcn<-pci$ids.PC['idx.SelFcn']
                 #idx<-(mdfr$pc==idx.SelFcn)&(mdfr$modeltype=='tcsam');
                 idx<-(mdfr$pc==idx.SelFcn)&(mdfr$model==mdl);
-                for (i in 1:length(idx)){
+                i<-1;
+                while (i<=length(idx)){
                     if (idx[i]){
                         mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
                         mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
@@ -89,11 +91,13 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                         mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
                         mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'selectivity',sep='\n');
                     }
+                    i<-i+1;
                 }
                 idx.RetFcn<-pci$ids.PC['idx.RetFcn'];
                 if (idx.RetFcn>0){
                     idx<-(mdfr$pc==idx.RetFcn);
-                    for (i in 1:length(idx)){
+                    i<-1;
+                    while (i<=length(idx)){
                         if (idx[i]){
                             mdfr$y[i]<-appendString(mdfr$y[i],y,sep='\n');
                             mdfr$x[i]<-appendString(mdfr$x[i],x,sep='\n');
@@ -101,6 +105,7 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                             mdfr$prcname[i]<-appendString(mdfr$prcname[i],n,sep='\n');
                             mdfr$fcntype[i]<-appendString(mdfr$fcntype[i],'retention',sep='\n');
                         }
+                        i<-i+1;
                     }
                 }
             }#fisheries
@@ -108,33 +113,41 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
     
         #plot surveys
         idx<-(mdfr$prctype=='survey');
-        p<-plotMDFR.XY(mdfr[idx,],x='z',
-                       agg.formula=NULL,faceting='prcname+y~x',
-                       xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
-                       colour='model',guideTitleColor='',
-                       shape='model',guideTitleShape='');
-        if (showPlot) print(p);
-        plots$surveys<-p;
+        if (any(idx)){
+            p<-plotMDFR.XY(mdfr[idx,],x='z',
+                           agg.formula=NULL,faceting='prcname+y~x',
+                           xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
+                           colour='model',guideTitleColor='',
+                           shape='model',guideTitleShape='',
+                           showPlot=FALSE);
+            if (showPlot) print(p);
+            plots$surveys<-p;
+        }
         
         #plot fisheries selectivity
         fisheries<-list();
         idx<-(mdfr$prctype=='fishery')&(mdfr$fcntype=='selectivity');
-        p<-plotMDFR.XY(mdfr[idx,],x='z',
-                       agg.formula=NULL,faceting='prcname+y~x',
-                       xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
-                       colour='model',guideTitleColor='',
-                       shape='model',guideTitleShape='');
-        if (showPlot) print(p);
-        fisheries$sel<-p;
-        #plot fisheries selectivity
+        if (any(idx)){
+            p<-plotMDFR.XY(mdfr[idx,],x='z',
+                           agg.formula=NULL,faceting='prcname+y~x',
+                           xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
+                           colour='model',guideTitleColor='',
+                           shape='model',guideTitleShape='');
+            if (showPlot) print(p);
+            fisheries$sel<-p;
+        }
+        #plot fisheries retention
         idx<-(mdfr$prctype=='fishery')&(mdfr$fcntype=='retention');
-        p<-plotMDFR.XY(mdfr[idx,],x='z',
-                       agg.formula=NULL,faceting='prcname+y~x',
-                       xlab='size (mm CW)',ylab='Retention',units='',lnscale=FALSE,
-                       colour='model',guideTitleColor='',
-                       shape='model',guideTitleShape='');
-        if (showPlot) print(p);
-        fisheries$ret<-p;
+        if (any(idx)){
+            p<-plotMDFR.XY(mdfr[idx,],x='z',
+                           agg.formula=NULL,faceting='prcname+y~x',
+                           xlab='size (mm CW)',ylab='Retention',units='',lnscale=FALSE,
+                           colour='model',guideTitleColor='',
+                           shape='model',guideTitleShape='',
+                           showPlot=FALSE);
+            if (showPlot) print(p);
+            fisheries$ret<-p;
+        }
         plots$fisheries<-fisheries;
             
         return(invisible(plots))
@@ -142,9 +155,8 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
     
     #only rsim models
     if (is.null(tcsam)&&(!is.null(rsim))){
-        if (class(rsim)!='list'){
-            rsim<-list(rsim=rsim)
-        }
+        #make sure rsim is a list of report objects
+        if (inherits(rsim,"rsim")) rsim<-list(rsim=rsim);
         
         #process list to extract selectivity function labels
         mdfr$selfcns<-'';
@@ -158,7 +170,8 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                        agg.formula=NULL,faceting='selfcns~.',
                        xlab='size (mm CW)',ylab='Selectivity/Retention',units='',lnscale=FALSE,
                        colour='model',guideTitleColor='',
-                       shape='model',guideTitleShape='');
+                       shape='model',guideTitleShape='',
+                       showPlot=FALSE);
         if (showPlot) print(p);
         return(invisible(p))
     }#rsim but no tcsam
@@ -176,7 +189,8 @@ compareModels.SelFcns.ByPC<-function(tcsam=NULL,
                              agg.formula=NULL,faceting='pc~.',
                              xlab='size (mm CW)',ylab='Selectivity',units='',lnscale=FALSE,
                              colour='model',guideTitleColour='',
-                             shape='model',guideTitleShape='');
+                             shape='model',guideTitleShape='',
+                             showPlot=FALSE);
     }
     if (showPlot) print(p);
         

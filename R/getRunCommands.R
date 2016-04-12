@@ -15,6 +15,7 @@
 #'@param mc.scale - number of iterations to adjust scale for mcmc calculations
 #'@param jitter - flag (T/F) to use jitter initial values
 #'@param jit.seed - value for random number seed to generate jitter
+#'@param calcOFL - flag (T/F) to do OFL calculations
 #'@param cleanup - flag (T/F) to clean up unnecessary files
 #'
 #'@details. If \code{cleanup} is TRUE, then .bar, .b0*, .p0*, .r0*, variance, 
@@ -36,6 +37,7 @@ getRunCommands<-function(os='osx',
                          mc.scale=1000,
                          jitter=FALSE,
                          jit.seed=NULL,
+                         calcOFL=FALSE,
                          cleanup=TRUE){
     nopath<-FALSE;
     if ((path2model=='.')||(path2model=='./')||(path2model=='.\\')||(path2model=="")) nopath=TRUE;
@@ -66,7 +68,7 @@ getRunCommands<-function(os='osx',
     } else if (tolower(os)%in% c('mac','osx')){
         model1<-model;
         if (!nopath) cpy<-"cp &&path2model ./&&model";
-        rn.mdl<-"./&&model -rs -nox  -configFile &&configFile &&mcmc &&nohess &&jitter &&jit.seed &&pin";
+        rn.mdl<-"./&&model -rs -nox  -configFile &&configFile &&mcmc &&nohess &&calcOFL &&jitter &&jit.seed &&pin";
         if (mcmc) rn.mcmc<-"./&&model  -configFile &&configFile -mceval";
         if (cleanup) cln<-gsub("del ","rm ",cln,fixed=TRUE);
         cdr<-paste('DIR="$( cd "$( dirname "$0" )" && pwd )"','cd ${DIR}',sep='\n');
@@ -76,19 +78,19 @@ getRunCommands<-function(os='osx',
     if (!nopath) run.cmds<-gsub("&&path2model",  path2model,  run.cmds,fixed=TRUE);
     run.cmds<-gsub("&&model1",      model1,      run.cmds,fixed=TRUE);
     run.cmds<-gsub("&&model",       model,       run.cmds,fixed=TRUE);
-    run.cmds<-gsub("&&configFile",  configFile,  run.cmds,fixed=TRUE)
-    str<-''; if (pin) str<-"-pin"
-    run.cmds<-gsub("&&pin",str,run.cmds,fixed=TRUE)
-    str<-''; if (!hess) str<-"-nohess"
-    run.cmds<-gsub("&&nohess",str,run.cmds,fixed=TRUE)
-    str<-''; if (jitter) str<-"-jitter"
-    run.cmds<-gsub("&&jitter",str,run.cmds,fixed=TRUE)
-    str<-''; if (is.numeric(jit.seed)) str<-paste("-iSeed",jit.seed)
-    run.cmds<-gsub("&&jit.seed",str,run.cmds,fixed=TRUE)
-    str<-''; if (mcmc) {
-        str<-paste("-mcmc",mc.N,"-mcsave",mc.save,"-mcscale",mc.scale);
-    }
-    run.cmds<-gsub("&&mcmc",str,run.cmds,fixed=TRUE)
+    run.cmds<-gsub("&&configFile",  configFile,  run.cmds,fixed=TRUE);
+    str<-''; if (pin) str<-"-pin";
+    run.cmds<-gsub("&&pin",str,run.cmds,fixed=TRUE);
+    str<-''; if (!hess) str<-"-nohess";
+    run.cmds<-gsub("&&nohess",str,run.cmds,fixed=TRUE);
+    str<-''; if (calcOFL) str<-"-calcOFL";
+    run.cmds<-gsub("&&calcOFL",str,run.cmds,fixed=TRUE);
+    str<-''; if (jitter) str<-"-jitter";
+    run.cmds<-gsub("&&jitter",str,run.cmds,fixed=TRUE);
+    str<-''; if (is.numeric(jit.seed)) str<-paste("-iSeed",jit.seed);
+    run.cmds<-gsub("&&jit.seed",str,run.cmds,fixed=TRUE);
+    str<-''; if (mcmc) str<-paste("-mcmc",mc.N,"-mcsave",mc.save,"-mcscale",mc.scale);
+    run.cmds<-gsub("&&mcmc",str,run.cmds,fixed=TRUE);
 
     cat("Run commands:\n",run.cmds,"\n\n");
     

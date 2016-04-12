@@ -6,12 +6,13 @@
 \usage{
 plotMDFR.XY(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
   agg.function = sum, ..., colour = NULL, fill = NULL, linetype = NULL,
-  shape = NULL, faceting = NULL, xlab = "", ylab = "", units = "",
-  lnscale = FALSE, title = "", guideTitleColour = NULL,
-  guideTitleFill = NULL, guideTitleLineType = NULL,
-  guideTitleShape = NULL, plotABline = FALSE, abline = list(intercept = 0,
-  slope = 1, colour = "black", linetype = 3, size = 1, alpha = 0.8),
-  showPlot = FALSE)
+  shape = NULL, faceting = NULL, facet_wrap = NULL, nrow = NULL,
+  ncol = NULL, scales = "fixed", xlim = NULL, ylim = NULL, xlab = "",
+  ylab = "", units = "", lnscale = FALSE, title = "",
+  guideTitleColour = NULL, guideTitleFill = NULL,
+  guideTitleLineType = NULL, guideTitleShape = NULL, plotABline = FALSE,
+  abline = list(intercept = 0, slope = 1, colour = "black", linetype = 3, size
+  = 1, alpha = 0.8), showPlot = FALSE)
 }
 \arguments{
 \item{mdfr}{- melted dataframe}
@@ -34,7 +35,19 @@ plotMDFR.XY(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
 
 \item{shape}{-  column name to which shape aesthetic is mapped}
 
-\item{faceting}{- faceting formula}
+\item{faceting}{- faceting formula for facet_grid'ing}
+
+\item{facet_wrap}{- faceting formula for facet_wrap'ing}
+
+\item{nrow}{- number of rows when using facet_wrap}
+
+\item{ncol}{- number of columns when using facet_wrap}
+
+\item{scales}{- scaling flag when faceting}
+
+\item{xlim}{- x axis limits}
+
+\item{ylim}{- y axis limits}
 
 \item{xlab}{- x axis label}
 

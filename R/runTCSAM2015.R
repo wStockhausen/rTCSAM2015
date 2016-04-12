@@ -12,7 +12,7 @@
 #'
 #'@param os   - 'win' or 'mac' or 'osx'
 #'@param path - path for model output
-#'@param model      - TCSAM2013 model executable name
+#'@param model - TCSAM2013 model executable name
 #'@param path2model - path to model executable
 #'@param configFile - filename (including path) to model configuration file
 #'@param pin  - T/F to use a pin file
@@ -22,8 +22,9 @@
 #'@param mc.save - number of iterations to skip when saving mcmc calculations
 #'@param mc.scale - number of iterations to adjust scale for mcmc calculations
 #'@param jitter  - T/F to jitter parameters
-#'@param jit.seed    - seed for random number generator (or NULL)
-#'@param plotResults - T/F to plot results using \code{???}
+#'@param jit.seed - seed for random number generator (or NULL)
+#'@param calcOFL - flag (T/F) to perform OFL calculations
+#'@param plotResults - T/F to plot results using \code{plotTCSAM2015I(...)}
 #'@param cleanup - flag (T/F) to clean up unnecessary files
 #'
 #'@return - dataframe of class 'tcam2015.par', with 2 columns (name, value) with jitter jit.seed (if jittered) 
@@ -47,6 +48,7 @@ runTCSAM2015<-function(os='osx',
                        mc.scale=1000,
                        jitter=FALSE,
                        jit.seed=NULL,
+                       calcOFL=FALSE,
                        plotResults=hess,
                        cleanup=TRUE){
     #start timing
@@ -75,6 +77,7 @@ runTCSAM2015<-function(os='osx',
                              mc.scale=mc.scale,
                              jitter=jitter,
                              jit.seed=jit.seed,
+                             calcOFL=calcOFL,
                              cleanup=cleanup)
     if (tolower(os)=='win'){
         cat(run.cmds,file="tmp.bat")
@@ -86,7 +89,7 @@ runTCSAM2015<-function(os='osx',
         system("./tmp.sh",wait=TRUE);
     }
 
-    #print timeing-related info
+    #print timing-related info
     etm<-Sys.time();
     elt<-etm-stm;
     cat("start time: ")

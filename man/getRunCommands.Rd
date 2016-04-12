@@ -7,7 +7,7 @@
 getRunCommands(os = "osx", model = "tcsam2015", path2model = "",
   configFile = "", pin = FALSE, hess = FALSE, mcmc = FALSE,
   mc.N = 1e+06, mc.save = 1000, mc.scale = 1000, jitter = FALSE,
-  jit.seed = NULL, cleanup = TRUE)
+  jit.seed = NULL, calcOFL = FALSE, cleanup = TRUE)
 }
 \arguments{
 \item{os}{- 'win', 'mac' or 'osx'}
@@ -33,6 +33,8 @@ getRunCommands(os = "osx", model = "tcsam2015", path2model = "",
 \item{jitter}{- flag (T/F) to use jitter initial values}
 
 \item{jit.seed}{- value for random number seed to generate jitter}
+
+\item{calcOFL}{- flag (T/F) to do OFL calculations}
 
 \item{cleanup}{- flag (T/F) to clean up unnecessary files}
 }

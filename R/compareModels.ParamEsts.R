@@ -24,21 +24,22 @@ compareModels.ParamEsts<-function(objs,dp=0.01,fac=2,
                                   verbose=FALSE){
     #extract dataframe with parameter estimates and info
     if (verbose) cat('Extracting params info\n')
-    dfr<-extractModelResults.Params(objs,dp=dp,verbose=verbose);
+    res<-extractModelResults.Params(objs,dp=dp,verbose=verbose);
     
-    #extract dataframe with parameter uncertainty info
-    if (verbose) cat("Extracting uncertainty info\n")
-    vfr<-extractModelResults.StdDevs(objs,fac=fac,verbose=verbose);
+    # #extract dataframe with parameter uncertainty info
+    # if (verbose) cat("Extracting uncertainty info\n")
+    # vfr<-extractModelResults.StdDevs(objs,fac=fac,verbose=verbose);
     
     #plot parameters as scalar values
     if (verbose) cat("Plotting parameter results\n")
-    plots<-plotModelResults.ScalarParams(dfr,vfr=vfr,
+    plots<-plotModelResults.ScalarParams(dfr=res$prsDFR,
+                                         vfr=res$stdDFR,
                                          nc=nc,nr=nr,
                                          showPlot=showPlot,
                                          pdf=pdf,
                                          verbose=verbose);
     
-    return(invisible(list(dfr=dfr,vfr=vfr,plots=plots)))
+    return(invisible(list(dfr=res$prsDFR,vfr=res$stdDFR,plots=plots)))
 }
 # resPar<-compareModels.ParamEsts(resLst,dp=0.01,fac=3,
 #                                    nc=3,nr=5,showPlot=TRUE)
