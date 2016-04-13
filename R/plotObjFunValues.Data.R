@@ -77,7 +77,11 @@ plotObjFunValues.Data<-function(mdfr,
     n<-length(ums);#number of models
     if (verbose) cat("number of models =",n,'\n')
     
-    ucts<-as.character(unique(dfr$catch_type));
+    ucts1<-as.character(unique(dfr$catch_type));
+    ucts<-c("index catch","retained catch","discard catch","total catch");
+    for (ct in ucts1){
+        if (!(ct %in% ucts)) cat("Unrecognized catch type '",ct,"' in plotObjFunValues.Data()\n",sep='')
+    }
     
     rng<-range(dfr$value)
     if (verbose) cat("range = [",paste(rng,collapse=', '),']\n',sep='')
@@ -85,7 +89,8 @@ plotObjFunValues.Data<-function(mdfr,
     ps<-list();
     if (n==1){
         for (ct in ucts){
-            p <- ggplot(data=dfr[dfr$catch_type==ct,],aes(x=source_name,y=value,color=model,fill=fac,line=3))
+            dfrp<-dfr[dfr$catch_type==ct,];
+            p <- ggplot(data=dfrp,aes(x=source_name,y=value,color=model,fill=fac,line=3))
             p <- p + geom_bar(stat="identity",position='dodge',alpha=1.0)
             p <- p + ylim(0,NA)
             p <- p + scale_fill_brewer(palette='Set1')

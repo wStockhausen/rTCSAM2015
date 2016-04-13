@@ -15,7 +15,7 @@
 #'
 compareModels.ObjFunValues<-function(repObj,
                                      variable='objfun',
-                                     ggtheme=theme_grey(),
+                                     ggtheme=ggplot2::theme_grey(),
                                      showPlot=TRUE,
                                      verbose=FALSE){
     plots<-list();

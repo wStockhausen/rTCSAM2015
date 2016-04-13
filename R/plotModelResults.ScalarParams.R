@@ -29,7 +29,7 @@ plotModelResults.ScalarParams<-function(dfr,
         pdf(file=pdf,width=8.5,height=11,onefile=TRUE);
         on.exit(dev.off());
     }
-    ups<-sort(unique(dfr$param));  #unique parameters
+    ups<-unique(dfr$param);        #unique parameters
     np<-length(ups);               #number of unique parameters
     npg<-ceiling(np/(nc*nr));      #number of pages
     plots<-list();
@@ -37,10 +37,13 @@ plotModelResults.ScalarParams<-function(dfr,
         upsp <- ups[1:(nc*nr)+(pg-1)*nc*nr];
         idx<- dfr$param %in% upsp
         dfrsp<-dfr[idx,];
+        dfrsp$param<-factor(dfrsp$param,upsp);
         if (!is.null(vfr)){
-           idx<- vfr$param %in% upsp
-           vfrsp<-vfr[idx,];
+            idx<- vfr$param %in% upsp
+            vfrsp<-vfr[idx,];
+            vfrsp$param<-factor(vfrsp$param,upsp);
         }
+        
        p <- ggplot(data=dfrsp)
        p <- p + geom_rect(mapping=aes_string(xmin='min',xmax='max'),ymin=I(0),ymax=I(0.7),alpha=0.5,fill='grey')
        p <- p + geom_vline(aes_string(xintercept='init',colour='case'),linetype=2,alpha=0.7,size=1);
