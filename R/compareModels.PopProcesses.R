@@ -1,7 +1,7 @@
 #'
-#'@title Compare population quantities from TCSAM2015 and rsimTCSAM model runs.
+#'@title Compare population process-related quantities from TCSAM2015 and rsimTCSAM model runs.
 #'
-#'@description Function to compare population quantities from TCSAM2015 and rsimTCSAM model runs.
+#'@description Function to compare population process-related quantities from TCSAM2015 and rsimTCSAM model runs.
 #'
 #'@param tcsams - single TCSAM2015 model report object, or named list of such
 #'@param rsims - single rsimTCSAM results object, or named list of such
@@ -17,7 +17,7 @@
 #'
 #'@export
 #'
-compareModels.PopQuants<-function(tcsams=NULL,
+compareModels.PopProcesses<-function(tcsams=NULL,
                                       rsims=NULL,
                                       showPlot=TRUE,
                                       pdf=NULL,
@@ -39,55 +39,78 @@ compareModels.PopQuants<-function(tcsams=NULL,
     
     plots<-list();
     
-    #abundance trends
-    if (verbose) cat("Plotting population abundance trends\n");
-    mdfr<-getMDFR('mr/P_list/N_yxmsz',tcsams,rsims);
-    dfr<-reshape2::dcast(mdfr,modeltype+model+y+x+m+s~.,fun.aggregate=sum,value.var='val');
-    p1<-plotMDFR.XY(dfr,x='y',value.var='.',faceting='x~m',
-                   plotABline=TRUE,plotPoints=FALSE,
-                   xlab='year',ylab='Abundance (millions)',units="",
-                   linetype='s',guideTitleLineType='',
-                   colour='model',guideTitleColour='');
-    if (showPlot) print(p1);
-    p2<-plotMDFR.XY(dfr[dfr$y>=1980,],x='y',value.var='.',faceting='x~m',
-                   plotABline=TRUE,plotPoints=FALSE,
-                   xlab='year',ylab='Abundance (millions)',units="",
-                   linetype='s',guideTitleLineType='',
-                   colour='model',guideTitleColour='');
-    if (showPlot) print(p2);
-    plots$N_yxms<-list(p1,p2);
+    #natural mortality
+    if (verbose) cat("Plotting natural mortality info\n");
+    mdfr<-NULL;
+    if (!is.null(tcsams)){
+        mdfr<-getMDFR('mp/M_cxm',tcsams,NULL);
+        mdfr$y<-'';
+        ums<-as.character(unique(mdfr$model))
+        for (um in ums){
+            tcsam<-tcsams[[um]];
+            pgi<-tcsam$mpi$nm$pgi;
+            nPCs<-length(pgi$pcs)-1;
+            for (pc in 1:nPCs){
+                idx<-(mdfr$pc==pc)&(mdfr$model==um);
+                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
+                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims)
+            }
+        }
+        mdfr$pc<-mdfr$y;
+        mdfr<-subset(mdfr,select=-y)
+    }
+    if (!is.null(rsims)){
+        mdfrp<-getMDFR('mp/M_cxm',NULL,rsims);
+        ums<-as.character(unique(mdfrp$model))
+        for (um in ums){
+            idx<-(mdfrp$model==um);
+            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
+        }
+        mdfr<-rbind(mdfr,mdfrp);
+    }
+    p<-plotMDFR.Bars(mdfr,x='m',agg.formula=NULL,faceting='pc~x',
+                     fill='model',xlab='maturity',ylab='natural mortality');
+    if (showPlot) print(p);
+    plots$M_cxm<-p;
     
-    #biomass trends
-    if (verbose) cat("Plotting population biomass trends\n");
-    mdfr<-getMDFR('mr/P_list/B_yxms',tcsams,rsims);
-    p1<-plotMDFR.XY(mdfr,x='y',value.var='val',faceting='x~m',
-                   plotABline=TRUE,plotPoints=FALSE,
-                   xlab='year',ylab='Biomass (1000s t)',units="",
-                   linetype='s',guideTitleLineType='',
+    #mean growth increments
+    if (verbose) cat("Plotting mean growth increments\n");
+    mdfr<-NULL;
+    if (!is.null(tcsams)){
+        mdfr<-getMDFR('mp/T_list/mnZAM_cz',tcsams,NULL);
+        mdfr$y<-'';
+        mdfr$x<-'';
+        ums<-as.character(unique(mdfr$model))
+        for (um in ums){
+            tcsam<-tcsams[[um]];
+            pgi<-tcsam$mpi$grw$pgi;
+            nPCs<-length(pgi$pcs)-1;#last element is a NULL
+            for (pc in 1:nPCs){
+                idx<-(mdfr$pc==pc)&(mdfr$model==um);
+                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
+                mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
+                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
+            }
+        }
+        mdfr$pc<-mdfr$y
+        mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
+    }
+    if (!is.null(rsims)){
+        mdfrp<-getMDFR('mp/T_list/mnZAM_cxz',NULL,rsims);
+        ums<-as.character(unique(mdfrp$model))
+        for (um in ums){
+            idx<-(mdfrp$model==um);
+            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
+        }
+        mdfr<-rbind(mdfr,mdfrp);
+    }
+    p<-plotMDFR.XY(mdfr,x='z',value.var='val',faceting='pc~x',
+                   plotABline=TRUE,
+                   xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
+                   shape='model',guideTitleShape='',
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p1);
-    p2<-plotMDFR.XY(mdfr[mdfr$y>=1980,],x='y',value.var='val',faceting='x~m',
-                   plotABline=TRUE,plotPoints=FALSE,
-                   xlab='year',ylab='Biomass (1000s t)',units="",
-                   linetype='s',guideTitleLineType='',
-                   colour='model',guideTitleColour='');
-    if (showPlot) print(p2);
-    plots$B_yxms<-list(p1,p2);
-    
-    #mature biomass at mating trends
-    if (verbose) cat("Plotting population mature biomass-at-mating trends\n");
-    mdfr<-getMDFR('mr/P_list/MB_yx',tcsams,rsims);
-    p1<-plotMDFR.XY(mdfr,x='y',value.var='val',faceting='x~.',
-                   plotABline=TRUE,plotPoints=FALSE,
-                   xlab='year',ylab='Mating Biomass (1000s t)',units="",
-                   colour='model',guideTitleColour='');
-    if (showPlot) print(p1);
-    p2<-plotMDFR.XY(mdfr[mdfr$y>=1980,],x='y',value.var='val',faceting='x~.',
-                   plotABline=TRUE,plotPoints=FALSE,
-                   xlab='year',ylab='Mating Biomass (1000s t)',units="",
-                   colour='model',guideTitleColour='');
-    if (showPlot) print(p2);
-    plots$MB_yx<-list(p1,p2);
+    if (showPlot) print(p);
+    plots$mnZAM_cz<-p;
     
     #growth transition matrices
     if (verbose) cat("Plotting growth transition matrices\n");

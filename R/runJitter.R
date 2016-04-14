@@ -98,12 +98,13 @@ runJitter<-function(os='osx',
     #read jitter results from file
     tbl<-read.csv(out.csv);
     idx<-order(tbl$objFun,abs(tbl$maxGrad));
+    best<-tbl$idx[idx[1]];
     seed<-tbl$seed[idx[1]];
     if (onlyEvalJitter){parList<-NULL;}
 
     #re-run case associated with mininum objective function value, save in "best.runxx"
     cat("\n\n---Re-running ADMB program for",idx[1],"out of",numRuns,"as best run---\n");
-    fldr<-paste('best.run',wtsUtilities::formatZeros(idx[1],width=max(2,ceiling(log10(numRuns)))),sep='');
+    fldr<-paste('best.run',wtsUtilities::formatZeros(best,width=max(2,ceiling(log10(numRuns)))),sep='');
     p2f<-file.path(path,fldr);
     cat("---Output folder is '",p2f,"'\n\n",sep='');
     par<-runTCSAM2015(path=p2f,
@@ -132,6 +133,6 @@ runJitter<-function(os='osx',
     print(elt);
 
     #return output
-    return(list(imn=idx[1],seed=seed,par=par,objFuns=tbl,parList=parList));
+    return(list(imn=best,seed=seed,par=par,objFuns=tbl,parList=parList));
 }
 #res<-jitterTCSAM2015(200);

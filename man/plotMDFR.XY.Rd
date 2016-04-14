@@ -10,9 +10,10 @@ plotMDFR.XY(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
   ncol = NULL, scales = "fixed", xlim = NULL, ylim = NULL, xlab = "",
   ylab = "", units = "", lnscale = FALSE, title = "",
   guideTitleColour = NULL, guideTitleFill = NULL,
-  guideTitleLineType = NULL, guideTitleShape = NULL, plotABline = FALSE,
-  abline = list(intercept = 0, slope = 1, colour = "black", linetype = 3, size
-  = 1, alpha = 0.8), showPlot = FALSE)
+  guideTitleLineType = NULL, guideTitleShape = NULL, plotPoints = TRUE,
+  plotLines = TRUE, plotABline = FALSE, abline = list(intercept = 0, slope
+  = 1, colour = "black", linetype = 3, size = 1, alpha = 0.8),
+  showPlot = FALSE)
 }
 \arguments{
 \item{mdfr}{- melted dataframe}
@@ -66,6 +67,10 @@ plotMDFR.XY(mdfr, x = NULL, value.var = "val", agg.formula = NULL,
 \item{guideTitleLineType}{- title for linetype guide}
 
 \item{guideTitleShape}{- title for shape guide}
+
+\item{plotPoints}{- flag to plot points}
+
+\item{plotLines}{- flag to plot lines}
 
 \item{plotABline}{- flag to plot a straight line}
 

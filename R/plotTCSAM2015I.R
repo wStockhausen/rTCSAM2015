@@ -82,10 +82,10 @@ plotTCSAM2015I<-function(repObj=NULL,
                                      verbose=verbose);
     #if (showPlot) print(plots$zscores);
     
-    #plot population quantities
+    #plot population processes
     cat("----------------------------------------------\n")
-    cat("plotting population quantities\n")
-    plots$pop.quants<-compareModels.PopQuants(repObj,showPlot=showPlot);
+    cat("plotting population processes\n")
+    plots$pop.quants<-compareModels.PopProcesses(repObj,showPlot=showPlot);
     #if (showPlot) print(plots$pop.quants);
     
     #plot fisheries quantities
@@ -110,15 +110,21 @@ plotTCSAM2015I<-function(repObj=NULL,
     cat("plotting selectivities by year.\n")
     plots$selfcns.byYr<-plotSelFcns.ByYear(repObj,showPlot=showPlot);
 
-    #plot simulated and observed data
-    cat("----------------------------------------------\n")
-    cat("plotting simulated and observed data.\n")
-    plots$DMCs<-plotDataModelComparisons(repObj,showPlot=showPlot);
-
     #plot effort regressions
     cat("----------------------------------------------\n")
     cat("plotting effort regressions.\n");
     plots$effRegs<-plotEffortRegressions(repObj,showPlot=showPlot);
+
+    # #plot population quantities
+    # cat("----------------------------------------------\n")
+    # cat("plotting population quantities\n")
+    # plots$pop.quants<-compareModels.PopQuants(repObj,showPlot=showPlot);
+    # #if (showPlot) print(plots$pop.quants);
+    
+    #plot simulated and observed data
+    cat("----------------------------------------------\n")
+    cat("plotting simulated and observed data.\n")
+    plots$DMCs<-plotDataModelComparisons(repObj,showPlot=showPlot);
 
     #TODO: stock-recruit curve(s)
     cat("----------------------------------------------\n")

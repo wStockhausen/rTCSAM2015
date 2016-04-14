@@ -16,9 +16,14 @@ getMDFR(path, tcsam = NULL, rsim = NULL, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print diagnostics}
 }
 \value{
-Melted dataframe (ala package reshape2) of the requested array, with additional columns 'model' and 'modeltype'.
+Melted dataframe (ala package reshape2).
 }
 \description{
 Function to get model objects as a melted dataframe from TCSAM2015 and rsimTCSAM models.
+}
+\details{
+Returned dataframeis a melted (ala reshape2) version of the requested array, 
+with additional columns 'model' and 'modeltype' appended at the "right". The array value
+is in column 'val'.
 }
 

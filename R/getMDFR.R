@@ -8,7 +8,11 @@
 #'@param rsim - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print diagnostics
 #'
-#'@return Melted dataframe (ala package reshape2) of the requested array, with additional columns 'model' and 'modeltype'.
+#'@return Melted dataframe (ala package reshape2).
+#'
+#'@details Returned dataframeis a melted (ala reshape2) version of the requested array, 
+#'with additional columns 'model' and 'modeltype' appended at the "right". The array value
+#'is in column 'val'.
 #'
 #'@export
 #'

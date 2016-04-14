@@ -29,6 +29,8 @@
 #'@param guideTitleFill - title for fill guide
 #'@param guideTitleLineType - title for linetype guide
 #'@param guideTitleShape - title for shape guide
+#'@param plotPoints - flag to plot points
+#'@param plotLines - flag to plot lines
 #'@param plotABline - flag to plot a straight line
 #'@param abline - list w/ components intercept, slope, colour, size, linetype, alpha describing line to plots
 #'@param showPlot - flag to show plot immediately
@@ -65,6 +67,8 @@ plotMDFR.XY<-function(mdfr,
                        guideTitleFill=NULL,
                        guideTitleLineType=NULL,
                        guideTitleShape=NULL,
+                       plotPoints=TRUE,
+                       plotLines=TRUE,
                        plotABline=FALSE,
                        abline=list(intercept=0,slope=1,colour='black',linetype=3,size=1,alpha=0.8),
                        showPlot=FALSE
@@ -92,8 +96,8 @@ plotMDFR.XY<-function(mdfr,
     
     #plot resulting dataframe
     p <- ggplot(aes_string(x=x,y='.',colour=colour,fill=fill,linetype=linetype,shape=shape),data=mdfr);
-    p <- p + geom_point();
-    p <- p + geom_line();
+    if (plotPoints) p <- p + geom_point();
+    if (plotLines)  p <- p + geom_line();
     if (plotABline){
         p <- p + geom_abline(intercept=abline$intercept,slope=abline$slope,
                              colour=abline$colour,linetype=abline$linetype,
