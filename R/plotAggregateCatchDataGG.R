@@ -48,24 +48,30 @@ plotAggregateCatchDataGG<-function(label=NULL,
         odfr<-reshape2::melt(obs$data,value.name='val');
         cvs <-reshape2::melt(obs$cvs,value.name='cv');
         odfr<-cbind(odfr,cv=cvs$cv);
-        if (tolower(pdfType)=='normal'){
-            #normal
-            cat('Using normal error structure for error bars\n')
-            sd<-odfr$cv*odfr$val;#sd on arithmetic scale
-            odfr$sd<-sd;
-            odfr$lci<-qnorm(ci[1],mean=odfr$val,sd=sd);
-            odfr$uci<-qnorm(ci[2],mean=odfr$val,sd=sd);
-        } else if (tolower(pdfType)=='lognormal'){
-            #lognormal
-            cat('Using lognormal error structure for error bars\n')
-            sd<-sqrt(log(1+odfr$cv^2));#sd on ln-scale
-            odfr$sd<-odfr$cv*odfr$val; #sd on arithmetic scale
-            odfr$lci<-exp(qnorm(ci[1],mean=log(odfr$val),sd=sd));
-            odfr$uci<-exp(qnorm(ci[2],mean=log(odfr$val),sd=sd));
+        if (!is.null(pdfType)){
+          if (tolower(pdfType)=='normal'){
+              #normal
+              cat('Using normal error structure for error bars\n')
+              sd<-odfr$cv*odfr$val;#sd on arithmetic scale
+              odfr$sd<-sd;
+              odfr$lci<-qnorm(ci[1],mean=odfr$val,sd=sd);
+              odfr$uci<-qnorm(ci[2],mean=odfr$val,sd=sd);
+          } else if (tolower(pdfType)=='lognormal'){
+              #lognormal
+              cat('Using lognormal error structure for error bars\n')
+              sd<-sqrt(log(1+odfr$cv^2));#sd on ln-scale
+              odfr$sd<-odfr$cv*odfr$val; #sd on arithmetic scale
+              odfr$lci<-exp(qnorm(ci[1],mean=log(odfr$val),sd=sd));
+              odfr$uci<-exp(qnorm(ci[2],mean=log(odfr$val),sd=sd));
+          } else {
+              cat('No error bars\n')
+              odfr$lci<-NA;
+              odfr$uci<-NA;
+          }
         } else {
-            cat('No error bars\n')
-            odfr$lci<-NA;
-            odfr$uci<-NA;
+          cat('No error bars\n')
+          odfr$lci<-NA;
+          odfr$uci<-NA;
         }
         odfr$facs<-paste(odfr$x,odfr$m,odfr$s)
         #find factor combinations which are NOT all 0's
@@ -109,7 +115,7 @@ plotAggregateCatchDataGG<-function(label=NULL,
     p <- ggplot(aes_string(x='y',y='val',colour='type',fill='type',shape='type',linetype='type'),data=cdfr)
     p <- p + scale_linetype_manual(values=c(observed=3,estimated=1))
     p <- p + scale_shape_manual(values=c(observed=19,estimated=1))
-    p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),position=pd,width=0.8,linetype=1)
+    if (pdfType!="NONE") p <- p + geom_errorbar(aes_string(ymin='lci',ymax='uci'),position=pd,width=0.8,linetype=1)
     p <- p + geom_point(position=pd,size=3)
     p <- p + geom_line( position=pd,size=1,alpha=1)
     if (!is.null(xlim)) p <- p + xlim(xlim);

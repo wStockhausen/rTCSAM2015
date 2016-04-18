@@ -89,163 +89,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
     if (showPlot) print(p2);
     plots$MB_yx<-list(p1,p2);
     
-    #growth transition matrices
-    if (verbose) cat("Plotting growth transition matrices\n");
-    mdfr<-NULL;
-    if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/T_list/T_czz',tcsams,NULL);
-        mdfr$y<-'';
-        mdfr$x<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$grw$pgi;
-            nPCs<-length(pgi$pcs)-1;#last element is a NULL
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
-            }
-        }
-        mdfr$pc<-mdfr$y
-        mdfr<-mdfr[,c('pc','x','z','zp','val','model','modeltype')];
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/T_list/T_cxzz',NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
-    p<-plotMDFR.Bubbles(mdfr,x='zp',y='z',faceting='model+pc~x',
-                        xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
-                        colour='.',guideTitleColor='',useColourGradient=TRUE,alpha=0.5);
-    if (showPlot) print(p);
-    plots$T_czz<-p;
-    
-    #molt-to-maturity
-    if (verbose) cat("Plotting molt to maturity info\n");
-    mdfr<-NULL;
-    if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/prMolt2Mat_cz',tcsams,NULL);
-        mdfr$y<-'';
-        mdfr$x<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$mat$pgi;
-            nPCs<-length(pgi$pcs)-1;#last element is a NULL
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
-            }
-        }
-        mdfr$pc<-mdfr$y;
-        mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/prMolt2Mat_cxz',NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims);
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
-    p<-plotMDFR.XY(mdfr,x='z',agg.formula='pc+x+model+z',faceting='pc~x',
-                   colour='model',guideTitleColour='',
-                   shape='model',guideTitleShape='',
-                   xlab='size (mm CW)',ylab='pr(molt-to-maturity)');
-    if (showPlot) print(p);
-    plots$prMolt2Mat_cz<-p;
-        
-    #recruitment size distribution
-    if (verbose) cat("Plotting recruitment size distribution\n");
-    path<-'mp/R_list/R_cz';
-    if (!is.null(tcsams)){
-        mdfr<-getMDFR(path,tcsams,NULL);
-        mdfr$y<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$rec$pgi;
-            nPCs<-length(pgi$pcs)-1;#last element is a NULL
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
-            }
-        }
-        mdfr$pc<-mdfr$y;
-        mdfr<-mdfr[,c('pc','z','val','model','modeltype')];
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR(path,NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims);
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
-    p<-plotMDFR.XY(mdfr,x='z',agg.formula='pc+x+model+z',faceting='pc~.',
-                   xlab='size (mm CW)',ylab='Recruitment size distribution',units='millions',lnscale=FALSE,
-                   colour='model',guideTitleColour='',
-                   shape='model',guideTitleShape='');
-    if (showPlot) print(p);
-    plots$R_cz<-p;
-    
-    #recruitment sex ratio
-    if (verbose) cat("Plotting recruitment sex ratio\n");
-    path<-'mp/R_list/Rx_c';
-    if (!is.null(tcsam)){
-        mdfr<-getMDFR(path,tcsams,NULL);
-        mdfr$y<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$rec$pgi;
-            nPCs<-length(pgi$pcs)-1;#last element is a NULL
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
-            }
-        }
-        mdfr$pc<-mdfr$y;
-        mdfr<-mdfr[,c('pc','val','model','modeltype')];
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR(path,NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims);
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
-    p<-plotMDFR.Bars(mdfr,x='pc',agg.formula=NULL,faceting=NULL,
-                     fill='model',xlab='year block',ylab='sex ratio');
-    if (showPlot) print(p);
-    plots$Rx_c<-p;
-    
-    #initial size distribution
-    if (verbose) cat("Plotting initial size distribution\n");
-    path<-'mr/iN_xmsz';
-    mdfr<-getMDFR(path,tcsams,rsims);
-    mdfr<-removeImmOS(mdfr);
-    p<-plotMDFR.XY(mdfr,x='z',agg.formula='model+x+m+s+z',faceting='m+s~x',
-                          xlab='size (mm CW)',ylab='Initial size distribution',units='millions',lnscale=FALSE,
-                          colour='model',guideTitleColour='Model\nCase',
-                          shape=NULL,guideTitleShape='');
-    if (showPlot) print(p);
-    plots$iN_xmsz<-p;
-        
+
     #recruitment
     if (verbose) cat("Plotting recruitment time series\n");
     path<-'mp/R_list/R_y';
@@ -263,41 +107,6 @@ compareModels.PopQuants<-function(tcsams=NULL,
     if (showPlot) print(p);
     plots$lnR_y<-p;
     
-    #Mature biomass
-    if (verbose) cat("Plotting mature biomass time series\n");
-    path<-'mr/P_list/MB_yx';
-    mdfr<-getMDFR(path,tcsams,rsims);
-    p<-plotMDFR.XY(mdfr,x='y',agg.formula='model+y+x',faceting='x~.',
-                          xlab='year',ylab='Mature Biomass',units="1000's t",lnscale=FALSE,
-                          colour='model',guideTitleColor='',
-                          shape='model',guideTitleShape='');
-    if (showPlot) print(p);
-    plots$MB_yx<-p;
-    
-    #Population biomass
-    if (verbose) cat("Plotting population biomass time series\n");
-    path<-'mr/P_list/B_yxms';
-    mdfr<-getMDFR(path,tcsams,rsims);
-    mdfr<-removeImmOS(mdfr);
-    p<-plotMDFR.XY(mdfr,x='y',agg.formula='model+y+x',faceting='x~.',
-                          xlab='year',ylab='Population Biomass',units="1000's t",lnscale=FALSE,
-                          colour='model',guideTitleColour='',
-                          shape='model',guideTitleShape='');
-    if (showPlot) print(p);
-    plots$B_yx<-p;
-    
-    #Population abundance
-    if (verbose) cat("Plotting poulation abundance time series\n");
-    path<-'mr/P_list/N_yxmsz';
-    mdfr<-getMDFR(path,tcsams,rsims);
-    mdfr<-removeImmOS(mdfr);
-    p<-plotMDFR.XY(mdfr,x='y',agg.formula='model+y+x',faceting='x~.',
-                          xlab='year',ylab='Population Abundance',units="millions",lnscale=FALSE,
-                          colour='model',guideTitleColour='',
-                          shape='model',guideTitleShape='');
-    if (showPlot) print(p);
-    plots$N_yx<-p;
-    
     #Population abundance-at-size
     if (verbose) cat("Plotting poulation abundance-at-size\n");
     path<-'mr/P_list/N_yxmsz';
@@ -310,5 +119,20 @@ compareModels.PopQuants<-function(tcsams=NULL,
     if (showPlot) print(p);
     plots$N_yxmsz<-p;
         
+    #Population abundance-at-size (bubble plots)
+    if (verbose) cat("Plotting poulation abundance-at-size (bubble plots)\n");
+    path<-'mr/P_list/N_yxmsz';
+    mdfr<-getMDFR(path,tcsams,rsims);
+    mdfr<-removeImmOS(mdfr);
+    p<-plotMDFR.Bubbles(mdfr,x='y',y='z',
+                        agg.formula='model+y+x+z',faceting='model~x',
+                        xlab='year',ylab='size (mm CW)',units="millions",
+                        colour='.',guideTitleColour='',useColourGradient=TRUE,alpha=0.5);
+    if (showPlot) print(p);
+    plots$N_yxmsz<-p;
+        
+    #Population abundance-at-size (line plots)
+    p<-compareModels.SizeComps(mdfr);
+    
     return(invisible(plots))
 }

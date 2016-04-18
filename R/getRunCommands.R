@@ -3,12 +3,14 @@
 #'
 #'@description Function to generate a script to make a tcsam2015 model run
 #'
-#'@param os - 'win', 'mac' or 'osx'
+#'@param os - 'win', 'mac', 'osx', or 'linux'
 #'@param model - admb model name
 #'@param path2model - path to model
 #'@param configFile - filename (including path) to model configuration file
 #'@param pin - flag (T/F) to use a pin file
 #'@param hess - flag (T/F) to calculate the hessian
+#'@param minPhase - start phase (or NULL) for minimization calculations
+#'@param maxPhase - last phase (or NULL) for minimization calculations
 #'@param mcmc - flag (T/F) to do mcmc calculations
 #'@param mc.N - number of mcmc iterations to do
 #'@param mc.save - number of iterations to skip when saving mcmc calculations
@@ -31,6 +33,8 @@ getRunCommands<-function(os='osx',
                          configFile='',
                          pin=FALSE,
                          hess=FALSE,
+                         minPhase=NULL,
+                         maxPhase=NULL,
                          mcmc=FALSE,
                          mc.N=1000000,
                          mc.save=1000,
@@ -60,15 +64,15 @@ getRunCommands<-function(os='osx',
     if (tolower(os)=='win'){
         model1<-paste(model,'exe',sep='.');
         if (!nopath) cpy<-"copy &&path2model &&model1";
-        rn.mdl<-"&&model -rs -nox  -configFile &&configFile &&mcmc &&nohess &&jitter &&jit.seed &&pin";
+        rn.mdl<-"&&model -rs -nox  -configFile &&configFile &&mnPhs &&mxPhs &&mcmc &&nohess &&jitter &&jit.seed &&pin";
         if (mcmc) rn.mcmc<-"&&model  -configFile &&configFile -mceval";
         ##cln is correct for 'win', so do nothing
         run.cmds<-paste(echo.on,cpy,rn.mdl,rn.mcmc,cln,sep="\n");
         path2model<-gsub("/","\\",file.path(path2model,model1),fixed=TRUE);
-    } else if (tolower(os)%in% c('mac','osx')){
+    } else if (tolower(os) %in% c('mac','osx','linux')){
         model1<-model;
         if (!nopath) cpy<-"cp &&path2model ./&&model";
-        rn.mdl<-"./&&model -rs -nox  -configFile &&configFile &&mcmc &&nohess &&calcOFL &&jitter &&jit.seed &&pin";
+        rn.mdl<-"./&&model -rs -nox  -configFile &&configFile &&mnPhs &&mxPhs &&mcmc &&nohess &&calcOFL &&jitter &&jit.seed &&pin";
         if (mcmc) rn.mcmc<-"./&&model  -configFile &&configFile -mceval";
         if (cleanup) cln<-gsub("del ","rm ",cln,fixed=TRUE);
         cdr<-paste('DIR="$( cd "$( dirname "$0" )" && pwd )"','cd ${DIR}',sep='\n');
@@ -91,6 +95,10 @@ getRunCommands<-function(os='osx',
     run.cmds<-gsub("&&jit.seed",str,run.cmds,fixed=TRUE);
     str<-''; if (mcmc) str<-paste("-mcmc",mc.N,"-mcsave",mc.save,"-mcscale",mc.scale);
     run.cmds<-gsub("&&mcmc",str,run.cmds,fixed=TRUE);
+    str<-''; if (!is.null(minPhase)) str<-paste0("-phase ",minPhase);
+    run.cmds<-gsub("&&mnPhs",str,run.cmds,fixed=TRUE);
+    str<-''; if (!is.null(maxPhase)) str<-paste0("-maxph ",maxPhase);
+    run.cmds<-gsub("&&mxPhs",str,run.cmds,fixed=TRUE);
 
     cat("Run commands:\n",run.cmds,"\n\n");
     

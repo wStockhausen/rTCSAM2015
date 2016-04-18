@@ -5,12 +5,13 @@
 \title{Generate run commands for a tcsam2015 model run}
 \usage{
 getRunCommands(os = "osx", model = "tcsam2015", path2model = "",
-  configFile = "", pin = FALSE, hess = FALSE, mcmc = FALSE,
-  mc.N = 1e+06, mc.save = 1000, mc.scale = 1000, jitter = FALSE,
-  jit.seed = NULL, calcOFL = FALSE, cleanup = TRUE)
+  configFile = "", pin = FALSE, hess = FALSE, minPhase = NULL,
+  maxPhase = NULL, mcmc = FALSE, mc.N = 1e+06, mc.save = 1000,
+  mc.scale = 1000, jitter = FALSE, jit.seed = NULL, calcOFL = FALSE,
+  cleanup = TRUE)
 }
 \arguments{
-\item{os}{- 'win', 'mac' or 'osx'}
+\item{os}{- 'win', 'mac', 'osx', or 'linux'}
 
 \item{model}{- admb model name}
 
@@ -21,6 +22,10 @@ getRunCommands(os = "osx", model = "tcsam2015", path2model = "",
 \item{pin}{- flag (T/F) to use a pin file}
 
 \item{hess}{- flag (T/F) to calculate the hessian}
+
+\item{minPhase}{- start phase (or NULL) for minimization calculations}
+
+\item{maxPhase}{- last phase (or NULL) for minimization calculations}
 
 \item{mcmc}{- flag (T/F) to do mcmc calculations}
 

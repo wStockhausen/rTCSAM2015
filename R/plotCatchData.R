@@ -26,7 +26,7 @@ plotCatchData<-function(name=NULL,
     plots<-list();
     #plot abundance
     if (!is.null(mod$abundance)){
-        #cat('Plotting abundance\n')
+        cat('Plotting abundance\n')
         plots$abundance<-list();
         od<-obs$abundance;
         md<-mod$abundance;
