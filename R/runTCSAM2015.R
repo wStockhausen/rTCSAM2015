@@ -31,7 +31,9 @@
 #'and par file info, or NULL if par file does not exist. 
 #'
 #'@details If the path associated with \code{configFile} is a relative one, it should
-#'be relative to the \code{path} variable.
+#'be relative to the \code{path} variable. If showPlot=TRUE, the report file, prs file, 
+#'and std files are read in and the associated objects are saved to 'ModelResults.RData'
+#'as repObj, prsObj, and stdObj, respectively. 
 #'
 #'@export
 #'
@@ -113,6 +115,7 @@ runTCSAM2015<-function(os='osx',
         repObj<-getRep(paste0(model,".rep"));
         prsObj<-getPrs(type='all');
         stdObj<-getStd(paste0(model,".std"));
+        save(repObj,prsObj,stdObj,file="ModelResults.RData")
         plotTCSAM2015I(repObj=repObj,
                        prsObj=prsObj,
                        stdObj=stdObj,
