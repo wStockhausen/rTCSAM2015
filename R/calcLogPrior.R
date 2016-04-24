@@ -43,7 +43,29 @@ calcLogPrior<-function(pdfType,v=NULL,x=NULL,lci=0.05,uci=0.95){
             class(rects)<-'pdfRects';
             return(rects);
         }
-    } else if (pdfType$type=='1stdiff_normal'){
+    } else if (pdfType$type=='expnormal'){
+        if (is.null(v)) {
+            lims<-qnorm(c(lci,uci),mean=pdfType$params$mean,sd=pdfType$params$stdv,lower.tail=TRUE);
+            v<-seq(from=lims[1],to=lims[2],length.out=100);
+        }
+        lp<-dnorm(exp(v),mean=pdfType$params$expmean,sd=pdfType$params$stdv,log=TRUE);
+        if (is.null(x)){
+            #return log prior as a vector
+            names(lp)<-as.character(v);
+            return(lp);
+        } else {
+            #return log prior as list of 'rects' class
+            nx<-length(x)
+            xl<-c(x[1]-0.5*(x[2]-x[1]),0.5*(x[2:nx]+x[1:(nx-1)]));
+            xr<-c(xl[2:(nx+1)],x[nx]+0.5*(x[nx]-x[nx-1]));
+            nv<-length(v);
+            vl<-c(v[1]-0.5*(v[2]-v[1]),0.5*(v[2:nv]+v[1:(nv-1)]));
+            vu<-c(vl[2:(nv+1)],v[nv]+0.5*(v[nv]-v[nv-1]));
+            rects<-list(lp=lp,xl=xl,xr=xr,vl=vl,vu=vu);
+            class(rects)<-'pdfRects';
+            return(rects);
+        }
+    } else if (pdfType$type %in% c('1stdiff_normal','ar1_normal')){
         if (is.null(v)) {
             lims<-qnorm(c(lci,uci),mean=pdfType$params$mean,sd=pdfType$params$stdv,lower.tail=TRUE);
             v<-seq(from=lims[1],to=lims[2],length.out=100);
@@ -59,5 +81,8 @@ calcLogPrior<-function(pdfType,v=NULL,x=NULL,lci=0.05,uci=0.95){
         rects<-list(lp=lp,xl=xl,xr=xr,vl=vl,vu=vu);
         class(rects)<-'pdfRects';
         return(rects);
+    } else {
+        cat('pdfType "',pdfType$type,'" not recognized in calcLogPrior().\n');
+        cat("Returning NULL.\n");
     }
 }
