@@ -3,16 +3,16 @@
 #'
 #'@description Function to get model penalties as a melted dataframe.
 #'
-#'@param repObj - tcsam2015.rep model results object or list of such
+#'@param repObjs - tcsam2015.rep model results object or list of such
 #'@param mdl - name to associate with model results object
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
-#'@details If repObj is a list of tcsam2015 model results objects, then the function
+#'@details If repObjs is a list of tcsam2015 model results objects, then the function
 #'is called recursively for each object, with the associated list component name used as 
-#'mdl. If repObj is a tcsam2015 model results object and mdl is NULL (the default), then 
-#'repObj$mc$configName is used as the model name.
+#'mdl. If repObjs is a tcsam2015 model results object and mdl is NULL (the default), then 
+#'repObjs$mc$configName is used as the model name.
 #'
 #'The returned dataframe has columns named 
 #'"model", "type", "category", "name", "level", "variable", and "value".
@@ -22,13 +22,13 @@
 #'
 #'@export
 #'
-getObjFunValues.Penalties<-function(repObj,
+getObjFunValues.Penalties<-function(repObjs,
                                     mdl=NULL,
                                     verbose=FALSE){
-    if (class(repObj)=='tcsam2015.rep'){
-        #repObj is a tcsam2015 model results object
-        if (is.null(mdl)) mdl<-repObj$mc$configName;
-        penalties<-repObj$model.fits$penalties;
+    if (inherits(repObjs,'tcsam2015.rep')){
+        #repObjs is a tcsam2015 model results object
+        if (is.null(mdl)) mdl<-repObjs$mc$configName;
+        penalties<-repObjs$model.fits$penalties;
         nmctgs<-names(penalties);#names of model categories for penalties
         dfr<-NULL;
         for (nmctg in nmctgs){
@@ -52,20 +52,20 @@ getObjFunValues.Penalties<-function(repObj,
             }#penalties
         }#categories
         mdfr<-reshape2::melt(dfr,id.vars=c('model','type','category','name','level'),measure.vars=c('wgt','nll','objfun'))
-    } else if (class(repObj)=='list'){
-        #repObj is a list of tcsam2015 model results objects
-        mdls<-names(repObj);
+    } else if (class(repObjs)=='list'){
+        #repObjs is a list of tcsam2015 model results objects
+        mdls<-names(repObjs);
         mdfr<-NULL;
         for (mdl in mdls){
-            mdfr<-rbind(mdfr,getObjFunValues.Penalties(repObj[[mdl]],mdl=mdl));
+            mdfr<-rbind(mdfr,getObjFunValues.Penalties(repObjs[[mdl]],mdl=mdl));
         }
     } else {
-        cat("Error in getPenalties(repObj).\n")
-        cat("'repObj' should be an object of class 'tcsam2015.rep' or a list of such.\n")
+        cat("Error in getPenalties(repObjs).\n")
+        cat("'repObjs' should be an object of class 'tcsam2015.rep' or a list of such.\n")
         cat("Returning NULL.\n")
         return(NULL);
     }
     return(mdfr)
 }
-#mdfr.pens.1<-getObjFunValues.Penalties(repObj)
-#mdfr.pens.2<-getObjFunValues.Penalties(list(base=repObj,alt1=repObj))
+#mdfr.pens.1<-getObjFunValues.Penalties(repObjs)
+#mdfr.pens.2<-getObjFunValues.Penalties(list(base=repObjs,alt1=repObjs))

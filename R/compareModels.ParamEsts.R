@@ -1,11 +1,11 @@
 #'
-#'@title Function to compare parameter values from different models.
+#'@title Function to compare parameter values from different TCSAM2015 models.
 #'
 #'@description This function extracts and plots parameters values, together with their limits
 #'(if any) and the posterior distributions implied by their estimated standard
-#'errors from several models.
+#'errors from several TCSAM2015 models.
 #'
-#'@param objs - list of model results objects (each is a list with elements 'prsObj' and 'stdObj')
+#'@param tcsams - list of TCSAM2015 model results objects (each is a list with elements 'prsObj' and 'stdObj')
 #'@param dp - percent difference between parameter value and upper/lower limits used to flag outliers
 #'@param fac - number of std devs to extend uncertainty plots
 #'@param nc - number of columns of plots per page
@@ -18,17 +18,17 @@
 #'
 #'@export
 #'
-compareModels.ParamEsts<-function(objs,dp=0.01,fac=2,
+compareModels.ParamEsts<-function(tcsams,dp=0.01,fac=2,
                                   nc=3,nr=4,showPlot=TRUE,
                                   pdf="ModelComparisons.Params.pdf",
                                   verbose=FALSE){
     #extract dataframe with parameter estimates and info
     if (verbose) cat('Extracting params info\n')
-    res<-extractModelResults.Params(objs,dp=dp,verbose=verbose);
+    res<-extractModelResults.Params(tcsams,dp=dp,verbose=verbose);
     
     # #extract dataframe with parameter uncertainty info
     # if (verbose) cat("Extracting uncertainty info\n")
-    # vfr<-extractModelResults.StdDevs(objs,fac=fac,verbose=verbose);
+    # vfr<-extractModelResults.StdDevs(tcsams,fac=fac,verbose=verbose);
     
     #plot parameters as scalar values
     if (verbose) cat("Plotting parameter results\n")

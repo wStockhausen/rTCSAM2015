@@ -4,11 +4,11 @@
 \alias{compareModels.ObjFunValues}
 \title{Plot all objective function values.}
 \usage{
-compareModels.ObjFunValues(repObj, variable = "objfun",
+compareModels.ObjFunValues(repObjs, variable = "objfun",
   ggtheme = ggplot2::theme_grey(), showPlot = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{repObj}{- model report object or list of report objects}
+\item{repObjs}{- model report object or list of report objects}
 
 \item{variable}{- name of variable to plot}
 

@@ -4,14 +4,14 @@
 \alias{getMDFR}
 \title{Get model arrays as a melted dataframe from TCSAM2015 and rsimTCSAM models}
 \usage{
-getMDFR(path, tcsam = NULL, rsim = NULL, verbose = FALSE)
+getMDFR(path, tcsams = NULL, rsims = NULL, verbose = FALSE)
 }
 \arguments{
 \item{path}{- path in models to requested array (using '/' as separator for list levels)}
 
-\item{tcsam}{- single TCSAM2015 model report object, or named list of such}
+\item{tcsams}{- single TCSAM2015 model report object, or named list of such}
 
-\item{rsim}{- single rsimTCSAM results object, or named list of such}
+\item{rsims}{- single rsimTCSAM results object, or named list of such}
 
 \item{verbose}{- flag (T/F) to print diagnostics}
 }
@@ -24,6 +24,6 @@ Function to get model objects as a melted dataframe from TCSAM2015 and rsimTCSAM
 \details{
 Returned dataframeis a melted (ala reshape2) version of the requested array, 
 with additional columns 'model' and 'modeltype' appended at the "right". The array value
-is in column 'val'.
+is in column 'val'. Uses \code{reshape2::melt(...)}.
 }
 

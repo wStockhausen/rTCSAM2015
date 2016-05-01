@@ -3,7 +3,7 @@
 #'
 #'@description Function to plot all objective function values.
 #'
-#'@param repObj - model report object or list of report objects
+#'@param repObjs - model report object or list of report objects
 #'@param variable - name of variable to plot
 #'@param ggtheme - a ggplot2 theme
 #'@param showPlot - flag to show plots immediately
@@ -13,14 +13,14 @@
 #'
 #'@export
 #'
-compareModels.ObjFunValues<-function(repObj,
+compareModels.ObjFunValues<-function(repObjs,
                                      variable='objfun',
                                      ggtheme=ggplot2::theme_grey(),
                                      showPlot=TRUE,
                                      verbose=FALSE){
     plots<-list();
     if (verbose) cat("plotting objective function values for penalties.\n")
-    mdfr<-getObjFunValues.Penalties(repObj,verbose=verbose);
+    mdfr<-getObjFunValues.Penalties(repObjs,verbose=verbose);
     plots$penalties<-plotObjFunValues.Penalties(mdfr,
                                                 variable=variable,
                                                 ggtheme=ggtheme,
@@ -28,7 +28,7 @@ compareModels.ObjFunValues<-function(repObj,
                                                 verbose=verbose);
     
     if (verbose) cat("plotting objective function values for priors.\n")
-    mdfr<-getObjFunValues.Priors(repObj,verbose=verbose);
+    mdfr<-getObjFunValues.Priors(repObjs,verbose=verbose);
     plots$priors<-plotObjFunValues.Priors(mdfr,
                                           variable=variable,
                                           ggtheme=ggtheme,
@@ -36,7 +36,7 @@ compareModels.ObjFunValues<-function(repObj,
                                           verbose=verbose);
     
     if (verbose) cat("plotting objective function values for data.\n")
-    mdfr<-getObjFunValues.Data(repObj,verbose=verbose);
+    mdfr<-getObjFunValues.Data(repObjs,verbose=verbose);
     plots$data<-plotObjFunValues.Data(mdfr,
                                       variable=variable,
                                       ggtheme=ggtheme,
@@ -45,4 +45,4 @@ compareModels.ObjFunValues<-function(repObj,
     return(plots);
 }
 
-#plots<-compareModelResults.ObjFunValues(repObj); print(plots);
+#plots<-compareModelResults.ObjFunValues(repObjs); print(plots);

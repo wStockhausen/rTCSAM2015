@@ -2,12 +2,12 @@
 % Please edit documentation in R/extractModelResults.Params.R
 \name{extractModelResults.Params}
 \alias{extractModelResults.Params}
-\title{Function to extract parameter values from different models.}
+\title{Function to extract parameter values from different TCSAM2015 models.}
 \usage{
 extractModelResults.Params(objs, dp = 0.01, fac = 2, verbose = FALSE)
 }
 \arguments{
-\item{objs}{- list of model results objects (each is a list with elements 'prsObj' and 'stdObj')}
+\item{objs}{- list of TCSAM2015 model results objects (each is a list with elements 'prsObj' and 'stdObj')}
 
 \item{dp}{- percent difference between parameter value and upper/lower limits used to flag outliers}
 
@@ -20,7 +20,7 @@ extractModelResults.Params(objs, dp = 0.01, fac = 2, verbose = FALSE)
 }
 \description{
 This function extracts parameters values, together with their limits
-(if any) from several models.
+(if any) from several TCSAM2015 models.
 }
 \details{
 Returned parameter info dataframe has columns case, type, param, init, value, min, max, and scl.

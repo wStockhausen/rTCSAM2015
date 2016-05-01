@@ -2,12 +2,12 @@
 % Please edit documentation in R/getObjFunValues.Data.R
 \name{getObjFunValues.Data}
 \alias{getObjFunValues.Data}
-\title{Get daat components in the objective function as a melted dataframe.}
+\title{Get data components in the objective function as a melted dataframe.}
 \usage{
-getObjFunValues.Data(res, mdl = NULL, verbose = FALSE)
+getObjFunValues.Data(repObjs, mdl = NULL, verbose = FALSE)
 }
 \arguments{
-\item{res}{- tcsam2015 model results object or list of such}
+\item{repObjs}{- tcsam2015 model results object or list of such}
 
 \item{mdl}{- name to associate with model results object}
 
@@ -20,10 +20,10 @@ a melted dataframe
 Function to get data (fisheries, surveys) components in the objective function as a melted dataframe.
 }
 \details{
-If res is a list of tcsam2015 model results objects, then the function
+If repObjs is a list of tcsam2015 model results objects, then the function
 is called recursively for each object, with the associated list component name used as 
-mdl. If res is a tcsam2015 model results object and mdl is NULL (the default), then 
-res$mc$configName is used as the model name.
+mdl. If repObjs is a tcsam2015 model results object and mdl is NULL (the default), then 
+repObjs$mc$configName is used as the model name.
 
 The returned dataframe has columns named 
 "model", "source.type", "source.name", "catch.type",  "data.type",      

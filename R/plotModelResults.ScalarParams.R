@@ -1,9 +1,9 @@
 #'
-#'@title Function to plot parameter values and associated uncertainty from different models.
+#'@title Function to plot parameter values and associated uncertainty from different TCSAM2015 models.
 #'
 #'@description This function plots parameters values, together with their limits
 #'(if any) and the posterior distributions implied by their estimated standard,
-#'errors from several models.
+#'errors from several TCSAM2015 models.
 #'
 #'@param dfr - dataframe from call to extractModelResults.Params
 #'@param vfr - dataframe from call to extractModelResults.StdDevs
@@ -25,7 +25,7 @@ plotModelResults.ScalarParams<-function(dfr,
                                         showPlot=TRUE,
                                         pdf=NULL,
                                         verbose=FALSE){
-    if (showPlot&!is.null(pdf)){
+    if (!is.null(pdf)){
         pdf(file=pdf,width=8.5,height=11,onefile=TRUE);
         on.exit(dev.off());
     }
@@ -57,7 +57,7 @@ plotModelResults.ScalarParams<-function(dfr,
            p <- p + guides(fill=guide_legend())
        }
        p <- p + facet_wrap(~param,ncol=nc,nrow=nr,drop=FALSE,scales="free_x");
-       if (showPlot) print(p);
+       if (showPlot||!is.null(pdf)) print(p);
        plots[[pg]]<-p;
     }
     return(invisible(plots));

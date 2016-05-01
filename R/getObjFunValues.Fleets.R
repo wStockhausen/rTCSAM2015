@@ -3,17 +3,17 @@
 #'
 #'@description Function to get fleet data components in the objective function as a melted dataframe.
 #'
-#'@param res - tcsam2015 model report object or list of such
+#'@param repObjs - tcsam2015 model report object or list of such
 #'@param mdl - name to associate with model results object
 #'@param type - "fishery" or "survey"
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
-#'@details If res is a list of tcsam2015 model report objects, then the function
+#'@details If repObjs is a list of tcsam2015 model report objects, then the function
 #'is called recursively for each object, with the associated list component name used as 
-#'mdl. If res is a tcsam2015 model report object and mdl is NULL (the default), then 
-#'res$mc$configName is used as the model name.
+#'mdl. If repObjs is a tcsam2015 model report object and mdl is NULL (the default), then 
+#'repObjs$mc$configName is used as the model name.
 #'
 #'The returned dataframe has columns named 
 #'"model", "source.type", "source.name", "catch.type",  "data.type",      
@@ -25,15 +25,15 @@
 #'
 #'@export
 #'
-getObjFunValues.Fleets<-function(res,mdl=NULL,type='fishery',verbose=FALSE){
-    if (class(res)=='tcsam2015.rep'){
-        #res is a tcsam2015 model results object
+getObjFunValues.Fleets<-function(repObjs,mdl=NULL,type='fishery',verbose=FALSE){
+    if (inherits(repObjs,'tcsam2015.rep')){
+        #repObjs is a tcsam2015 model results object
         dfr<-NULL;
-        if (is.null(mdl)) mdl<-res$mc$configName;
+        if (is.null(mdl)) mdl<-repObjs$mc$configName;
         if (type=='fishery'){
-            fleets<-res$model.fits$fisheries;
+            fleets<-repObjs$model.fits$fisheries;
         } else if (type=='survey'){
-            fleets<-res$model.fits$surveys;
+            fleets<-repObjs$model.fits$surveys;
         } else {
             
         }
@@ -54,20 +54,20 @@ getObjFunValues.Fleets<-function(res,mdl=NULL,type='fishery',verbose=FALSE){
                 }
             }#non-NULL fleet
         }#fleets
-    } else if (class(res)=='list'){
-        #res is a list of tcsam2015 model report objects
-        mdls<-names(res);
+    } else if (class(repObjs)=='list'){
+        #repObjs is a list of tcsam2015 model report objects
+        mdls<-names(repObjs);
         dfr<-NULL;
         for (mdl in mdls){
-            dfr<-rbind(dfr,getObjFunValues.Fleets(res[[mdl]],mdl=mdl));
+            dfr<-rbind(dfr,getObjFunValues.Fleets(repObjs[[mdl]],mdl=mdl));
         }
     } else {
-        cat("Error in getObjFunValues.Fleets(res).\n")
-        cat("'res' should be an object of class 'tcsam2015.rep' or a list of such.\n")
+        cat("Error in getObjFunValues.Fleets(repObjs).\n")
+        cat("'repObjs' should be an object of class 'tcsam2015.rep' or a list of such.\n")
         cat("Returning NULL.\n")
         return(NULL);
     }
     return(dfr)
 }
-#mdfr.fshs.1<-getObjFunValues.Fleets(res)
-#mdfr.fshs.2<-getObjFunValues.Fleets(list(base=res,alt1=res))
+#mdfr.fshs.1<-getObjFunValues.Fleets(repObjs)
+#mdfr.fshs.2<-getObjFunValues.Fleets(list(base=repObjs,alt1=repObjs))

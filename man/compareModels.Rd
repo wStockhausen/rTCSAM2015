@@ -4,13 +4,13 @@
 \alias{compareModels}
 \title{Compare model output from TCSAM2015 and/or rsimTCSAM model runs.}
 \usage{
-compareModels(tcsam = NULL, rsim = NULL, ggtheme = theme_grey(),
+compareModels(tcsams = NULL, rsims = NULL, ggtheme = theme_grey(),
   showPlot = TRUE, pdf = NULL, width = 8, height = 6)
 }
 \arguments{
-\item{tcsam}{- single TCSAM2015 model results object, or named list of such}
+\item{tcsams}{- single TCSAM2015 model results object, or named list of such}
 
-\item{rsim}{- single rsimTCSAM results object, or named list of such}
+\item{rsims}{- single rsimTCSAM results object, or named list of such}
 
 \item{ggtheme}{- a ggplot2 theme to use with ggplot2 plots}
 

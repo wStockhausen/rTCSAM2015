@@ -2,13 +2,13 @@
 % Please edit documentation in R/compareModels.ParamEsts.R
 \name{compareModels.ParamEsts}
 \alias{compareModels.ParamEsts}
-\title{Function to compare parameter values from different models.}
+\title{Function to compare parameter values from different TCSAM2015 models.}
 \usage{
-compareModels.ParamEsts(objs, dp = 0.01, fac = 2, nc = 3, nr = 4,
+compareModels.ParamEsts(tcsams, dp = 0.01, fac = 2, nc = 3, nr = 4,
   showPlot = TRUE, pdf = "ModelComparisons.Params.pdf", verbose = FALSE)
 }
 \arguments{
-\item{objs}{- list of model results objects (each is a list with elements 'prsObj' and 'stdObj')}
+\item{tcsams}{- list of TCSAM2015 model results objects (each is a list with elements 'prsObj' and 'stdObj')}
 
 \item{dp}{- percent difference between parameter value and upper/lower limits used to flag outliers}
 
@@ -30,6 +30,6 @@ compareModels.ParamEsts(objs, dp = 0.01, fac = 2, nc = 3, nr = 4,
 \description{
 This function extracts and plots parameters values, together with their limits
 (if any) and the posterior distributions implied by their estimated standard
-errors from several models.
+errors from several TCSAM2015 models.
 }
 

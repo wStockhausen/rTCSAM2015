@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotModelResults.ScalarParams.R
 \name{plotModelResults.ScalarParams}
 \alias{plotModelResults.ScalarParams}
-\title{Function to plot parameter values and associated uncertainty from different models.}
+\title{Function to plot parameter values and associated uncertainty from different TCSAM2015 models.}
 \usage{
 plotModelResults.ScalarParams(dfr, vfr = NULL, nc = 3, nr = 4,
   showPlot = TRUE, pdf = NULL, verbose = FALSE)
@@ -28,6 +28,6 @@ plotModelResults.ScalarParams(dfr, vfr = NULL, nc = 3, nr = 4,
 \description{
 This function plots parameters values, together with their limits
 (if any) and the posterior distributions implied by their estimated standard,
-errors from several models.
+errors from several TCSAM2015 models.
 }
 

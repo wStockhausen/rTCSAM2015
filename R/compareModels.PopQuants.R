@@ -30,10 +30,10 @@ compareModels.PopQuants<-function(tcsams=NULL,
         on.exit(dev.close())
     }
     
-    if (class(tcsams)[1]=='tcsam2015.rep'){
+    if (inherits(tcsams,'tcsam2015.rep')){
         tcsams<-list(tcsam=tcsams);#wrap in list
     }
-    if (class(rsims)=='rsimTCSAM'){
+    if (inherits(rsims,'rsimTCSAM')){
         rsims<-list(rsim=rsims);#wrap in list
     }
     
@@ -48,13 +48,13 @@ compareModels.PopQuants<-function(tcsams=NULL,
                    xlab='year',ylab='Abundance (millions)',units="",
                    linetype='s',guideTitleLineType='',
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p1);
+    if (showPlot||!is.null(pdf)) print(p1);
     p2<-plotMDFR.XY(dfr[dfr$y>=1980,],x='y',value.var='.',faceting='x~m',
                    plotABline=TRUE,plotPoints=FALSE,
                    xlab='year',ylab='Abundance (millions)',units="",
                    linetype='s',guideTitleLineType='',
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p2);
+    if (showPlot||!is.null(pdf)) print(p2);
     plots$N_yxms<-list(p1,p2);
     
     #biomass trends
@@ -65,13 +65,13 @@ compareModels.PopQuants<-function(tcsams=NULL,
                    xlab='year',ylab='Biomass (1000s t)',units="",
                    linetype='s',guideTitleLineType='',
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p1);
+    if (showPlot||!is.null(pdf)) print(p1);
     p2<-plotMDFR.XY(mdfr[mdfr$y>=1980,],x='y',value.var='val',faceting='x~m',
                    plotABline=TRUE,plotPoints=FALSE,
                    xlab='year',ylab='Biomass (1000s t)',units="",
                    linetype='s',guideTitleLineType='',
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p2);
+    if (showPlot||!is.null(pdf)) print(p2);
     plots$B_yxms<-list(p1,p2);
     
     #mature biomass at mating trends
@@ -81,12 +81,12 @@ compareModels.PopQuants<-function(tcsams=NULL,
                    plotABline=TRUE,plotPoints=FALSE,
                    xlab='year',ylab='Mating Biomass (1000s t)',units="",
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p1);
+    if (showPlot||!is.null(pdf)) print(p1);
     p2<-plotMDFR.XY(mdfr[mdfr$y>=1980,],x='y',value.var='val',faceting='x~.',
                    plotABline=TRUE,plotPoints=FALSE,
                    xlab='year',ylab='Mating Biomass (1000s t)',units="",
                    colour='model',guideTitleColour='');
-    if (showPlot) print(p2);
+    if (showPlot||!is.null(pdf)) print(p2);
     plots$MB_yx<-list(p1,p2);
     
 
@@ -98,13 +98,13 @@ compareModels.PopQuants<-function(tcsams=NULL,
                    xlab='year',ylab='Recruitment',units='millions',lnscale=FALSE,
                    colour='model',guideTitleColor='',
                    shape='model',guideTitleShape='');
-    if (showPlot) print(p);
+    if (showPlot||!is.null(pdf)) print(p);
     plots$R_y<-p;
     p<-plotMDFR.XY(mdfr,x='y',agg.formula=NULL,faceting=NULL,
                    xlab='year',ylab='Recruitment',units='millions',lnscale=TRUE,
                    colour='model',guideTitleColor='',
                    shape='model',guideTitleShape='');
-    if (showPlot) print(p);
+    if (showPlot||!is.null(pdf)) print(p);
     plots$lnR_y<-p;
     
     #Population abundance-at-size
@@ -116,7 +116,7 @@ compareModels.PopQuants<-function(tcsams=NULL,
                         agg.formula='model+y+x+z',faceting='model~x',
                         xlab='year',ylab='size (mm CW)',units="millions",
                         colour='.',guideTitleColour='',useColourGradient=TRUE,alpha=0.5);
-    if (showPlot) print(p);
+    if (showPlot||!is.null(pdf)) print(p);
     plots$N_yxmsz<-p;
         
     #Population abundance-at-size (bubble plots)
@@ -128,11 +128,12 @@ compareModels.PopQuants<-function(tcsams=NULL,
                         agg.formula='model+y+x+z',faceting='model~x',
                         xlab='year',ylab='size (mm CW)',units="millions",
                         colour='.',guideTitleColour='',useColourGradient=TRUE,alpha=0.5);
-    if (showPlot) print(p);
+    if (showPlot||!is.null(pdf)) print(p);
     plots$N_yxmsz<-p;
         
     #Population abundance-at-size (line plots)
-    p<-compareModels.SizeComps(mdfr);
+    cat("TODO: In compareModels.PopQuants(...), implement plots for population abundance-at-size as line plots.\n");
+    #p<-compareModels.SizeComps(mdfr);
     
     return(invisible(plots))
 }

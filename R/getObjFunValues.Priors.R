@@ -3,16 +3,16 @@
 #'
 #'@description Function to get model priors as a melted dataframe.
 #'
-#'@param res - tcsam2015 model report object or list of such
+#'@param repObjs - tcsam2015 model report object or list of such
 #'@param mdl - name to associate with model results object
 #'@param verbose - flag (T/F) to print diagnostic info
 #'
 #'@return a melted dataframe 
 #'
-#'@details If res is a list of tcsam2015 model report objects, then the function
+#'@details If repObjs is a list of tcsam2015 model report objects, then the function
 #'is called recursively for each object, with the associated list component name used as 
-#'mdl. If res is a tcsam2015 model report object and mdl is NULL (the default), then 
-#'res$mc$configName is used as the model name.
+#'mdl. If repObjs is a tcsam2015 model report object and mdl is NULL (the default), then 
+#'repObjs$mc$configName is used as the model name.
 #'
 #'The returned dataframe has columns named 
 #'"model", "type", "category", "name", "level", "variable", and "value".
@@ -22,13 +22,13 @@
 #'
 #'@export
 #'
-getObjFunValues.Priors<-function(res,
+getObjFunValues.Priors<-function(repObjs,
                                  mdl=NULL,
                                  verbose=FALSE){
-    if (class(res)=='tcsam2015.rep'){
-        #res is a tcsam2015 model results object
-        if (is.null(mdl)) mdl<-res$mc$configName;
-        priors<-res$model.fits$priors;
+    if (inherits(repObjs,'tcsam2015.rep')){
+        #repObjs is a tcsam2015 model results object
+        if (is.null(mdl)) mdl<-repObjs$mc$configName;
+        priors<-repObjs$model.fits$priors;
         nmctgs<-names(priors);#names of model categories for priors
         dfr<-NULL;
         for (nmctg in nmctgs){
@@ -52,20 +52,20 @@ getObjFunValues.Priors<-function(res,
             }#parameters
         }#categories
         mdfr<-reshape2::melt(dfr,id.vars=c('model','type','category','name','level'),measure.vars=c('wgt','nll','objfun'))
-    } else if (class(res)=='list'){
-        #res is a list of tcsam2015 model report objects
-        mdls<-names(res);
+    } else if (class(repObjs)=='list'){
+        #repObjs is a list of tcsam2015 model report objects
+        mdls<-names(repObjs);
         mdfr<-NULL;
         for (mdl in mdls){
-            mdfr<-rbind(mdfr,getObjFunValues.Priors(res[[mdl]],mdl=mdl));
+            mdfr<-rbind(mdfr,getObjFunValues.Priors(repObjs[[mdl]],mdl=mdl));
         }
     } else {
-        cat("Error in getPriors(res).\n")
-        cat("'res' should be an object of class 'tcsam2015.rep' or a list of such.\n")
+        cat("Error in getPriors(repObjs).\n")
+        cat("'repObjs' should be an object of class 'tcsam2015.rep' or a list of such.\n")
         cat("Returning NULL.\n")
         return(NULL);
     }
     return(mdfr)
 }
-#mdfr.priors.1<-getObjFunValues.Priors(res)
-#mdfr.priors.2<-getObjFunValues.Priors(list(base=res,alt1=res))
+#mdfr.priors.1<-getObjFunValues.Priors(repObjs)
+#mdfr.priors.2<-getObjFunValues.Priors(list(base=repObjs,alt1=repObjs))
