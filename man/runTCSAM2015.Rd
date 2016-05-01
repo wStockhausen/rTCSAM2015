@@ -5,10 +5,10 @@
 \title{Function to run TCSAM2015.}
 \usage{
 runTCSAM2015(os = "osx", path = ".", model = "tcsam2015",
-  path2model = "", configFile = "", pin = FALSE, hess = FALSE,
-  mcmc = FALSE, mc.N = 1e+06, mc.save = 1000, mc.scale = 1000,
-  jitter = FALSE, jit.seed = NULL, calcOFL = FALSE, plotResults = hess,
-  cleanup = TRUE)
+  path2model = "", configFile = "", pin = FALSE, minPhase = 1,
+  maxPhase = NULL, hess = FALSE, mcmc = FALSE, mc.N = 1e+06,
+  mc.save = 1000, mc.scale = 1000, jitter = FALSE, jit.seed = NULL,
+  calcOFL = FALSE, plotResults = hess, cleanup = TRUE)
 }
 \arguments{
 \item{os}{- 'win' or 'mac' or 'osx'}
@@ -22,6 +22,10 @@ runTCSAM2015(os = "osx", path = ".", model = "tcsam2015",
 \item{configFile}{- filename (including path) to model configuration file}
 
 \item{pin}{- T/F to use a pin file}
+
+\item{minPhase}{- phase to start minimization (or NULL)}
+
+\item{maxPhase}{- final minimization phase (or NULL)}
 
 \item{hess}{- T/F to compute hessian (and .std file)}
 

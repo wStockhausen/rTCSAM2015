@@ -16,6 +16,8 @@
 #'@param path2model - path to model executable
 #'@param configFile - filename (including path) to model configuration file
 #'@param pin  - T/F to use a pin file
+#'@param minPhase - phase to start minimization (or NULL)
+#'@param maxPhase - final minimization phase (or NULL)
 #'@param hess - T/F to compute hessian (and .std file)
 #'@param mcmc - T/F to run mcmc
 #'@param mc.N - number of mcmc iterations to do
@@ -43,6 +45,8 @@ runTCSAM2015<-function(os='osx',
                        path2model='',
                        configFile='',
                        pin=FALSE,
+                       minPhase=1,
+                       maxPhase=NULL,
                        hess=FALSE,
                        mcmc=FALSE,
                        mc.N=1000000,
@@ -72,6 +76,8 @@ runTCSAM2015<-function(os='osx',
                              path2model=path2model,
                              configFile=configFile,
                              pin=pin,
+                             minPhase=minPhase,
+                             maxPhase=maxPhase,
                              hess=hess,
                              mcmc=mcmc,
                              mc.N=mc.N,

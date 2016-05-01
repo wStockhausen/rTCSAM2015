@@ -40,48 +40,59 @@ plotZScoresForAll<-function(repObj,
     #plot z-scores for recruit devs
     if (verbose) cat("Plotting z-scores for rec devs\n")
     pDevsLnR<-repObj$mpi$rec$pDevsLnR;
-    mdfr<-NULL;
-    for (p in names(pDevsLnR)){
-        dfr<-reshape2::melt(pDevsLnR[[p]]$finalVals,value.name="zscr");
-        dfr$pc<-p;
-        mdfr<-rbind(mdfr,dfr);
+    if (!is.null(pDevsLnR)){
+        mdfr<-NULL;
+        for (p in names(pDevsLnR)){
+            dfr<-reshape2::melt(pDevsLnR[[p]]$finalVals,value.name="zscr");
+            dfr$pc<-p;
+            mdfr<-rbind(mdfr,dfr);
+        }
+        ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
+        pd<-position_identity();
+        pR <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
+        pR <- pR + geom_point(position=pd,size=3,alpha=0.8)
+        pR <- pR + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
+        pR <- pR + ylim(ylim);
+        pR <- pR + xlab('year')
+        pR <- pR + ylab('recruitment deviations')
+        pR <- pR + guides(colour=guide_legend('pc',order=1),
+                          fill  =guide_legend('pc',order=1),
+                          shape =guide_legend('pc',order=1))
+        pR <- pR + ggtheme;
+        if (showPlot) print(pR);
+    } else {
+        cat("--No rec devs, no z-scores.\n");
+        pR<-NULL;
     }
-    ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
-    pd<-position_identity();
-    pR <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
-    pR <- pR + geom_point(position=pd,size=3,alpha=0.8)
-    pR <- pR + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
-    pR <- pR + ylim(ylim);
-    pR <- pR + xlab('year')
-    pR <- pR + ylab('recruitment deviations')
-    pR <- pR + guides(colour=guide_legend('pc',order=1),
-                      fill  =guide_legend('pc',order=1),
-                      shape =guide_legend('pc',order=1))
-    pR <- pR + ggtheme;
-    if (showPlot) print(pR);
+
     
     #plot z-scores for F-devs
     if (verbose) cat("Plotting z-scores for F-devs\n")
     pDevsLnC<-repObj$mpi$fsh$pDevsLnC;
-    mdfr<-NULL;
-    for (p in names(pDevsLnC)){
-        dfr<-reshape2::melt(pDevsLnC[[p]]$finalVals,value.name="zscr");
-        dfr$pc<-p;
-        mdfr<-rbind(mdfr,dfr);
+    if (!is.null(pDevsLnC)){
+        mdfr<-NULL;
+        for (p in names(pDevsLnC)){
+            dfr<-reshape2::melt(pDevsLnC[[p]]$finalVals,value.name="zscr");
+            dfr$pc<-p;
+            mdfr<-rbind(mdfr,dfr);
+        }
+        ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
+        pd<-position_dodge(0.2)
+        pC <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
+        pC <- pC + geom_point(position=pd,size=3,alpha=0.8)
+        pC <- pC + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
+        pC <- pC + ylim(ylim);
+        pC <- pC + xlab('year')
+        pC <- pC + ylab('fishery capture deviations')
+        pC <- pC + guides(colour=guide_legend('pc',order=1),
+                          fill  =guide_legend('pc',order=1),
+                          shape =guide_legend('pc',order=1))
+        pC <- pC + ggtheme;
+        if (showPlot) print(pC);
+    } else {
+        cat("--No F-devs, no z-scores.\n");
+        pC<-NULL;
     }
-    ylim<-max(abs(mdfr$zscr),na.rm=TRUE)*c(-1,1);
-    pd<-position_dodge(0.2)
-    pC <- ggplot(aes_string(x='Var1',y='zscr',colour='pc',shape='pc',fill='pc'),data=mdfr)
-    pC <- pC + geom_point(position=pd,size=3,alpha=0.8)
-    pC <- pC + geom_hline(yintercept=0,colour='black',size=2,linetype=2)
-    pC <- pC + ylim(ylim);
-    pC <- pC + xlab('year')
-    pC <- pC + ylab('fishery capture deviations')
-    pC <- pC + guides(colour=guide_legend('pc',order=1),
-                      fill  =guide_legend('pc',order=1),
-                      shape =guide_legend('pc',order=1))
-    pC <- pC + ggtheme;
-    if (showPlot) print(pC);
     
     #plot z-scores for selectivity devs
     if (verbose) cat("Plotting z-scores for selectivity devs\n");

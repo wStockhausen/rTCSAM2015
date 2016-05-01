@@ -59,7 +59,7 @@ getObjFunValues.Fleets<-function(repObjs,mdl=NULL,type='fishery',verbose=FALSE){
         mdls<-names(repObjs);
         dfr<-NULL;
         for (mdl in mdls){
-            dfr<-rbind(dfr,getObjFunValues.Fleets(repObjs[[mdl]],mdl=mdl));
+            dfr<-rbind(dfr,getObjFunValues.Fleets(repObjs[[mdl]],mdl=mdl,type=type,verbose=verbose));
         }
     } else {
         cat("Error in getObjFunValues.Fleets(repObjs).\n")
