@@ -24,8 +24,8 @@ getMDFR<-function(path,tcsams=NULL,rsims=NULL,verbose=FALSE){
             obj<-getObj(path,tcsams,verbose=verbose);
             if (!is.null(obj)){
                 mdfr<-reshape2::melt(obj,value.name='val',as.is=TRUE);
-                mdfr$model<-'tcsams';
-                mdfr$modeltype<-'tcsams';
+                mdfr$model<-'tcsam';
+                mdfr$modeltype<-'tcsam';
             }
         } else if (class(tcsams)=='list'){
             #tcsams is a list of tcsam2015 model report objects
@@ -36,7 +36,7 @@ getMDFR<-function(path,tcsams=NULL,rsims=NULL,verbose=FALSE){
                 mdfrp<-getMDFR(path,tcsams=tcsam1,rsims=NULL,verbose=verbose);
                 if (!is.null(mdfrp)){
                     if (!is.null(nms[l])) mdfrp$model<-nms[l];
-                    mdfrp$modeltype<-'tcsams';
+                    mdfrp$modeltype<-'tcsam';
                     mdfr<-rbind(mdfr,mdfrp);
                 }
             }
@@ -54,8 +54,8 @@ getMDFR<-function(path,tcsams=NULL,rsims=NULL,verbose=FALSE){
             obj<-getObj(path,rsims,verbose=verbose);
             if (!is.null(obj)){
                 mdfrp<-reshape2::melt(obj,value.name='val',as.is=TRUE);
-                mdfrp$model<-'rsims';
-                mdfrp$modeltype<-'rsims';
+                mdfrp$model<-'rsim';
+                mdfrp$modeltype<-'rsim';
                 mdfr<-rbind(mdfr,mdfrp)
             }
         } else if (class(rsims)=='list'){
@@ -67,7 +67,7 @@ getMDFR<-function(path,tcsams=NULL,rsims=NULL,verbose=FALSE){
                 mdfrp<-getMDFR(path,rsims=rsim1,tcsams=NULL,verbose=verbose);
                 if (!is.null(mdfrp)){
                     if (!is.null(nms[l])) mdfrp$model<-nms[l];
-                    mdfrp$modeltype<-'rsims';
+                    mdfrp$modeltype<-'rsim';
                     mdfr<-rbind(mdfr,mdfrp);
                 }
             }
