@@ -32,4 +32,6 @@ writeModelResultsToCSV.Surveys<-function(tcsams=NULL,
     extractModelResults.RepObjs(tcsams,rsims,path,
                                 label.value="Biomass (1000's t)",
                                 cast.formula=cast.formula,csv=csvp);
+    
+    if (verbose) cat("Done!\n");
 }

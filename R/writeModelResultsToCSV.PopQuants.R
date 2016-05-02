@@ -14,10 +14,10 @@
 #'
 #'@export
 #'
-writeModelResultsToCSV<-function(tcsams=NULL,
-                                 rsims=NULL,
-                                 csv="ModelResults.PopQuants",
-                                 verbose=FALSE){
+writeModelResultsToCSV.PopQuants<-function(tcsams=NULL,
+                                           rsims=NULL,
+                                           csv="ModelResults.PopQuants",
+                                           verbose=FALSE){
     if (inherits(tcsams,'tcsam2015.rep')){
         tcsams<-list(tcsam=tcsams);#wrap in list
     }
