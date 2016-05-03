@@ -1,5 +1,5 @@
 #'
-#'@title Write population quantities from model results from TCSAM2015 and rsimTCSAM model runs to a csv file.
+#'@title Write population quantities from model results from TCSAM2015 and rsimTCSAM model runs to a csv file
 #'
 #'@description Function to write population quantities from model results from TCSAM2015 and rsimTCSAM model runs to a csv file.
 #'
