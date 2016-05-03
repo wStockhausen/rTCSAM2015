@@ -41,33 +41,7 @@ compareModels.PopProcesses<-function(tcsams=NULL,
     
     #natural mortality
     if (verbose) cat("Plotting natural mortality info\n");
-    mdfr<-NULL;
-    if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/M_cxm',tcsams,NULL);
-        mdfr$y<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$nm$pgi;
-            nPCs<-length(pgi$pcs)-1;
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims)
-            }
-        }
-        mdfr$pc<-mdfr$y;
-        mdfr<-subset(mdfr,select=-y)
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/M_cxm',NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
+    mdfr<-getMDFR.NatMort(tcsams,rsims,verbose);
     p<-plotMDFR.Bars(mdfr,x='m',agg.formula=NULL,faceting='pc~x',
                      fill='model',xlab='maturity',ylab='natural mortality');
     if (showPlot||!is.null(pdf)) print(p);
@@ -75,35 +49,8 @@ compareModels.PopProcesses<-function(tcsams=NULL,
     
     #mean growth increments
     if (verbose) cat("Plotting mean growth increments\n");
-    mdfr<-NULL;
-    if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/T_list/mnZAM_cz',tcsams,NULL);
-        mdfr$y<-'';
-        mdfr$x<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$grw$pgi;
-            nPCs<-length(pgi$pcs)-1;#last element is a NULL
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
-            }
-        }
-        mdfr$pc<-mdfr$y
-        mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/T_list/mnZAM_cxz',NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
+    mdfr<-getMDFR.MeanGrowthIncrements(tcsams,rsims,verbose);
+    ##mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
     p<-plotMDFR.XY(mdfr,x='z',value.var='val',faceting='pc~x',
                    plotABline=TRUE,
                    xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
@@ -114,35 +61,7 @@ compareModels.PopProcesses<-function(tcsams=NULL,
     
     #growth transition matrices
     if (verbose) cat("Plotting growth transition matrices\n");
-    mdfr<-NULL;
-    if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/T_list/T_czz',tcsams,NULL);
-        mdfr$y<-'';
-        mdfr$x<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$grw$pgi;
-            nPCs<-length(pgi$pcs)-1;#last element is a NULL
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$x[idx]<-tolower(pgi$pcs[[pc]]$SEX);
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims);
-            }
-        }
-        mdfr$pc<-mdfr$y
-        mdfr<-mdfr[,c('pc','x','z','zp','val','model','modeltype')];
-    }
-    if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/T_list/T_cxzz',NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
-        }
-        mdfr<-rbind(mdfr,mdfrp);
-    }
+    mdfr<-getMDFR.GrowthTansitionMatrices(tcsams,rsims,verbose);
     p<-plotMDFR.Bubbles(mdfr,x='zp',y='z',faceting='model+pc~x',
                         xlab='pre-molt size (mm CW)',ylab='post-molt size (mm CW)',units="",
                         colour='.',guideTitleColor='',useColourGradient=TRUE,alpha=0.5);
@@ -269,5 +188,6 @@ compareModels.PopProcesses<-function(tcsams=NULL,
     if (showPlot||!is.null(pdf)) print(p);
     plots$iN_xmsz<-p;
         
+    if (verbose) cat("Done compareModels.PopProcesses. \n");
     return(invisible(plots))
 }
