@@ -4,14 +4,14 @@
 \alias{compareModels.FisherySelFcns}
 \title{Compare fishery selectivity functions from TCSAM2015 and rsimTCSAM model runs.}
 \usage{
-compareModels.FisherySelFcns(tcsam = NULL, rsim = NULL, years = list(TCF =
-  2013), cast = "x", faceting = "y~x", showPlot = TRUE, pdf = NULL,
+compareModels.FisherySelFcns(tcsams = NULL, rsims = NULL, years = list(TCF
+  = 2013), cast = "x", faceting = "y~x", showPlot = TRUE, pdf = NULL,
   width = 14, height = 8)
 }
 \arguments{
-\item{tcsam}{- single TCSAM2015 model results object, or named list of such}
+\item{tcsams}{- single TCSAM2015 model report object, or named list of such}
 
-\item{rsim}{- single rsimTCSAM results object, or named list of such}
+\item{rsims}{- single rsimTCSAM results object, or named list of such}
 
 \item{years}{- list, by fishery name, of years to plot}
 

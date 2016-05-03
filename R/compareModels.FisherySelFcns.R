@@ -3,8 +3,8 @@
 #'
 #'@description Function to compare fishery selectivity functions from TCSAM2015 and rsimTCSAM model runs.
 #'
-#'@param tcsam - single TCSAM2015 model results object, or named list of such
-#'@param rsim - single rsimTCSAM results object, or named list of such
+#'@param tcsams - single TCSAM2015 model report object, or named list of such
+#'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param years - list, by fishery name, of years to plot
 #'@param cast - casting formula for excluding x,m,s factor levels from an average-at-size across unspecified factors
 #'@param faceting - faceting formula involving y and factors in the cast
@@ -17,8 +17,8 @@
 #'
 #'@export
 #'
-compareModels.FisherySelFcns<-function(tcsam=NULL,
-                                      rsim=NULL,
+compareModels.FisherySelFcns<-function(tcsams=NULL,
+                                      rsims=NULL,
                                       years=list(TCF=2013),
                                       cast='x',
                                       faceting='y~x',
@@ -26,6 +26,13 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
                                       pdf=NULL,
                                       width=14,
                                       height=8){
+    if (inherits(tcsams,'tcsam2015.rep')){
+        tcsams<-list(tcsam=tcsams);#wrap in list
+    }
+    if (inherits(rsims,'rsimTCSAM')){
+        rsims<-list(rsim=rsims);#wrap in list
+    }
+    
     #set up pdf device, if requested
     if (!is.null(pdf)){
         pdf(file=pdf,width=width,height=height);
@@ -34,10 +41,10 @@ compareModels.FisherySelFcns<-function(tcsam=NULL,
         
     #selectivity/retention
     path<-'mp/F_list/sel_fyxmsz';
-    sdfr<-getMDFR(path,tcsam,rsim);
+    sdfr<-getMDFR(path,tcsams,rsims);
     sdfr$type<-'selectivity';
     path<-'mp/F_list/ret_fyxmsz';
-    rdfr<-getMDFR(path,tcsam,rsim);
+    rdfr<-getMDFR(path,tcsams,rsims);
     rdfr$type<-'retention';
     
     mdfr<-rbind(sdfr,rdfr);

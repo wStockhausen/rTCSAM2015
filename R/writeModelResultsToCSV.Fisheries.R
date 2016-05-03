@@ -27,11 +27,25 @@ writeModelResultsToCSV.Fisheries<-function(tcsams=NULL,
                                 label.value="Total catch (millions)",
                                 cast.formula=cast.formula,csv=csvp);
     
-    #total retined catch
+    #retained catch
     path<-'mr/F_list/rmN_fyxmsz';
     csvp<-paste0(csv,".RetainedCatchAbundance.csv");
     extractModelResults.RepObjs(tcsams,rsims,path,
                                 label.value="Retained catch (millions)",
+                                cast.formula=cast.formula,csv=csvp);
+    
+    #discard mortality (abundance)
+    path<-'mr/F_list/dmN_fyxmsz';
+    csvp<-paste0(csv,".DiscardMortalityAbundance.csv");
+    extractModelResults.RepObjs(tcsams,rsims,path,
+                                label.value="Discard mortality (millions)",
+                                cast.formula=cast.formula,csv=csvp);
+    
+    #total catch mortality (abundance)
+    path<-'mr/F_list/tmN_fyxmsz';
+    csvp<-paste0(csv,".TotalMortalityAbundance.csv");
+    extractModelResults.RepObjs(tcsams,rsims,path,
+                                label.value="Discard mortality (millions)",
                                 cast.formula=cast.formula,csv=csvp);
     
     #total catch biomass
@@ -53,6 +67,13 @@ writeModelResultsToCSV.Fisheries<-function(tcsams=NULL,
     csvp<-paste0(csv,".DiscardMortalityBiomass.csv");
     extractModelResults.RepObjs(tcsams,rsims,path,
                                 label.value="Discard mortality (1000's t)",
+                                cast.formula=cast.formula,csv=csvp);
+    
+    #total mortality (biomass)
+    path<-'mr/F_list/tmB_fyxms';
+    csvp<-paste0(csv,".TotalMortalityBiomass.csv");
+    extractModelResults.RepObjs(tcsams,rsims,path,
+                                label.value="Total mortality (1000's t)",
                                 cast.formula=cast.formula,csv=csvp);
     
     if (verbose) cat("Done!\n");
