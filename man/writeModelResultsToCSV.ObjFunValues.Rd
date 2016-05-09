@@ -2,24 +2,23 @@
 % Please edit documentation in R/writeModelResultsToCSV.ObjFunValues.R
 \name{writeModelResultsToCSV.ObjFunValues}
 \alias{writeModelResultsToCSV.ObjFunValues}
-\title{Plot all objective function values}
+\title{Write all objective function values to csvs}
 \usage{
-writeModelResultsToCSV.ObjFunValues(repObjs, variable = "objfun",
-  csv = "ModelComparisons.ObjFunValues.csv", verbose = FALSE)
+writeModelResultsToCSV.ObjFunValues(repObjs,
+  csv = "ModelComparisons.ObjFunValues", verbose = FALSE)
 }
 \arguments{
 \item{repObjs}{- model report object or list of report objects}
 
-\item{variable}{- name of variable to plot}
-
-\item{csv}{- csf file name to export dataframe to}
+\item{csv}{- base filename for csvs to export dataframes to}
 
 \item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
-dataframe with objective function components for penalties, priors, and data.
+list w two dataframes with objective function components, 
+one for penalties and priors (...PP.csv) and one for data (...Data.csv).
 }
 \description{
-Function to plot all objective function values.
+Function to write all objective function values to csvs.
 }
 
