@@ -1,5 +1,7 @@
 #'
-#'@title Plot model fits to abundance, biomass and size frequencies as z-scores for fleet data components.
+#'@title Plot model fits to abundance, biomass and size frequencies as z-scores for fleet data components
+#'
+#'@title Function to plot model fits to abundance, biomass and size frequencies as z-scores for fleet data components.
 #'
 #'@param repObj - model report list object
 #'@param type - fleet type ('fishery' or 'survey')

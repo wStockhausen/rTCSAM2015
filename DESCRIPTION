@@ -1,9 +1,9 @@
 Package: rTCSAM2015
 Type: Package
 Title: A set of tools to set up input for, and interact with output from, a
-    TCSAM2015 model run, as well as to compare TCSAM2015 and rsimTCAM runs.
-Version: 2016.05.02
-Date: 2016-05-02
+    TCSAM2015 model run, as well as to compare TCSAM2015 and rsimTCSAM runs.
+Version: 2016.05.12
+Date: 2016-05-12
 Author: William T. Stockhausen
 Maintainer: William T. Stockhausen <ywilliam.stockhausen@noaa.gov>
 Description: This package provides a set of tools to set up input for,
@@ -20,5 +20,5 @@ Imports:
     sqldf (>= 0.4-10),
     stats (>= 3.1.2),
     tcltk (>= 3.1.2),
-    wtsUtilities (>= 1.0.10)
+    wtsUtilities (>= 2016.04.21)
 RoxygenNote: 5.0.1
