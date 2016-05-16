@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotSizeCompsComparisons2.R
 \name{plotSizeCompsComparisons2}
 \alias{plotSizeCompsComparisons2}
-\title{Plot comparisons of model and data size compositions by year and sex}
+\title{DEPRECATED: Plot comparisons of model and data size compositions by year and sex}
 \usage{
 plotSizeCompsComparisons2(name, od, md, label = "", disAggBy = c("sx", "ms",
   "sc"), normalize = TRUE, normBy = NULL, ggtheme = theme_grey(),
@@ -35,8 +35,8 @@ plotSizeCompsComparisons2(name, od, md, label = "", disAggBy = c("sx", "ms",
 list of ggplot objects comprising the graph pages to plot
 }
 \description{
-Function to plot comparisons of model and data size compositions by year for
-specified sexes.
+DEPRECATED: Function to plot comparisons of model and data size compositions by year for
+specified sexes. USE: \code{compareModels.Fits.NatZData(...)} and \code{compareModels.ZScores.NatZData(...)}.
 }
 \details{
 Maturity/shell condition combinations for a given year x sex combination 

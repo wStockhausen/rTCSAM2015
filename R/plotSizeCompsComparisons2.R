@@ -1,8 +1,8 @@
 #'
-#'@title Plot comparisons of model and data size compositions by year and sex
+#'@title DEPRECATED: Plot comparisons of model and data size compositions by year and sex
 #'
-#'@description Function to plot comparisons of model and data size compositions by year for
-#'specified sexes. 
+#'@description DEPRECATED: Function to plot comparisons of model and data size compositions by year for
+#'specified sexes. USE: \code{compareModels.Fits.NatZData(...)} and \code{compareModels.ZScores.NatZData(...)}.
 #'
 #'@details Maturity/shell condition combinations for a given year x sex combination 
 #'are distinguished by different colors.
