@@ -9,7 +9,6 @@
 #'@param logscale - flag (T/F) to plot on log scale
 #'@param xlab - x axis label
 #'@param ylab - y axis label
-#'@param title - plot title
 #'@param xlim - x axis limits
 #'@param ylim - y axis limits
 #'@param ggtheme - graphical theme for plot
@@ -18,9 +17,10 @@
 #'@param width - pdf page width (in inches)
 #'@param height - pdf page width (in inches)
 #'
-#'@return list of ggplot2 objects
+#'@return list of ggplot2 objects, named by fleet
 #'
-#'@details Uses \code{reshape2::dcast(...)}
+#'@details Uses \code{reshape2::dcast(...)}.  
+#'Plots are produced by fleet and faceted by sex, maturity, shell condition, and catch type.
 #'
 #'@import ggplot2
 #'
@@ -32,7 +32,6 @@ compareModels.Fits.AggCatchData<-function(mdfr,
                                           logscale=FALSE,
                                           xlab="Year",
                                           ylab="",
-                                          title="",
                                           xlim=NULL,
                                           ylim=NULL,
                                           ggtheme=ggplot2::theme_grey(),
@@ -59,13 +58,7 @@ compareModels.Fits.AggCatchData<-function(mdfr,
         if (verbose) cat("Plotting fleet '",fleet,"'.\n",sep='');
         mdfrp<-mdfr1[mdfr1$fleet==fleet,];#select results for fleet        
         ddfr<-reshape2::dcast(mdfrp,model+catch.type+y+x+m+s~var,fun.aggregate=sum,na.rm=FALSE,value.var='val',drop=TRUE)
-        # if (logscale) {
-        #     ddfr$obs<-log10(ddfr$obs);
-        #     ddfr$est<-log10(ddfr$est);
-        #     ddfr$uci<-log10(ddfr$uci);
-        #     ddfr$lci<-log10(ddfr$lci);
-        # }
-        
+
         #restructure ddfr by "observed" and "estimated"
         iobs<-which(names(ddfr) %in% c('obs','uci','lci'));
         ddfrm<-ddfr[,-iobs];
@@ -82,8 +75,7 @@ compareModels.Fits.AggCatchData<-function(mdfr,
         ddfro$type<-"observed";
         
         ddfr<-rbind(ddfro,ddfrm);
-        ddfr<-ddfro;
-        
+
         if (is.null(ylim)) ylim<-c(0,1.2*max(ddfr$val,na.rm=TRUE));
         if (logscale) ylim<-c(NA,ylim[2]);
         
@@ -106,7 +98,7 @@ compareModels.Fits.AggCatchData<-function(mdfr,
                         shape   =guide_legend('type',order=1),
                         fill    =guide_legend('type',order=1),
                         colour  =guide_legend('type',order=1))
-        p <- p + ggtitle(title);
+        p <- p + ggtitle(fleet);
         p <- p + ggtheme;
         print(p)
         plots[[fleet]]<-p;

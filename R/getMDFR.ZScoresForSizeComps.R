@@ -68,7 +68,7 @@ getMDFR.ZScoresForSizeComps<-function(fits,
                     idx<-(ndfr$x==x)&(ndfr$m==m)&(ndfr$s==s);
                     ndfr<-ndfr[!idx,];
                 } else {
-                    if (verbose) cat(----'keeping factor combination',x,m,s,"\n")
+                    if (verbose) cat('----keeping factor combination',x,m,s,"\n")
                 }
             }#s
         }#m
