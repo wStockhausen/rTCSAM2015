@@ -72,7 +72,7 @@ compareModels.PopProcesses<-function(tcsams=NULL,
     if (verbose) cat("Plotting molt to maturity info\n");
     mdfr<-NULL;
     if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/prMolt2Mat_cz',tcsams,NULL);
+        mdfr<-getMDFR('mp/prM2M_cz',tcsams,NULL);
         mdfr$y<-'';
         mdfr$x<-'';
         ums<-as.character(unique(mdfr$model))
@@ -91,7 +91,7 @@ compareModels.PopProcesses<-function(tcsams=NULL,
         mdfr<-mdfr[,c('pc','x','z','val','model','modeltype')];
     }
     if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/prMolt2Mat_cxz',NULL,rsims);
+        mdfrp<-getMDFR('mp/prM2M_cxz',NULL,rsims);
         ums<-as.character(unique(mdfrp$model))
         for (um in ums){
             idx<-(mdfrp$model==um);
@@ -104,7 +104,7 @@ compareModels.PopProcesses<-function(tcsams=NULL,
                    shape='model',guideTitleShape='',
                    xlab='size (mm CW)',ylab='pr(molt-to-maturity)');
     if (showPlot||!is.null(pdf)) print(p);
-    plots$prMolt2Mat_cz<-p;
+    plots$prM2M_cz<-p;
         
     #recruitment size distribution
     if (verbose) cat("Plotting recruitment size distribution\n");

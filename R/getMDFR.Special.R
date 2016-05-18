@@ -140,7 +140,7 @@ getMDFR.prM2M<-function(tcsams,rsims,verbose=FALSE){
     
     mdfr<-NULL;
     if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/prMolt2Mat_cz',tcsams,NULL);
+        mdfr<-getMDFR('mp/prM2M_cz',tcsams,NULL);
         mdfr$y<-'';
         mdfr$x<-'';
         ums<-as.character(unique(mdfr$model))
@@ -159,7 +159,7 @@ getMDFR.prM2M<-function(tcsams,rsims,verbose=FALSE){
         mdfr<-mdfr[,c('modeltype','model','pc','x','z','val')];
     }
     if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/prMolt2Mat_cxz',NULL,rsims);
+        mdfrp<-getMDFR('mp/prM2M_cxz',NULL,rsims);
         ums<-as.character(unique(mdfrp$model))
         for (um in ums){
             idx<-(mdfrp$model==um);

@@ -22,7 +22,7 @@ Melted dataframe (ala package reshape2).
 Function to get model objects as a melted dataframe from TCSAM2015 and rsimTCSAM models.
 }
 \details{
-Returned dataframeis a melted (ala reshape2) version of the requested array, 
+Returned dataframe is a melted (ala reshape2) version of the requested array, 
 with additional columns 'model' and 'modeltype' appended at the "right". The array value
 is in column 'val'. Uses \code{reshape2::melt(...)}.
 }
