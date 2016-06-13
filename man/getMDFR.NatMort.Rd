@@ -4,22 +4,25 @@
 \alias{getMDFR.NatMort}
 \title{Get natural mortality rates from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe}
 \usage{
-getMDFR.NatMort(tcsams, rsims, verbose = FALSE)
+getMDFR.NatMort(tcsams = NULL, rsims = NULL, type = c("M_cxm", "M_yxm",
+  "M_yxmsz"), verbose = FALSE)
 }
 \arguments{
 \item{tcsams}{- single TCSAM2015 model report object, or named list of such}
 
 \item{rsims}{- single rsimTCSAM results object, or named list of such}
 
+\item{type}{- flag indicating which M's to extract ('M_cxm', 'M_yxm' or 'M_yxmsz')}
+
 \item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
-nothing
+data.frame
 }
 \description{
 Function to get natural mortlaity rates from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.
 }
 \details{
-Extracts natural mortality.
+Extracts natural mortality rates
 }
 

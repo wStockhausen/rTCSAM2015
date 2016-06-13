@@ -14,7 +14,7 @@ getMDFR.prM2M(tcsams, rsims, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
-nothing
+data.frame
 }
 \description{
 Function to get molt-to-maturity ogives from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.

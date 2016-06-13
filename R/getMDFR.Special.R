@@ -5,15 +5,18 @@
 #'
 #'@param tcsams - single TCSAM2015 model report object, or named list of such
 #'@param rsims - single rsimTCSAM results object, or named list of such
+#'@param type - flag indicating which M's to extract ('M_cxm', 'M_yxm' or 'M_yxmsz') 
 #'@param verbose - flag (T/F) to print debug info
 #'
-#'@return nothing
+#'@return data.frame
 #'
-#'@details Extracts natural mortality.
+#'@details Extracts natural mortality rates
 #'
 #'@export
 #'
-getMDFR.NatMort<-function(tcsams,rsims,verbose=FALSE){
+getMDFR.NatMort<-function(tcsams=NULL,rsims=NULL,
+                          type=c('M_cxm','M_yxm','M_yxmsz'),
+                          verbose=FALSE){
     if (verbose) cat("--Getting natural mortality info\n");
     if (inherits(tcsams,'tcsam2015.rep')){
         tcsams<-list(tcsam=tcsams);#wrap in list
@@ -24,29 +27,49 @@ getMDFR.NatMort<-function(tcsams,rsims,verbose=FALSE){
     
     mdfr<-NULL;
     if (!is.null(tcsams)){
-        mdfr<-getMDFR('mp/M_cxm',tcsams,NULL);
-        mdfr$y<-'';
-        ums<-as.character(unique(mdfr$model))
-        for (um in ums){
-            tcsam<-tcsams[[um]];
-            pgi<-tcsam$mpi$nm$pgi;
-            nPCs<-length(pgi$pcs)-1;
-            for (pc in 1:nPCs){
-                idx<-(mdfr$pc==pc)&(mdfr$model==um);
-                mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
-                mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims)
+        if (type[1]=='M_cxm'){
+            mdfr<-getMDFR('mp/M_cxm',tcsams,NULL);
+            mdfr$y<-'';
+            ums<-as.character(unique(mdfr$model))
+            for (um in ums){
+                tcsam<-tcsams[[um]];
+                pgi<-tcsam$mpi$nm$pgi;
+                nPCs<-length(pgi$pcs)-1;
+                for (pc in 1:nPCs){
+                    idx<-(mdfr$pc==pc)&(mdfr$model==um);
+                    mdfr$y[idx]<-pgi$pcs[[pc]]$YEAR_BLOCK;
+                    mdfr$y[idx]<-reformatTimeBlocks(mdfr$y[idx],tcsam$mc$dims)
+                }
             }
+            mdfr$pc<-mdfr$y;
+            mdfr<-mdfr[,c("modeltype","model","pc","x","m","val")];
+        } else if (type[1]=='M_yxm'){
+            mdfr<-getMDFR('mp/M_yxmsz',tcsams,NULL);
+            mdfr<-reshape2::dcast(mdfr,formula='modeltype+model+y+x+m~.',fun.aggregate=mean,value.var='val');
+            names(mdfr)<-c("modeltype","model","y","x","m","val");
+            
+        } else if (type[1]=='M_yxmsz'){
+            mdfr<-getMDFR('mp/M_yxmsz',tcsams,NULL);
+            mdfr<-mdfr[,c("modeltype","model","y","x","m","s","z","val")];
         }
-        mdfr$pc<-mdfr$y;
-        mdfr<-subset(mdfr,select=-y)
     }
     
     if (!is.null(rsims)){
-        mdfrp<-getMDFR('mp/M_cxm',NULL,rsims);
-        ums<-as.character(unique(mdfrp$model))
-        for (um in ums){
-            idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
+        if (type[1]=='M_cxm'){
+            mdfrp<-getMDFR('mp/M_cxm',NULL,rsims);
+            ums<-as.character(unique(mdfrp$model))
+            for (um in ums){
+                idx<-(mdfrp$model==um);
+                mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
+            }
+            mdfrp<-mdfrp[,c("modeltype","model","pc","x","m","val")];
+        } else if (type[1]=='M_yxm'){
+            mdfrp<-getMDFR('mp/M_yxmsz',rsimms,NULL);
+            mdfrp<-reshape2::dcast(mdfrp,formula='modeltype+model+y+x+m~.',fun.aggregate=mean,value.var='val');
+            names(mdfrp)<-c("modeltype","model","y","x","m","val");
+        } else if (type[1]=='M_yxmsz'){
+            mdfrp<-getMDFR('mp/M_yxmsz',rsims,NULL);
+            mdfrp<-mdfr[,c("modeltype","model","y","x","m","s","z","val")];
         }
         mdfr<-rbind(mdfr,mdfrp);
     }
@@ -64,7 +87,7 @@ getMDFR.NatMort<-function(tcsams,rsims,verbose=FALSE){
 #'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print debug info
 #'
-#'@return nothing
+#'@return data.frame
 #'
 #'@details Extracts mean growth increments.
 #'
@@ -123,7 +146,7 @@ getMDFR.MeanGrowthIncrements<-function(tcsams,rsims,verbose=FALSE){
 #'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print debug info
 #'
-#'@return nothing
+#'@return data.frame
 #'
 #'@details Extracts molt-to-maturity ogives.
 #'
@@ -182,7 +205,7 @@ getMDFR.prM2M<-function(tcsams,rsims,verbose=FALSE){
 #'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print debug info
 #'
-#'@return nothing
+#'@return data.frame
 #'
 #'@details Extracts mean growth increments.
 #'
@@ -213,7 +236,7 @@ getMDFR.RecSizeDistribution<-function(tcsams,rsims,verbose=FALSE){
             }
         }
         mdfr$pc<-mdfr$y;
-        mdfr<-mdfr[,c('modeltype','model','pc','x','z','val')];
+        mdfr<-mdfr[,c('modeltype','model','pc','z','val')];
     }
     if (!is.null(rsims)){
         mdfrp<-getMDFR(path,NULL,rsims);
@@ -222,7 +245,7 @@ getMDFR.RecSizeDistribution<-function(tcsams,rsims,verbose=FALSE){
             idx<-(mdfrp$model==um);
             mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims);
         }
-        mdfrp<-mdfrp[,c('modeltype','model','pc','x','z','val')];
+        mdfrp<-mdfrp[,c('modeltype','model','pc','z','val')];
         mdfr<-rbind(mdfr,mdfrp);
     }
     
@@ -239,7 +262,7 @@ getMDFR.RecSizeDistribution<-function(tcsams,rsims,verbose=FALSE){
 #'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print debug info
 #'
-#'@return nothing
+#'@return data.frame
 #'
 #'@details Extracts recruitment sex ratio.
 #'
@@ -272,7 +295,6 @@ getMDFR.SexRatio<-function(tcsams,rsims,verbose=FALSE){
             }
         }
         mdfr$pc<-mdfr$y;
-        mdfr<-mdfr[,c('pc','val','model','modeltype')];
         mdfr<-mdfr[,c('modeltype','model','pc','val')];
     }
     if (!is.null(rsims)){
@@ -299,7 +321,7 @@ getMDFR.SexRatio<-function(tcsams,rsims,verbose=FALSE){
 #'@param rsims - single rsimTCSAM results object, or named list of such
 #'@param verbose - flag (T/F) to print debug info
 #'
-#'@return nothing
+#'@return data.frame
 #'
 #'@details Extracts recruitment sex ratio.
 #'
@@ -332,14 +354,15 @@ getMDFR.GrowthTransitionMatrices<-function(tcsams,rsims,verbose=FALSE){
             }
         }
         mdfr$pc<-mdfr$y
-        mdfr<-mdfr[,c('pc','x','z','zp','val','model','modeltype')];
+        mdfr<-mdfr[,c('modeltype','model','pc','x','z','zp','val')];
     }
     if (!is.null(rsims)){
         mdfrp<-getMDFR('mp/T_list/T_cxzz',NULL,rsims);
         ums<-as.character(unique(mdfrp$model))
         for (um in ums){
             idx<-(mdfrp$model==um);
-            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims)
+            mdfrp$pc[idx]<-reformatTimeBlocks(mdfrp$pc[idx],rsims[[um]]$mc$dims);
+            mdfrp<-mdfrp[,c('modeltype','model','pc','x','z','zp','val')];
         }
         mdfr<-rbind(mdfr,mdfrp);
     }
