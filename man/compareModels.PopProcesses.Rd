@@ -2,7 +2,7 @@
 % Please edit documentation in R/compareModels.PopProcesses.R
 \name{compareModels.PopProcesses}
 \alias{compareModels.PopProcesses}
-\title{Compare population process-related quantities from TCSAM2015 and rsimTCSAM model runs.}
+\title{Compare population process-related quantities from TCSAM2015 and rsimTCSAM model runs}
 \usage{
 compareModels.PopProcesses(tcsams = NULL, rsims = NULL, showPlot = TRUE,
   pdf = NULL, width = 8, height = 6, verbose = FALSE)
