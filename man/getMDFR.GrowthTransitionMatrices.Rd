@@ -14,12 +14,13 @@ getMDFR.GrowthTransitionMatrices(tcsams, rsims, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
-data.frame
+dataframe with columns 'modeltype', 'model', 'pc', 'x', 'z', 'zp', 'val'.
+Note that 'z' is pre-molt size, 'zp' is post-molt size.
 }
 \description{
 Function to get growth transition matrices from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.
 }
 \details{
-Extracts recruitment sex ratio.
+Extracts growth transition matrices.
 }
 

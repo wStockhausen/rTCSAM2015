@@ -17,10 +17,15 @@ getMDFR.NatMort(tcsams = NULL, rsims = NULL, type = c("M_cxm", "M_yxm",
 \item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
-data.frame
+dataframe with columns
+\itemize{ 
+ \item{'M_cxm:',  'modeltype', 'model', 'pc', 'x', 'm', 'val'}
+ \item{'M_yxm:',  'modeltype', 'model',  'y', 'x', 'm', 'val'}
+ \item{'M_yxmsz:','modeltype', 'model', 'y', 'x', 'm', 's', 'z', 'val'}
+}
 }
 \description{
-Function to get natural mortlaity rates from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.
+Function to get natural mortality rates from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.
 }
 \details{
 Extracts natural mortality rates

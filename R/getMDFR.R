@@ -25,7 +25,7 @@ getMDFR<-function(path,tcsams=NULL,rsims=NULL,verbose=FALSE){
             if (!is.null(obj)){
                 mdfr<-reshape2::melt(obj,value.name='val',as.is=TRUE);
                 mdfr$model<-'tcsam';
-                mdfr$modeltype<-'tcsam';
+                mdfr$modeltype<-'TCSAM2015';
             }
         } else if (class(tcsams)=='list'){
             #tcsams is a list of tcsam2015 model report objects
@@ -36,7 +36,6 @@ getMDFR<-function(path,tcsams=NULL,rsims=NULL,verbose=FALSE){
                 mdfrp<-getMDFR(path,tcsams=tcsam1,rsims=NULL,verbose=verbose);
                 if (!is.null(mdfrp)){
                     if (!is.null(nms[l])) mdfrp$model<-nms[l];
-                    mdfrp$modeltype<-'tcsam';
                     mdfr<-rbind(mdfr,mdfrp);
                 }
             }

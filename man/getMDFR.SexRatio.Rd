@@ -14,7 +14,7 @@ getMDFR.SexRatio(tcsams, rsims, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
-data.frame
+dataframe with columns 'modeltype', 'model', 'pc', 'val'.
 }
 \description{
 Function to get recruitment sex ratio from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.

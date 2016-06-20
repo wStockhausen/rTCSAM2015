@@ -14,7 +14,7 @@ getMDFR.RecSizeDistribution(tcsams, rsims, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print debug info}
 }
 \value{
-data.frame
+dataframe with columns 'modeltype', 'model', 'pc', 'z', 'val'.
 }
 \description{
 Function to get recruitment size distribution from model results from TCSAM2015 and rsimTCSAM model runs as a dataframe.

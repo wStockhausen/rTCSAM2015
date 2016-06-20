@@ -4,10 +4,10 @@
 \alias{compareModels.GrowthTransitionMatrices}
 \title{Compare growth transition matrices for TCSAM2015 model runs}
 \usage{
-compareModels.GrowthTransitionMatrices(mdfr, nrow = 4, ncol = 3,
+compareModels.GrowthTransitionMatrices(mdfr, nrow = 7, ncol = 5,
   xlab = "post-molt size (mm CW)", ylab = "proportion", xlim = NULL,
-  ylim = NULL, ggtheme = ggplot2::theme_grey(), showPlot = TRUE,
-  pdf = NULL, width = 8, height = 6, verbose = FALSE)
+  ylim = NULL, ggtheme = ggplot2::theme_grey(), showPlot = FALSE,
+  pdf = NULL, width = 8, height = 10, verbose = FALSE)
 }
 \arguments{
 \item{mdfr}{- dataframe from call to \code{getMDFR.GrowthTransitionMatrices(...)} for n.at.z data}
@@ -35,6 +35,8 @@ recursive list of lists of ggplot2 objects
 Function to compare growth transition matrices for TCSAM2015 model runs.
 }
 \details{
-Plots are produced by sex and faceted by parameter combination.
+Plots are produced by sex and parameter combination, 
+and faceted by pre-molt size ('z' column). nrow*ncol determines
+the maximum number of plots per figure.
 }
 

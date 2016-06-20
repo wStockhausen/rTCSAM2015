@@ -15,24 +15,26 @@
 #'
 #'@return recursive list of lists of ggplot2 objects
 #'
-#'@details Plots are produced by sex and faceted by parameter combination.
+#'@details Plots are produced by sex and parameter combination, 
+#'and faceted by pre-molt size ('z' column). nrow*ncol determines
+#'the maximum number of plots per figure.
 #'
 #'@import ggplot2
 #'
 #'@export
 #'
 compareModels.GrowthTransitionMatrices<-function(mdfr,
-                                                  nrow=4,
-                                                  ncol=3,
+                                                  nrow=7,
+                                                  ncol=5,
                                                   xlab="post-molt size (mm CW)",
                                                   ylab="proportion",
                                                   xlim=NULL,
                                                   ylim=NULL,
                                                   ggtheme=ggplot2::theme_grey(),
-                                                  showPlot=TRUE,
+                                                  showPlot=FALSE,
                                                   pdf=NULL,
                                                   width=8,
-                                                  height=6,
+                                                  height=10,
                                                   verbose=FALSE){
     #set up pdf device, if requested
     if (!is.null(pdf)){
@@ -40,29 +42,40 @@ compareModels.GrowthTransitionMatrices<-function(mdfr,
         on.exit(dev.close());
     }
     
-    xs<-c("male","female");
-    pcs<-sort(unique(mdfr$pc))
-    zs<-sort(unique(mdfr$z));
+    uxs<-c("male","female");
+    upc<-as.character(sort(unique(mdfr$pc)));
+    uzs<-as.numeric(sort(unique(as.numeric(mdfr$z))));
+    if (verbose) {
+        cat("uxs =",uxs,"\n");
+        cat("upc =",upc,"\n");
+        cat("uzs =",uzs,"\n");
+    }
+    mdfr$z<-as.character(mdfr$z);
     
     mxp<-nrow*ncol;
+    if (verbose) cat("\tmxp =",mxp,"\n");
     
-    plots<-list();
-    for (x in xs){
-        idx<-mdfr$x==x;
-        pps<-list();
-        for (pc in pcs){
-            idp<-mdfr$pc==pc;
-            if (verbose) cat("Checking",x,pc,"\n");
-            pgs<-list();
+    pxs<-list();
+    for (x in uxs){
+        if (verbose) cat("Checking x =",x,"\n");
+        idx<-(mdfr$x==x);
+        if (verbose) cat("sum(idx) =",sum(idx),"\n");
+        pcs<-list();
+        for (pc in upc){
+            if (verbose) cat("\tChecking pc =",pc,"\n");
+            idp<-(mdfr$pc==pc);
             mdfrp<-mdfr[idx&idp,];#select results for sex and pc
-            
-            npg<-ceiling(length(zs)/mxp)
+            if (verbose) cat("\tnrow(mdfrp) =",nrow(mdfrp),"\n");
+            npg<-ceiling(length(uzs)/mxp)
             
             rng<-range(mdfrp$val,na.rm=TRUE,finite=TRUE);
-            cat("rng = ",rng,'\n')
+            cat("\t\trng = ",rng,'\n')
             
+            pgs<-list();
             for (pg in 1:npg){ #loop over pages
-                dfrp<-mdfrp[(mdfrp$z %in% zs[(pg-1)*mxp+1:mxp]),]
+                if (verbose) cat("\t\tcreating pg =",pg,"\n");
+                dfrp<-mdfrp[(mdfrp$z %in% uzs[(pg-1)*mxp+1:mxp]),];
+                dfrp$z<-factor(as.character(dfrp$z),as.character(uzs));
                 #do plot
                 pd<-position_identity();
                 p <- ggplot(data=dfrp,mapping=aes(x=zp,y=val,colour=model))
@@ -73,16 +86,16 @@ compareModels.GrowthTransitionMatrices<-function(mdfr,
                 p <- p + geom_hline(yintercept=0,colour='black',size=0.5)
                 p <- p + labs(x=xlab,y=ylab)
                 p <- p + facet_wrap(~z,ncol=ncol) 
-                p <- p + ggtitle(paste('pc:',pc,': ',x,sep=''))
+                p <- p + ggtitle(paste0(pc,': ',x))
                 p <- p + guides(colour=guide_legend('model'))
                 p <- p + ggtheme
                 if (showPlot) print(p);
                 pgs[[pg]]<-p;
             }#pg
-            pps[[pc]]<-pgs;
-        }#ss
-        pxs[[x]]<-pms;
-    }#xs
+            pcs[[pc]]<-pgs;
+        }#pc
+        pxs[[x]]<-pcs;
+    }#x
 
-    return(invisible(plots))
+    return(invisible(pxs))
 }
