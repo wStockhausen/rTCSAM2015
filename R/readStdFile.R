@@ -1,7 +1,7 @@
 #'
-#'@title Read a TCSAM2015 model std file and return a dataframe of class 'tcsam2015.prs'
+#'@title Read a TCSAM2015 model std file and return a dataframe of class 'tcsam2015.std'
 #'
-#'@description Function to read a TCSAM2015 std file and return a dataframe of class 'tcsam2015.prs'.
+#'@description Function to read a TCSAM2015 std file and return a dataframe of class 'tcsam2015.std'.
 #'
 #'@param stdfile - std file from a TCSAM2015 model run. can be NULL.
 #'
